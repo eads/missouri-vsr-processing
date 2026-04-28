@@ -1,0 +1,352 @@
+agency,race,year,searches,contraband,hit_rate
+Adrian Police Dept,White,2024,43,9,20.9
+Alton Police Dept,White,2024,24,8,33.3
+Andrew County Sheriff's Dept,White,2024,130,46,35.4
+Ash Grove Police Dept,White,2024,36,17,47.2
+Ashland Police Dept,White,2024,65,7,10.8
+Audrain County Sheriff's Dept,White,2024,54,9,16.7
+Aurora Police Dept,White,2024,107,21,19.6
+Ava Police Dept,White,2024,45,9,20.0
+Ballwin Police Dept,White,2024,30,4,13.3
+Bates County Sheriff's Dept,White,2024,93,23,24.7
+Battlefield Police Dept,White,2024,47,2,4.3
+Belton Police Dept,White,2024,189,59,31.2
+Belton Police Dept,Black,2024,135,29,21.5
+Belton Police Dept,Hispanic,2024,45,10,22.2
+Benton County Sheriff's Dept,White,2024,174,28,16.1
+Bismarck Police Dept,White,2024,27,2,7.4
+Blue Springs Police Dept,White,2024,138,32,23.2
+Blue Springs Police Dept,Black,2024,57,8,14.0
+Bolivar Police Dept,White,2024,128,16,12.5
+Bollinger County Sheriff's Dept,White,2024,33,10,30.3
+Boone County Sheriff's Dept,White,2024,454,93,20.5
+Boone County Sheriff's Dept,Black,2024,333,62,18.6
+Boone County Sheriff's Dept,Hispanic,2024,38,9,23.7
+Boonville Police Dept,White,2024,72,21,29.2
+Boonville Police Dept,Black,2024,34,8,23.5
+Bowling Green Police Dept,White,2024,127,18,14.2
+Branson Police Dept,White,2024,175,40,22.9
+Branson Police Dept,Black,2024,20,4,20.0
+Branson Police Dept,Hispanic,2024,20,4,20.0
+Branson West Police Dept,White,2024,48,5,10.4
+Bridgeton Police Dept,White,2024,45,8,17.8
+Bridgeton Police Dept,Black,2024,63,13,20.6
+Brookfield Police Dept,White,2024,65,11,16.9
+Buchanan County Sheriff's Dept,White,2024,32,6,18.8
+Buffalo Police Dept,White,2024,30,5,16.7
+Butler County Sheriff's Dept,White,2024,131,23,17.6
+Butler Police Dept,White,2024,88,29,33.0
+Cabool Police Dept,White,2024,23,6,26.1
+Caldwell County Sheriff's Dept,White,2024,41,6,14.6
+Callaway County Sheriff's Dept,White,2024,351,64,18.2
+Callaway County Sheriff's Dept,Black,2024,84,15,17.9
+Camden County Sheriff's Dept,White,2024,456,114,25.0
+Camden County Sheriff's Dept,Black,2024,24,6,25.0
+Camden County Sheriff's Dept,Hispanic,2024,23,10,43.5
+Camdenton Police Dept,White,2024,72,10,13.9
+Cameron Police Dept,White,2024,59,5,8.5
+Cape Girardeau Co Sheriff's Dept,White,2024,277,72,26.0
+Cape Girardeau Co Sheriff's Dept,Black,2024,81,19,23.5
+Cape Girardeau Police Dept,White,2024,128,26,20.3
+Cape Girardeau Police Dept,Black,2024,57,15,26.3
+Carl Junction Police Dept,White,2024,29,9,31.0
+Carroll County Sheriff's Dept,White,2024,46,5,10.9
+Carter County Sheriff's Dept,White,2024,20,6,30.0
+Carterville Police Dept,White,2024,30,9,30.0
+Carthage Police Dept,White,2024,348,88,25.3
+Carthage Police Dept,Black,2024,24,7,29.2
+Carthage Police Dept,Hispanic,2024,80,26,32.5
+Cass County Sheriff's Dept,White,2024,344,102,29.7
+Cass County Sheriff's Dept,Black,2024,61,16,26.2
+Cedar County Sheriff's Dept,White,2024,20,4,20.0
+Chesterfield Police Dept,White,2024,191,41,21.5
+Chesterfield Police Dept,Black,2024,118,24,20.3
+Chillicothe Police Dept,White,2024,169,61,36.1
+Christian County Sheriff's Dept,White,2024,365,66,18.1
+Clay County Sheriff's Dept,White,2024,685,223,32.6
+Clay County Sheriff's Dept,Black,2024,164,32,19.5
+Clay County Sheriff's Dept,Hispanic,2024,34,9,26.5
+Claycomo Police Dept,White,2024,80,35,43.8
+Claycomo Police Dept,Black,2024,59,13,22.0
+Clayton Police Dept,White,2024,49,10,20.4
+Clayton Police Dept,Black,2024,53,7,13.2
+Clinton Police Dept,White,2024,23,6,26.1
+Cole County Sheriff's Dept,White,2024,114,27,23.7
+Cole County Sheriff's Dept,Black,2024,21,5,23.8
+Columbia Police Dept,White,2024,242,79,32.6
+Columbia Police Dept,Black,2024,321,80,24.9
+Columbia Police Dept,Hispanic,2024,24,9,37.5
+Concordia Police Dept,White,2024,37,4,10.8
+Cooper County Sheriff's Dept,White,2024,116,32,27.6
+Cooper County Sheriff's Dept,Black,2024,21,3,14.3
+Cottleville Police Dept,White,2024,96,15,15.6
+Cottleville Police Dept,Black,2024,22,4,18.2
+Crawford County Sheriff's Dept,White,2024,187,59,31.6
+Creve Coeur Police Dept,White,2024,83,16,19.3
+Creve Coeur Police Dept,Black,2024,110,9,8.2
+Crystal City Police Dept,White,2024,227,32,14.1
+Crystal City Police Dept,Black,2024,20,3,15.0
+Cuba Police Dept,White,2024,21,4,19.0
+DeKalb County Sheriff's Dept,White,2024,32,5,15.6
+DeSoto Police Dept,White,2024,38,3,7.9
+Dent County Sheriff's Dept,White,2024,39,8,20.5
+Desloge Police Dept,White,2024,72,23,31.9
+Dexter Police Dept,White,2024,119,20,16.8
+Doolittle Police Dept,White,2024,22,0,0.0
+Douglas County Sheriff's Dept,White,2024,82,15,18.3
+El Dorado Springs Police Dept,White,2024,23,3,13.0
+Eldon Police Dept,White,2024,20,1,5.0
+Eureka Police Dept,White,2024,52,9,17.3
+Farmington Police Dept,White,2024,147,33,22.4
+Ferguson Police Dept,Black,2024,32,19,59.4
+Festus Police Dept,White,2024,100,11,11.0
+Foristell Police Dept,White,2024,60,2,3.3
+Franklin County Sheriff's Dept,White,2024,491,150,30.5
+Franklin County Sheriff's Dept,Black,2024,26,5,19.2
+Fredericktown Police Dept,White,2024,56,10,17.9
+Fulton Police Dept,White,2024,148,37,25.0
+Fulton Police Dept,Black,2024,47,8,17.0
+Gasconade County Sheriff's Dept,White,2024,78,33,42.3
+Gladstone Dept of Public Safety,White,2024,44,11,25.0
+Gladstone Dept of Public Safety,Black,2024,29,8,27.6
+Grain Valley Police Dept,White,2024,89,16,18.0
+Grandview Police Dept,White,2024,31,3,9.7
+Grandview Police Dept,Black,2024,52,23,44.2
+Greene County Sheriff's Dept,White,2024,839,215,25.6
+Greene County Sheriff's Dept,Black,2024,132,21,15.9
+Greene County Sheriff's Dept,Hispanic,2024,45,10,22.2
+Hallsville Police Dept,White,2024,37,10,27.0
+Hannibal Police Dept,White,2024,306,52,17.0
+Hannibal Police Dept,Black,2024,71,14,19.7
+Hazelwood Police Dept,White,2024,71,32,45.1
+Hazelwood Police Dept,Black,2024,195,64,32.8
+Henry County Sheriff's Dept,White,2024,20,4,20.0
+Herculaneum Police Dept,White,2024,39,2,5.1
+Higginsville Police Dept,White,2024,105,32,30.5
+Hillsdale Police Dept,Black,2024,132,4,3.0
+Holden Police Dept,White,2024,60,10,16.7
+Hollister Police Dept,White,2024,50,9,18.0
+Holts Summit Police Dept,White,2024,49,8,16.3
+Houston Police Dept,White,2024,88,8,9.1
+Howard County Sheriff's Dept,White,2024,34,5,14.7
+Howell County Sheriff's Dept,White,2024,250,47,18.8
+Independence Police Dept,White,2024,581,235,40.4
+Independence Police Dept,Black,2024,217,84,38.7
+Independence Police Dept,Hispanic,2024,100,38,38.0
+Iron County Sheriff's Dept,White,2024,24,3,12.5
+Jackson County Sheriff's Dept,White,2024,61,7,11.5
+Jackson County Sheriff's Dept,Black,2024,33,1,3.0
+Jackson Police Dept,White,2024,177,52,29.4
+Jasper County Sheriff's Dept,White,2024,151,40,26.5
+Jefferson City Police Dept,White,2024,559,99,17.7
+Jefferson City Police Dept,Black,2024,378,47,12.4
+Jefferson City Police Dept,Hispanic,2024,31,5,16.1
+Jefferson County Sheriff's Dept,White,2024,680,115,16.9
+Jefferson County Sheriff's Dept,Black,2024,35,6,17.1
+Johnson County Sheriff's Dept,White,2024,227,227,100.0
+Johnson County Sheriff's Dept,Black,2024,30,30,100.0
+Joplin Police Dept,White,2024,762,254,33.3
+Joplin Police Dept,Black,2024,58,22,37.9
+Joplin Police Dept,Hispanic,2024,26,14,53.8
+Kahoka Police Dept,White,2024,25,4,16.0
+Kansas City Police Dept,White,2024,185,44,23.8
+Kansas City Police Dept,Black,2024,200,45,22.5
+Kansas City Police Dept,Hispanic,2024,60,12,20.0
+Kearney Police Dept,White,2024,74,14,18.9
+Kennett Police Dept,White,2024,67,17,25.4
+Kennett Police Dept,Black,2024,35,21,60.0
+Kimberling City Police Dept,White,2024,84,17,20.2
+Kirksville Police Dept,White,2024,136,17,12.5
+Kirkwood Police Dept,White,2024,3719,8,0.2
+Kirkwood Police Dept,Black,2024,26,3,11.5
+Knob Noster Police Dept,White,2024,22,5,22.7
+Laclede County Sheriff's Dept,White,2024,222,41,18.5
+Lafayette County Sheriff's Dept,White,2024,87,14,16.1
+Lafayette County Sheriff's Dept,Black,2024,23,5,21.7
+Lake Ozark Police Dept,White,2024,144,144,100.0
+Lake St Louis Police Dept,White,2024,135,19,14.1
+Lake St Louis Police Dept,Black,2024,32,5,15.6
+Lamar Police Dept,White,2024,34,8,23.5
+Lawrence County Sheriff's Dept,White,2024,64,16,25.0
+Lawson Police Dept,White,2024,25,10,40.0
+Lebanon Police Dept,White,2024,68,24,35.3
+Lee's Summit Police Dept,White,2024,295,82,27.8
+Lee's Summit Police Dept,Black,2024,205,55,26.8
+Lewis County Sheriff's Dept,White,2024,26,13,50.0
+Liberty Police Dept,White,2024,86,35,40.7
+Liberty Police Dept,Black,2024,26,3,11.5
+Licking Police Dept,White,2024,99,13,13.1
+Linn County Sheriff's Dept,White,2024,22,3,13.6
+Linn Creek Police Dept,White,2024,28,5,17.9
+Livingston County Sheriff's Dept,White,2024,42,11,26.2
+Macon Police Dept,White,2024,20,6,30.0
+Manchester Police Dept,White,2024,87,16,18.4
+Manchester Police Dept,Black,2024,34,2,5.9
+Mansfield Police Dept,White,2024,48,3,6.2
+Marion County Sheriff's Dept,White,2024,43,11,25.6
+Marshall Police Dept,White,2024,34,12,35.3
+Marshfield Police Dept,White,2024,48,15,31.2
+Maryland Heights Police Dept,White,2024,564,142,25.2
+Maryland Heights Police Dept,Black,2024,632,95,15.0
+Maryland Heights Police Dept,Hispanic,2024,39,5,12.8
+Maryville Dept of Public Safety,White,2024,93,28,30.1
+Miller County Sheriff's Dept,White,2024,204,70,34.3
+Miner Police Dept,White,2024,61,14,23.0
+Miner Police Dept,Black,2024,28,4,14.3
+Mississippi County Sheriff's Dept,White,2024,26,8,30.8
+Missouri Dept Natural Resources-Park Rangers,White,2024,192,20,10.4
+Missouri Dept of Conservation Protection Branch,White,2024,76,25,32.9
+Missouri State Highway Patrol,White,2024,8262,1788,21.6
+Missouri State Highway Patrol,Black,2024,1977,335,16.9
+Missouri State Highway Patrol,Hispanic,2024,903,122,13.5
+Moberly Police Dept,White,2024,145,33,22.8
+Moberly Police Dept,Black,2024,21,4,19.0
+Moniteau County Sheriff's Dept,White,2024,69,18,26.1
+Monroe City Police Dept,White,2024,49,10,20.4
+Monroe County Sheriff's Dept,White,2024,25,0,0.0
+Montgomery County Sheriff's Dept,White,2024,220,51,23.2
+Montgomery County Sheriff's Dept,Black,2024,28,8,28.6
+Morgan County Sheriff's Dept,White,2024,154,25,16.2
+Mountain Grove Police Dept,White,2024,114,11,9.6
+Mountain View Police Dept,White,2024,166,52,31.3
+Neosho Police Dept,White,2024,86,25,29.1
+Neosho Police Dept,Hispanic,2024,21,6,28.6
+Newton County Sheriff's Dept,White,2024,215,67,31.2
+North Kansas City Police Dept,White,2024,57,22,38.6
+North Kansas City Police Dept,Black,2024,38,7,18.4
+Northwoods Police Dept,Black,2024,25,9,36.0
+O'Fallon Police Dept,White,2024,736,105,14.3
+O'Fallon Police Dept,Black,2024,319,36,11.3
+O'Fallon Police Dept,Hispanic,2024,76,9,11.8
+Odessa Police Dept,White,2024,53,5,9.4
+Olivette Police Dept,Black,2024,33,10,30.3
+Osage Beach Police Dept,White,2024,173,19,11.0
+Osage County Sheriff's Dept,White,2024,32,21,65.6
+Osceola Police Dept,White,2024,90,27,30.0
+Owensville Police Dept,White,2024,61,17,27.9
+Ozark County Sheriff's Dept,White,2024,58,11,19.0
+Ozark Police Dept,White,2024,651,207,31.8
+Ozark Police Dept,Black,2024,41,5,12.2
+Pacific Police Dept,White,2024,90,1,1.1
+Palmyra Police Dept,White,2024,29,0,0.0
+Park Hills Police Dept,White,2024,170,43,25.3
+Parkville Police Dept,White,2024,22,5,22.7
+Parkville Police Dept,Black,2024,27,4,14.8
+Peculiar Police Dept,White,2024,60,19,31.7
+Peculiar Police Dept,Black,2024,22,1,4.5
+Perry County Sheriff's Dept,White,2024,87,24,27.6
+Perry County Sheriff's Dept,Black,2024,22,0,0.0
+Perryville Police Dept,White,2024,53,6,11.3
+Pettis County Sheriff's Dept,White,2024,228,87,38.2
+Pevely Police Dept,White,2024,45,4,8.9
+Phelps County Sheriff's Dept,White,2024,267,105,39.3
+Phelps County Sheriff's Dept,Black,2024,26,7,26.9
+Phelps County Sheriff's Dept,Hispanic,2024,23,6,26.1
+Pike County Sheriff's Dept,White,2024,64,22,34.4
+Pineville Police Dept,White,2024,31,4,12.9
+Platte County Sheriff's Dept,White,2024,304,48,15.8
+Platte County Sheriff's Dept,Black,2024,120,14,11.7
+Pleasant Valley Police Dept,White,2024,74,8,10.8
+Pleasant Valley Police Dept,Black,2024,56,1,1.8
+Poplar Bluff Police Dept,White,2024,288,45,15.6
+Poplar Bluff Police Dept,Black,2024,74,12,16.2
+Portageville Police Dept,White,2024,42,13,31.0
+Potosi Police Dept,White,2024,205,74,36.1
+Ralls County Sheriff's Dept,White,2024,28,4,14.3
+Randolph County Sheriff's Dept,White,2024,124,33,26.6
+Ray County Sheriff's Dept,White,2024,70,9,12.9
+Raymore Police Dept,White,2024,110,14,12.7
+Raymore Police Dept,Black,2024,84,2,2.4
+Raytown Police Dept,White,2024,21,8,38.1
+Raytown Police Dept,Black,2024,25,1,4.0
+Republic Police Dept,White,2024,444,71,16.0
+Republic Police Dept,Black,2024,28,3,10.7
+Republic Police Dept,Hispanic,2024,39,4,10.3
+Richmond Heights Police Dept,White,2024,37,8,21.6
+Richmond Heights Police Dept,Black,2024,85,22,25.9
+Richmond Police Dept,White,2024,41,13,31.7
+Riverside Police Dept,White,2024,139,33,23.7
+Riverside Police Dept,Black,2024,69,7,10.1
+Rogersville Police Dept,White,2024,23,5,21.7
+Rolla Police Dept,White,2024,193,33,17.1
+Saline County Sheriff's Dept,White,2024,60,18,30.0
+Sedalia Police Dept,White,2024,364,88,24.2
+Sedalia Police Dept,Black,2024,48,17,35.4
+Sedalia Police Dept,Hispanic,2024,77,19,24.7
+Seligman Police Dept,White,2024,24,5,20.8
+Senath Police Dept,White,2024,22,6,27.3
+Seneca Police Dept,White,2024,193,68,35.2
+Seymour Police Dept,White,2024,58,7,12.1
+Sikeston Police Dept,White,2024,133,30,22.6
+Sikeston Police Dept,Black,2024,149,30,20.1
+Smithville Police Dept,White,2024,43,17,39.5
+Southwest City Police Dept,White,2024,23,6,26.1
+Springfield Police Dept,White,2024,1523,476,31.3
+Springfield Police Dept,Black,2024,244,72,29.5
+Springfield Police Dept,Hispanic,2024,107,34,31.8
+St Ann Police Dept,White,2024,231,59,25.5
+St Ann Police Dept,Black,2024,408,67,16.4
+St Ann Police Dept,Hispanic,2024,90,10,11.1
+St Charles County Police Dept,White,2024,572,187,32.7
+St Charles County Police Dept,Black,2024,308,51,16.6
+St Charles County Police Dept,Hispanic,2024,23,4,17.4
+St Charles Police Dept,White,2024,376,79,21.0
+St Charles Police Dept,Black,2024,263,43,16.3
+St Charles Police Dept,Hispanic,2024,46,3,6.5
+St Clair County Sheriff's Dept,White,2024,27,4,14.8
+St Clair Police Dept,White,2024,62,5,8.1
+St Francois County Sheriff's Dept,White,2024,445,218,49.0
+St James Police Dept,White,2024,135,35,25.9
+St John Police Dept,White,2024,27,11,40.7
+St Joseph Police Dept,White,2024,179,38,21.2
+St Joseph Police Dept,Black,2024,34,6,17.6
+St Louis City Police Dept,White,2024,103,27,26.2
+St Louis City Police Dept,Black,2024,347,81,23.3
+St Louis County Police Dept,White,2024,344,70,20.3
+St Louis County Police Dept,Black,2024,278,59,21.2
+St Peters Police Dept,White,2024,288,49,17.0
+St Peters Police Dept,Black,2024,95,11,11.6
+St Robert Police Dept,White,2024,41,13,31.7
+Ste Genevieve Co Sheriff's Dept,White,2024,133,47,35.3
+Ste Genevieve Co Sheriff's Dept,Black,2024,29,6,20.7
+Ste Genevieve Police Dept,White,2024,38,8,21.1
+Stoddard County Sheriff's Dept,White,2024,151,23,15.2
+Strafford Police Dept,White,2024,31,5,16.1
+Sugar Creek Police Dept,White,2024,78,11,14.1
+Sugar Creek Police Dept,Black,2024,42,8,19.0
+Sullivan County Sheriff's Dept,White,2024,27,3,11.1
+Sullivan Police Dept,White,2024,76,22,28.9
+Sunrise Beach Police Dept,White,2024,31,4,12.9
+Sunset Hills Police Dept,White,2024,273,22,8.1
+Sunset Hills Police Dept,Black,2024,54,1,1.9
+Sweet Springs Police Dept,White,2024,21,7,33.3
+Taney County Sheriff's Dept,White,2024,205,30,14.6
+Tipton Police Dept,White,2024,51,8,15.7
+Town and Country Police Dept,White,2024,129,19,14.7
+Town and Country Police Dept,Black,2024,115,13,11.3
+UCM-Dept of Public Safety,White,2024,39,11,28.2
+Union Police Dept,White,2024,47,16,34.0
+University of Missouri-Columbia Police Dept,White,2024,145,80,55.2
+University of Missouri-Columbia Police Dept,Black,2024,55,20,36.4
+Warren County Sheriff's Dept,White,2024,313,69,22.0
+Warren County Sheriff's Dept,Black,2024,23,6,26.1
+Warrensburg Police Dept,White,2024,133,19,14.3
+Warrensburg Police Dept,Black,2024,48,4,8.3
+Warrenton Police Dept,White,2024,74,11,14.9
+Washington County Sheriff's Dept,White,2024,91,35,38.5
+Washington Police Dept,White,2024,106,21,19.8
+Waynesville Police Dept,White,2024,34,7,20.6
+Webb City Police Dept,White,2024,143,58,40.6
+Webster County Sheriff's Dept,White,2024,39,7,17.9
+Wellsville Police Dept,White,2024,46,3,6.5
+Wentzville Police Dept,White,2024,295,48,16.3
+Wentzville Police Dept,Black,2024,98,6,6.1
+Willard Police Dept,White,2024,73,24,32.9
+Wright City Police Dept,White,2024,97,19,19.6
+Wright County Sheriff's Dept,White,2024,196,52,26.5
+Breckenridge Hills Police Dept,White,2024,65,12,18.5
+Breckenridge Hills Police Dept,Black,2024,66,26,39.4
+North County Police Cooperative,White,2024,31,13,41.9
+North County Police Cooperative,Black,2024,235,101,43.0
+Winona Police Dept,White,2024,26,0,0.0
+Goodman Police Dept,White,2024,28,11,39.3

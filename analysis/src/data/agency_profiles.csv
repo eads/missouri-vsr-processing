@@ -1,0 +1,202 @@
+agency,county,geo_type,agency_type,hisp_stops_2020,hisp_stops_2024,total_stops_2024,stop_change_pct,hisp_arrest_rate,white_arrest_rate,arrest_ratio,hisp_search_rate,white_search_rate,search_ratio,discretionary_share,ever_commented,comment_years,has_287g,g287_type,g287_date,cluster
+Dexter Police Dept,"Dexter city, Missouri",place,municipal_police,35,61,3160,74.3,3.28,1.66,1.98,1.64,4.13,0.4,40.6,False,0,False,,,Other
+Battlefield Police Dept,"Battlefield city, Missouri",place,municipal_police,13,51,1825,292.3,0.0,2.22,0.0,0.0,2.82,0.0,23.5,True,1,False,,,Other
+Macon County Sheriff's Dept,"Macon County, Missouri",county,county_sheriff,23,29,527,26.1,3.45,5.98,0.58,3.45,2.99,1.15,10.3,False,0,False,,,Macon County
+St John Police Dept,"St John city, Missouri",place,municipal_police,18,26,710,44.4,26.92,12.43,2.17,19.23,14.59,1.32,71.8,False,0,False,,,Other
+Raytown Police Dept,"Raytown city, Missouri",place,municipal_police,55,25,454,-54.5,4.0,10.14,0.39,8.0,14.19,0.56,100.0,False,0,False,,,KC Metro (Jackson/Clay)
+Missouri Dept Natural Resources-Park Rangers,Missouri,state,park_ranger,129,153,4761,18.6,4.58,3.59,1.28,5.23,4.39,1.19,47.4,False,0,False,,,Other
+Linn County Sheriff's Dept,"Linn County, Missouri",county,county_sheriff,11,115,1427,945.5,1.74,1.39,1.25,1.74,1.9,0.92,6.6,False,0,False,,,Linn County
+St Robert Police Dept,"St Robert city, Missouri",place,municipal_police,135,190,2913,40.7,3.68,2.79,1.32,3.16,1.97,1.6,46.4,False,0,False,,,Other
+Camden County Sheriff's Dept,"Camden County, Missouri",county,county_sheriff,40,86,2959,115.0,23.26,12.17,1.91,26.74,16.96,1.58,50.5,False,0,False,,,Camden County
+Crawford County Sheriff's Dept,"Crawford County, Missouri",county,county_sheriff,18,106,2911,488.9,14.15,3.24,4.37,4.72,7.22,0.65,28.4,False,0,False,,,Crawford County
+Kennett Police Dept,"Kennett city, Missouri",place,municipal_police,132,199,3382,50.8,11.06,2.99,3.7,6.53,2.78,2.35,41.2,False,0,False,,,Other
+St Clair County Sheriff's Dept,"St Clair County, Missouri",county,county_sheriff,38,28,861,-26.3,3.57,1.48,2.41,3.57,3.62,0.99,39.3,False,0,False,,,St Clair County
+Higginsville Police Dept,"Higginsville city, Missouri",place,municipal_police,38,63,1966,65.8,0.0,1.74,0.0,6.35,6.09,1.04,68.3,False,0,False,,,Other
+Webb City Police Dept,"Webb City city, Missouri",place,municipal_police,81,233,6697,187.7,11.59,6.72,1.72,6.44,2.39,2.69,32.8,False,0,False,,,SW Missouri
+Maryville Dept of Public Safety,"Maryville city, Missouri",place,municipal_police,41,30,1451,-26.8,36.67,9.97,3.68,16.67,7.48,2.23,59.4,False,0,False,,,Other
+Manchester Police Dept,"Manchester city, Missouri",place,municipal_police,19,60,4069,215.8,28.33,3.49,8.12,10.0,2.89,3.46,64.5,True,2,False,,,St. Louis County
+Crystal City Police Dept,"Crystal City city, Missouri",place,municipal_police,19,63,3383,231.6,9.52,4.47,2.13,9.52,7.35,1.3,56.3,False,0,False,,,Other
+Macon Police Dept,"Macon city, Missouri",place,municipal_police,39,47,1616,20.5,0.0,1.54,0.0,0.0,1.4,0.0,20.4,False,0,False,,,Other
+Cape Girardeau Police Dept,"Cape Girardeau city, Missouri",place,municipal_police,55,145,5457,163.6,2.07,1.4,1.48,4.83,3.51,1.38,55.7,True,1,False,,,Other
+Mountain View Police Dept,"Mountain View city, Missouri",place,municipal_police,9,55,1479,511.1,7.27,6.66,1.09,10.91,12.28,0.89,28.3,True,1,False,,,Other
+Osage Beach Police Dept,"Osage Beach city, Missouri",place,municipal_police,12,48,4035,300.0,10.42,3.29,3.17,14.58,4.58,3.18,44.2,True,2,False,,,Other
+City of California Police Dept,"City of California city, Missouri",place,municipal_police,51,34,247,-33.3,11.76,2.42,4.86,8.82,5.31,1.66,54.1,False,0,False,,,Other
+St Louis County Police Dept,"St. Louis County, Missouri",county,municipal_police,146,338,35171,131.5,3.55,2.32,1.53,2.96,1.62,1.83,66.0,False,0,False,,,St. Louis County
+Sugar Creek Police Dept,"Sugar Creek city, Missouri",place,municipal_police,21,108,2141,414.3,7.41,6.51,1.14,6.48,5.34,1.21,31.4,False,0,False,,,Other
+Maryland Heights Police Dept,"Maryland Heights city, Missouri",place,municipal_police,129,369,13474,186.0,5.42,3.02,1.79,10.57,8.47,1.25,53.1,True,3,False,,,St. Louis County
+Branson West Police Dept,"Branson West city, Missouri",place,municipal_police,35,42,1349,20.0,11.9,3.17,3.75,11.9,3.81,3.12,44.7,True,1,False,,,SW Missouri
+Bates County Sheriff's Dept,"Bates County, Missouri",county,county_sheriff,13,40,845,207.7,0.0,3.34,0.0,17.5,12.43,1.41,31.7,True,1,False,,,Bates County
+Claycomo Police Dept,"Claycomo city, Missouri",place,municipal_police,140,254,2652,81.4,3.15,2.38,1.32,7.48,5.15,1.45,25.0,False,0,False,,,KC Metro (Jackson/Clay)
+North Kansas City Police Dept,"North Kansas City city, Missouri",place,municipal_police,379,508,4802,34.0,1.77,1.42,1.25,1.38,2.13,0.65,49.7,True,2,False,,,KC Metro (Jackson/Clay)
+Warrenton Police Dept,"Warrenton city, Missouri",place,municipal_police,37,54,1563,45.9,3.7,1.8,2.06,7.41,5.32,1.39,52.6,False,0,False,,,Other
+Chesterfield Police Dept,"Chesterfield city, Missouri",place,municipal_police,60,342,15120,470.0,7.6,1.9,4.0,2.05,1.76,1.16,53.3,True,2,False,,,St. Louis County
+Ellisville Police Dept,"Ellisville city, Missouri",place,municipal_police,65,128,5216,96.9,2.34,0.5,4.68,1.56,0.33,4.73,59.5,True,4,False,,,Other
+Oronogo Police Dept,"Oronogo city, Missouri",place,municipal_police,55,48,1268,-12.7,0.0,0.86,0.0,2.08,1.03,2.02,24.5,False,0,False,,,Other
+Wayne County Sheriff's Dept,"Wayne County, Missouri",county,county_sheriff,24,34,686,41.7,0.0,0.19,0.0,0.0,2.7,0.0,15.4,False,0,False,,,Wayne County
+Jasper County Sheriff's Dept,"Jasper County, Missouri",county,county_sheriff,328,376,5402,14.6,5.85,2.8,2.09,4.26,3.2,1.33,38.3,True,4,False,,,Jasper County
+Kearney Police Dept,"Kearney city, Missouri",place,municipal_police,17,98,3034,476.5,0.0,1.35,0.0,1.02,2.71,0.38,57.0,True,1,False,,,Other
+Hallsville Police Dept,"Hallsville city, Missouri",place,municipal_police,6,47,1486,683.3,4.26,0.55,7.75,12.77,2.9,4.4,56.2,False,0,False,,,Other
+Herculaneum Police Dept,"Herculaneum city, Missouri",place,municipal_police,10,34,2394,240.0,0.0,1.18,0.0,0.0,1.84,0.0,28.6,False,0,False,,,Other
+Cassville Police Dept,"Cassville city, Missouri",place,municipal_police,24,98,1695,308.3,2.04,2.54,0.8,0.0,1.04,0.0,40.6,False,0,False,,,SW Missouri
+Rolla Police Dept,"Rolla city, Missouri",place,municipal_police,48,60,3699,25.0,13.33,5.9,2.26,13.33,5.99,2.23,45.2,False,0,False,,,Other
+Springfield Police Dept,"Springfield city, Missouri",place,municipal_police,617,879,19411,42.5,4.21,3.08,1.37,12.17,9.43,1.29,48.1,False,0,False,,,SW Missouri
+Missouri State Highway Patrol,Missouri,state,state_patrol,10106,14569,312976,44.2,5.13,2.7,1.9,6.2,3.19,1.94,20.4,False,0,True,task_force,2025-03,Statewide
+Holts Summit Police Dept,"Holts Summit city, Missouri",place,municipal_police,26,30,712,15.4,10.0,2.06,4.85,36.67,8.4,4.37,53.3,True,2,False,,,Other
+Parkville Police Dept,"Parkville city, Missouri",place,municipal_police,49,88,1213,79.6,14.77,2.51,5.88,14.77,2.51,5.88,47.9,False,0,False,,,Other
+Lake Ozark Police Dept,"Lake Ozark city, Missouri",place,municipal_police,37,45,1732,21.6,13.33,3.77,3.54,8.89,9.2,0.97,31.1,False,0,False,,,SW Missouri
+Doolittle Police Dept,"Doolittle city, Missouri",place,municipal_police,21,25,519,19.0,0.0,1.35,0.0,12.0,4.97,2.41,12.0,True,1,False,,,Other
+Audrain County Sheriff's Dept,"Audrain County, Missouri",county,county_sheriff,21,24,680,14.3,33.33,11.93,2.79,16.67,9.76,1.71,48.0,False,0,False,,,Audrain County
+Milan Police Dept,"Milan city, Missouri",place,municipal_police,34,62,283,82.4,3.23,3.98,0.81,3.23,3.48,0.93,31.7,False,0,False,,,Other
+Marshall Police Dept,"Marshall city, Missouri",place,municipal_police,304,294,2012,-3.3,5.44,4.26,1.28,2.04,2.41,0.85,39.4,False,0,False,,,Other
+Crane Police Dept,"Crane city, Missouri",place,municipal_police,20,21,531,5.0,0.0,1.41,0.0,0.0,2.21,0.0,30.0,False,0,False,,,Other
+Jefferson City Police Dept,"Jefferson City city, Missouri",place,municipal_police,74,323,12674,336.5,0.62,0.78,0.79,9.6,6.67,1.44,55.7,False,0,False,,,I-70 Corridor
+Mountain Grove Police Dept,"Mountain Grove city, Missouri",place,municipal_police,16,31,2243,93.8,3.23,2.51,1.29,6.45,5.3,1.22,56.2,False,0,False,,,Other
+Greene County Sheriff's Dept,"Greene County, Missouri",county,county_sheriff,339,701,17936,106.8,5.28,3.08,1.71,6.42,5.44,1.18,53.9,True,2,False,,,Greene County
+Olivette Police Dept,"Olivette city, Missouri",place,municipal_police,15,73,1697,386.7,2.74,0.91,3.01,1.37,1.36,1.01,59.7,True,1,False,,,Other
+Ballwin Police Dept,"Ballwin city, Missouri",place,municipal_police,12,109,7221,808.3,5.5,0.67,8.21,2.75,0.52,5.29,46.7,False,0,False,,,St. Louis County
+Lexington Police Dept,"Lexington city, Missouri",place,municipal_police,25,20,467,-20.0,5.0,4.71,1.06,5.0,2.48,2.02,47.1,False,0,False,,,Other
+Maplewood Police Dept,"Maplewood city, Missouri",place,municipal_police,14,55,1787,292.9,1.82,0.71,2.56,0.0,0.5,0.0,57.1,False,0,False,,,St. Louis County
+Marion County Sheriff's Dept,"Marion County, Missouri",county,county_sheriff,25,55,1204,120.0,1.82,3.26,0.56,7.27,4.25,1.71,47.5,False,0,False,,,Marion County
+St Ann Police Dept,"St Ann city, Missouri",place,municipal_police,32,275,4634,759.4,29.45,12.68,2.32,32.73,17.12,1.91,63.4,False,0,False,,,St. Louis County
+Fulton Police Dept,"Fulton city, Missouri",place,municipal_police,19,30,3029,57.9,3.33,4.98,0.67,0.0,6.3,0.0,53.3,False,0,False,,,Other
+Kimberling City Police Dept,"Kimberling City city, Missouri",place,municipal_police,18,48,1609,166.7,22.92,3.56,6.44,18.75,5.53,3.39,34.5,False,0,False,,,Other
+Riverside Police Dept,"Riverside city, Missouri",place,municipal_police,251,168,3677,-33.1,5.36,7.3,0.73,3.57,6.43,0.56,72.6,True,4,False,,,Other
+St Charles Police Dept,"St Charles city, Missouri",place,municipal_police,68,358,10834,426.5,22.91,6.68,3.43,12.85,5.92,2.17,63.7,False,0,False,,,St. Charles County
+Pacific Police Dept,"Pacific city, Missouri",place,municipal_police,11,54,2867,390.9,0.0,4.18,0.0,3.7,3.42,1.08,76.8,False,0,False,,,Other
+Blue Springs Police Dept,"Blue Springs city, Missouri",place,municipal_police,63,304,10102,382.5,0.99,2.81,0.35,0.66,1.79,0.37,75.5,True,5,False,,,KC Metro (Jackson/Clay)
+Creve Coeur Police Dept,"Creve Coeur city, Missouri",place,municipal_police,57,141,6828,147.4,6.38,2.45,2.6,4.96,2.07,2.4,33.8,True,3,False,,,St. Louis County
+Bridgeton Police Dept,"Bridgeton city, Missouri",place,municipal_police,54,155,3655,187.0,1.94,2.58,0.75,1.29,3.88,0.33,66.3,True,5,False,,,St. Louis County
+Callaway County Sheriff's Dept,"Callaway County, Missouri",county,county_sheriff,38,55,2854,44.7,7.27,8.37,0.87,12.73,14.84,0.86,67.3,False,0,False,,,Callaway County
+Joplin Police Dept,"Joplin city, Missouri",place,municipal_police,268,449,12648,67.5,4.9,7.7,0.64,5.79,6.9,0.84,54.2,False,0,False,,,SW Missouri
+Poplar Bluff Police Dept,"Poplar Bluff city, Missouri",place,municipal_police,12,29,3845,141.7,3.45,3.34,1.03,3.45,9.08,0.38,54.3,False,0,False,,,Other
+Seneca Police Dept,"Seneca city, Missouri",place,municipal_police,58,109,2631,87.9,7.34,5.64,1.3,10.09,8.13,1.24,51.3,False,0,False,,,Other
+Town and Country Police Dept,"Town and Country city, Missouri",place,municipal_police,6,146,7474,2333.3,11.64,3.53,3.3,6.85,2.42,2.83,41.1,True,2,False,,,St. Louis County
+Lake St Louis Police Dept,"Lake St Louis city, Missouri",place,municipal_police,45,153,4634,240.0,1.31,0.66,1.98,6.54,3.7,1.77,58.2,False,0,False,,,St. Charles County
+Foristell Police Dept,"Foristell city, Missouri",place,municipal_police,42,51,2216,21.4,35.29,3.27,10.79,29.41,3.16,9.31,25.5,False,0,False,,,Other
+Cole County Sheriff's Dept,"Cole County, Missouri",county,county_sheriff,102,109,3470,6.9,2.75,2.74,1.0,0.92,4.01,0.23,34.9,False,0,False,,,Cole County
+Henry County Sheriff's Dept,"Henry County, Missouri",county,county_sheriff,17,61,2336,258.8,0.0,1.3,0.0,0.0,0.93,0.0,16.4,True,2,False,,,Henry County
+Ashland Police Dept,"Ashland city, Missouri",place,municipal_police,20,23,1398,15.0,13.04,7.76,1.68,0.0,5.6,0.0,0.0,True,2,False,,,Other
+Grandview Police Dept,"Grandview city, Missouri",place,municipal_police,400,303,3647,-24.2,1.98,1.47,1.35,4.95,1.76,2.81,44.6,True,1,False,,,KC Metro (Jackson/Clay)
+Pierce City Police Dept,"Pierce City city, Missouri",place,municipal_police,11,29,314,163.6,0.0,2.56,0.0,10.34,4.03,2.57,34.5,False,0,False,,,Other
+Pineville Police Dept,"Pineville city, Missouri",place,municipal_police,65,68,1074,4.6,8.82,3.32,2.66,5.88,3.32,1.77,15.5,False,0,False,,,Other
+Cabool Police Dept,"Cabool city, Missouri",place,municipal_police,8,28,953,250.0,0.0,4.45,0.0,0.0,2.69,0.0,23.3,False,0,False,,,Other
+Independence Police Dept,"Independence city, Missouri",place,municipal_police,791,1894,18683,139.4,4.44,3.54,1.25,5.28,4.85,1.09,37.9,True,3,False,,,KC Metro (Jackson/Clay)
+Jackson County Sheriff's Dept,"Jackson County, Missouri",county,county_sheriff,21,117,2530,457.1,7.69,12.04,0.64,3.42,4.08,0.84,40.2,False,0,False,,,Jackson County
+Ozark Police Dept,"Ozark city, Missouri",place,municipal_police,43,190,7731,341.9,5.79,5.61,1.03,7.89,9.04,0.87,65.4,True,1,False,,,SW Missouri
+Pettis County Sheriff's Dept,"Pettis County, Missouri",county,county_sheriff,101,126,1921,24.8,11.11,8.95,1.24,10.32,14.07,0.73,44.5,True,1,True,jail_enforcement,2025-08,Pettis County
+Palmyra Police Dept,"Palmyra city, Missouri",place,municipal_police,48,74,1865,54.2,2.7,1.31,2.06,4.05,1.8,2.25,15.4,False,0,False,,,Other
+Raymore Police Dept,"Raymore city, Missouri",place,municipal_police,107,280,6261,161.7,1.79,1.69,1.06,2.86,2.41,1.19,35.6,True,1,False,,,Other
+St James Police Dept,"St James city, Missouri",place,municipal_police,10,49,1696,390.0,6.12,5.37,1.14,18.37,8.84,2.08,10.2,False,0,False,,,Other
+Bolivar Police Dept,"Bolivar city, Missouri",place,municipal_police,53,71,2512,34.0,7.04,5.6,1.26,7.04,5.47,1.29,46.7,False,0,False,,,Other
+Warrensburg Police Dept,"Warrensburg city, Missouri",place,municipal_police,34,58,2002,70.6,13.79,6.57,2.1,17.24,8.09,2.13,59.7,False,0,False,,,Other
+Kirksville Police Dept,"Kirksville city, Missouri",place,municipal_police,22,43,1896,95.5,9.3,5.62,1.65,11.63,8.31,1.4,52.3,True,2,False,,,Other
+Louisiana Police Dept,"Louisiana city, Missouri",place,municipal_police,15,25,485,66.7,4.0,1.49,2.68,4.0,3.72,1.08,34.6,False,0,False,,,Other
+Wentzville Police Dept,"Wentzville city, Missouri",place,municipal_police,86,159,6547,84.9,10.69,8.32,1.28,8.18,5.83,1.4,48.9,False,0,False,,,St. Charles County
+Butler Police Dept,"Butler city, Missouri",place,municipal_police,9,29,1127,222.2,0.0,3.0,0.0,3.45,8.26,0.42,51.6,False,0,False,,,Other
+Hannibal Police Dept,"Hannibal city, Missouri",place,municipal_police,29,77,4504,165.5,9.09,7.85,1.16,11.69,7.93,1.47,27.3,True,2,False,,,Other
+Christian County Sheriff's Dept,"Christian County, Missouri",county,county_sheriff,102,129,7183,26.5,3.1,2.48,1.25,3.88,5.42,0.72,68.8,True,1,True,all_three,2025-07,Christian County
+Duquesne Police Dept,"Duquesne city, Missouri",place,municipal_police,42,93,1331,121.4,6.45,1.25,5.16,7.53,1.6,4.71,24.2,False,0,False,,,SW Missouri
+Moniteau County Sheriff's Dept,"Moniteau County, Missouri",county,county_sheriff,23,87,1169,278.3,8.05,3.1,2.6,17.24,6.89,2.5,43.7,False,0,False,,,Moniteau County
+Republic Police Dept,"Republic city, Missouri",place,municipal_police,90,444,10198,393.3,7.43,3.71,2.0,8.78,4.8,1.83,58.6,True,2,False,,,SW Missouri
+Saline County Sheriff's Dept,"Saline County, Missouri",county,county_sheriff,35,105,1099,200.0,9.52,4.78,1.99,10.48,6.99,1.5,47.7,False,0,False,,,Saline County
+Sullivan Police Dept,"Sullivan city, Missouri",place,municipal_police,6,21,1645,250.0,4.76,1.51,3.15,0.0,4.78,0.0,58.3,False,0,False,,,Other
+Washington Police Dept,"Washington city, Missouri",place,municipal_police,23,25,4117,8.7,4.0,3.77,1.06,4.0,2.68,1.49,50.0,False,0,False,,,Other
+Hollister Police Dept,"Hollister city, Missouri",place,municipal_police,97,64,1404,-34.0,0.0,1.17,0.0,3.12,3.9,0.8,54.5,False,0,False,,,Other
+Willard Police Dept,"Willard city, Missouri",place,municipal_police,17,36,1592,111.8,8.33,5.17,1.61,8.33,4.9,1.7,47.4,True,1,False,,,Other
+Stoddard County Sheriff's Dept,"Stoddard County, Missouri",county,county_sheriff,8,50,2115,525.0,0.0,2.91,0.0,2.0,7.84,0.26,49.1,False,0,False,,,Stoddard County
+O'Fallon Police Dept,"O'Fallon city, Missouri",place,municipal_police,603,663,20792,10.0,11.76,3.02,3.89,11.46,4.93,2.32,64.7,True,2,False,,,St. Charles County
+Sunrise Beach Police Dept,"Sunrise Beach city, Missouri",place,municipal_police,8,35,1090,337.5,0.0,0.59,0.0,2.86,3.06,0.93,37.8,True,1,False,,,Other
+Howell County Sheriff's Dept,"Howell County, Missouri",county,county_sheriff,5,24,1711,380.0,4.17,3.32,1.26,12.5,15.38,0.81,46.4,True,1,False,,,Howell County
+Peculiar Police Dept,"Peculiar city, Missouri",place,municipal_police,30,86,2102,186.7,3.49,1.94,1.8,5.81,3.43,1.69,25.0,True,2,False,,,Other
+Branson Police Dept,"Branson city, Missouri",place,municipal_police,129,371,4792,187.6,3.5,2.62,1.34,5.39,4.28,1.26,61.1,True,2,True,task_force,2026-02,SW Missouri
+Webster County Sheriff's Dept,"Webster County, Missouri",county,county_sheriff,23,54,2491,134.8,0.0,0.77,0.0,0.0,1.66,0.0,49.2,False,0,False,,,Webster County
+Grain Valley Police Dept,"Grain Valley city, Missouri",place,municipal_police,18,70,1597,288.9,5.71,5.2,1.1,7.14,6.61,1.08,34.3,False,0,False,,,Other
+Buchanan County Sheriff's Dept,"Buchanan County, Missouri",county,county_sheriff,100,21,4893,-79.0,0.0,5.07,0.0,0.0,0.74,0.0,42.9,False,0,False,,,Buchanan County
+Perryville Police Dept,"Perryville city, Missouri",place,municipal_police,12,25,1300,108.3,4.0,2.58,1.55,4.0,4.41,0.91,42.3,False,0,False,,,Other
+St Louis City Police Dept,"St. Louis city, Missouri",place,municipal_police,412,645,23717,56.6,0.47,0.67,0.7,1.24,1.16,1.07,70.2,False,0,False,,,St. Louis City
+Camdenton Police Dept,"Camdenton city, Missouri",place,municipal_police,18,62,1374,244.4,8.06,3.51,2.3,9.68,5.75,1.68,55.1,False,0,False,,,Other
+Jackson Police Dept,"Jackson city, Missouri",place,municipal_police,53,81,4960,52.8,6.17,3.63,1.7,6.17,3.97,1.55,58.2,True,1,False,,,Other
+University of Missouri-Columbia Police Dept,"Columbia city, Missouri",place,university,76,144,4938,89.5,9.72,4.02,2.42,2.78,4.29,0.65,46.9,False,0,False,,,Boone County
+Diamond Police Dept,"Diamond city, Missouri",place,municipal_police,16,110,1419,587.5,0.91,0.65,1.4,0.91,0.24,3.79,23.4,False,0,False,,,SW Missouri
+Warren County Sheriff's Dept,"Warren County, Missouri",county,county_sheriff,32,54,2145,68.8,25.93,6.77,3.83,31.48,16.3,1.93,63.6,False,0,False,,,Warren County
+Hazelwood Police Dept,"Hazelwood city, Missouri",place,municipal_police,102,90,11265,-11.8,0.0,3.36,0.0,1.11,2.88,0.39,71.3,True,2,False,,,St. Louis County
+Ste Genevieve Co Sheriff's Dept,"Ste Genevieve County, Missouri",county,county_sheriff,8,44,3239,450.0,2.27,6.09,0.37,11.36,5.0,2.27,35.8,False,0,False,,,Ste Genevieve Co
+Boone County Sheriff's Dept,"Boone County, Missouri",county,county_sheriff,132,410,11974,210.6,7.8,3.75,2.08,9.27,5.87,1.58,50.4,True,3,False,,,Boone County
+Sunset Hills Police Dept,"Sunset Hills city, Missouri",place,municipal_police,12,97,3410,708.3,2.06,4.79,0.43,4.12,10.22,0.4,64.7,False,0,False,,,St. Louis County
+Jefferson County Sheriff's Dept,"Jefferson County, Missouri",county,county_sheriff,16,107,22123,568.8,14.02,5.17,2.71,9.35,3.24,2.89,54.8,False,0,True,task_force,2026-01,Jefferson County
+Sullivan County Sheriff's Dept,"Sullivan County, Missouri",county,county_sheriff,34,45,355,32.4,8.89,4.26,2.09,11.11,9.57,1.16,45.8,False,0,False,,,Sullivan County
+Wright City Police Dept,"Wright City city, Missouri",place,municipal_police,65,116,2288,78.5,10.34,2.3,4.5,6.9,5.18,1.33,39.7,False,0,False,,,Other
+Benton County Sheriff's Dept,"Benton County, Missouri",county,county_sheriff,8,27,948,237.5,18.52,11.77,1.57,37.04,19.51,1.9,55.2,False,0,False,,,Benton County
+Perry County Sheriff's Dept,"Perry County, Missouri",county,county_sheriff,31,78,2266,151.6,16.67,2.83,5.89,16.67,4.74,3.52,34.5,False,0,False,,,Perry County
+Taney County Sheriff's Dept,"Taney County, Missouri",county,county_sheriff,41,129,3051,214.6,8.53,1.89,4.51,11.63,7.33,1.59,58.9,False,0,False,,,Taney County
+Odessa Police Dept,"Odessa city, Missouri",place,municipal_police,27,56,1637,107.4,1.79,1.35,1.33,0.0,3.58,0.0,37.5,False,0,False,,,Other
+Montgomery County Sheriff's Dept,"Montgomery County, Missouri",county,county_sheriff,15,42,1538,180.0,11.9,7.71,1.54,19.05,16.47,1.16,59.2,False,0,False,,,Montgomery County
+Livingston County Sheriff's Dept,"Livingston County, Missouri",county,county_sheriff,40,46,1025,15.0,13.04,4.9,2.66,13.04,4.9,2.66,26.1,True,1,False,,,Livingston County
+DeKalb County Sheriff's Dept,"DeKalb County, Missouri",county,county_sheriff,12,54,1104,350.0,1.85,1.4,1.32,3.7,3.2,1.16,14.0,False,0,False,,,DeKalb County
+Richmond Heights Police Dept,"Richmond Heights city, Missouri",place,municipal_police,5,64,5354,1180.0,0.0,1.46,0.0,3.12,1.35,2.31,60.0,True,2,False,,,Other
+Franklin County Sheriff's Dept,"Franklin County, Missouri",county,county_sheriff,150,170,9969,13.3,4.71,3.67,1.28,9.41,5.3,1.78,51.1,False,0,False,,,Franklin County
+Union Police Dept,"Union city, Missouri",place,municipal_police,13,22,1719,69.2,0.0,1.04,0.0,0.0,2.89,0.0,16.7,False,0,False,,,Other
+Ray County Sheriff's Dept,"Ray County, Missouri",county,county_sheriff,8,44,1170,450.0,11.36,2.86,3.97,13.64,6.68,2.04,53.8,False,0,False,,,Ray County
+St Peters Police Dept,"St Peters city, Missouri",place,municipal_police,46,266,10431,478.3,7.14,3.93,1.82,4.51,3.8,1.19,66.4,False,0,False,,,St. Charles County
+Bourbon-Dept of Public Safety,"Bourbon city, Missouri",place,municipal_police,9,24,795,166.7,0.0,1.22,0.0,0.0,1.63,0.0,20.8,False,0,False,,,Other
+Clay County Sheriff's Dept,"Clay County, Missouri",county,county_sheriff,199,640,9512,221.6,4.38,6.66,0.66,5.31,10.09,0.53,73.9,False,0,False,,,Clay County
+Laclede County Sheriff's Dept,"Laclede County, Missouri",county,county_sheriff,28,46,2322,64.3,4.35,5.13,0.85,4.35,10.16,0.43,54.3,False,0,False,,,Laclede County
+Lebanon Police Dept,"Lebanon city, Missouri",place,municipal_police,10,23,1444,130.0,4.35,4.23,1.03,8.7,4.96,1.75,37.5,False,0,False,,,Other
+Cottleville Police Dept,"Cottleville city, Missouri",place,municipal_police,59,63,3148,6.8,7.94,3.07,2.59,7.94,3.83,2.07,50.0,False,0,False,,,Other
+Johnson County Sheriff's Dept,"Johnson County, Missouri",county,county_sheriff,29,125,3159,331.0,6.4,5.33,1.2,9.6,8.52,1.13,39.4,False,0,False,,,Johnson County
+Cass County Sheriff's Dept,"Cass County, Missouri",county,county_sheriff,60,153,4430,155.0,5.23,5.25,1.0,12.42,9.5,1.31,60.6,False,0,False,,,Cass County
+Mount Vernon Police Dept,"Mount Vernon city, Missouri",place,municipal_police,29,23,587,-20.7,0.0,0.36,0.0,0.0,1.82,0.0,34.8,False,0,False,,,Other
+St Charles County Police Dept,"St. Charles County, Missouri",county,municipal_police,150,386,13864,157.3,3.37,2.05,1.64,5.96,5.69,1.05,68.5,False,0,True,task_force,2026-03,St. Charles County
+Duenweg Police Dept,"Duenweg city, Missouri",place,municipal_police,14,44,597,214.3,2.27,1.45,1.57,9.09,3.53,2.58,34.6,False,0,False,,,Other
+Clayton Police Dept,"Clayton city, Missouri",place,municipal_police,15,144,4906,860.0,0.69,1.08,0.64,2.08,1.9,1.09,54.5,True,4,False,,,St. Louis County
+Lawson Police Dept,"Lawson city, Missouri",place,municipal_police,17,23,843,35.3,0.0,3.1,0.0,0.0,3.23,0.0,8.7,False,0,False,,,Other
+UCM-Dept of Public Safety,"Warrensburg city, Missouri",place,university,11,41,1175,272.7,4.88,3.98,1.23,4.88,4.31,1.13,39.1,False,0,False,,,Other
+Ladue Police Dept,"Ladue city, Missouri",place,municipal_police,8,32,2796,300.0,0.0,0.75,0.0,0.0,0.7,0.0,28.6,True,3,False,,,Other
+Cooper County Sheriff's Dept,"Cooper County, Missouri",county,county_sheriff,5,41,1233,720.0,4.88,4.49,1.09,9.76,11.58,0.84,60.7,False,0,False,,,Cooper County
+Clinton Police Dept,"Clinton city, Missouri",place,municipal_police,53,64,2229,20.8,0.0,1.14,0.0,1.56,1.2,1.3,23.4,True,2,False,,,Other
+Daviess County Sheriff's Dept,"Daviess County, Missouri",county,county_sheriff,34,21,661,-38.2,23.81,2.17,10.97,14.29,1.67,8.56,9.1,False,0,False,,,Daviess County
+Andrew County Sheriff's Dept,"Andrew County, Missouri",county,county_sheriff,24,55,1819,129.2,5.45,3.21,1.7,7.27,7.73,0.94,32.1,True,2,False,,,Andrew County
+Cuba Police Dept,"Cuba city, Missouri",place,municipal_police,52,21,894,-59.6,4.76,1.33,3.58,9.52,2.54,3.75,36.4,True,1,False,,,Other
+Neosho Police Dept,"Neosho city, Missouri",place,municipal_police,57,267,2786,368.4,6.37,2.83,2.25,7.87,3.63,2.17,35.0,False,0,False,,,SW Missouri
+Carterville Police Dept,"Carterville city, Missouri",place,municipal_police,57,24,989,-57.9,0.0,0.54,0.0,4.17,3.24,1.29,29.2,False,0,False,,,Other
+Kansas City Police Dept,"Kansas City city, Missouri",place,municipal_police,2736,2623,38096,-4.1,4.99,1.66,3.01,2.29,0.87,2.63,49.8,True,3,False,,,KC Metro (Jackson/Clay)
+Lee's Summit Police Dept,"Lee's Summit city, Missouri",place,municipal_police,52,418,24761,703.8,2.87,2.53,1.13,1.44,1.66,0.87,67.9,True,2,False,,,KC Metro (Jackson/Clay)
+Miner Police Dept,"Miner city, Missouri",place,municipal_police,21,31,1589,47.6,12.9,3.9,3.31,12.9,5.17,2.5,53.1,False,0,False,,,Other
+Pleasant Valley Police Dept,"Pleasant Valley city, Missouri",place,municipal_police,86,148,2219,72.1,3.38,1.5,2.25,8.11,5.03,1.61,64.8,False,0,False,,,Other
+Lake Lotawana Police Dept,"Lake Lotawana city, Missouri",place,municipal_police,29,46,1250,58.6,0.0,1.57,0.0,0.0,0.83,0.0,43.5,False,0,False,,,Other
+Miller County Sheriff's Dept,"Miller County, Missouri",county,county_sheriff,15,34,1638,126.7,20.59,5.54,3.72,29.41,13.63,2.16,52.6,False,0,False,,,Miller County
+Liberty Police Dept,"Liberty city, Missouri",place,municipal_police,35,76,3963,117.1,1.32,5.83,0.23,1.32,2.82,0.47,53.1,False,0,False,,,Other
+Platte City Police Dept,"Platte City city, Missouri",place,municipal_police,17,34,569,100.0,2.94,1.05,2.8,2.94,1.26,2.33,20.5,False,0,False,,,Other
+Waynesville Police Dept,"Waynesville city, Missouri",place,municipal_police,139,191,3343,37.4,2.62,3.19,0.82,2.09,1.37,1.53,26.3,True,2,False,,,Other
+Carthage Police Dept,"Carthage city, Missouri",place,municipal_police,301,691,6309,129.6,18.96,7.33,2.59,11.58,6.46,1.79,36.6,False,0,False,,,SW Missouri
+Boonville Police Dept,"Boonville city, Missouri",place,municipal_police,20,30,1431,50.0,10.0,4.11,2.43,6.67,6.17,1.08,46.9,False,0,False,,,Other
+Belton Police Dept,"Belton city, Missouri",place,municipal_police,203,222,3811,9.4,33.33,10.86,3.07,20.27,7.49,2.71,87.4,False,0,False,,,Other
+Platte County Sheriff's Dept,"Platte County, Missouri",county,county_sheriff,5,21,9192,320.0,9.52,7.5,1.27,9.52,4.29,2.22,50.0,True,3,False,,,Platte County
+Linn Creek Police Dept,"Linn Creek city, Missouri",place,municipal_police,9,30,987,233.3,0.0,1.59,0.0,0.0,3.18,0.0,21.9,True,1,False,,,Other
+Columbia Police Dept,"Columbia city, Missouri",place,municipal_police,148,302,11853,104.1,11.59,3.81,3.04,7.95,3.43,2.32,58.6,True,1,False,,,Boone County
+Overland Police Dept,"Overland city, Missouri",place,municipal_police,45,76,1621,68.9,13.16,3.87,3.4,13.16,2.63,5.0,46.4,False,0,False,,,St. Louis County
+St Clair Police Dept,"St Clair city, Missouri",place,municipal_police,11,27,1599,145.5,3.7,3.76,0.98,3.7,4.09,0.9,39.3,False,0,False,,,Other
+Bowling Green Police Dept,"Bowling Green city, Missouri",place,municipal_police,9,46,1544,411.1,8.7,3.76,2.31,15.22,9.37,1.62,47.1,False,0,False,,,Other
+Tipton Police Dept,"Tipton city, Missouri",place,municipal_police,8,49,1230,512.5,0.0,1.32,0.0,6.12,4.79,1.28,58.9,False,0,False,,,Other
+Brookfield Police Dept,"Brookfield city, Missouri",place,municipal_police,30,46,1826,53.3,0.0,0.89,0.0,4.35,3.86,1.13,22.0,False,0,False,,,Other
+Phelps County Sheriff's Dept,"Phelps County, Missouri",county,county_sheriff,49,111,3413,126.5,5.41,4.5,1.2,20.72,8.84,2.34,24.3,False,0,True,task_force,2025-10,Phelps County
+Sedalia Police Dept,"Sedalia city, Missouri",place,municipal_police,311,619,6834,99.0,19.22,6.99,2.75,12.44,6.58,1.89,53.6,False,0,False,,,Other
+Houston Police Dept,"Houston city, Missouri",place,municipal_police,17,34,1903,100.0,8.82,2.93,3.01,11.76,4.87,2.41,37.8,False,0,False,,,Other
+Pleasant Hill Police Dept,"Pleasant Hill city, Missouri",place,municipal_police,26,44,1705,69.2,25.0,2.19,11.42,4.55,1.03,4.42,47.7,False,0,False,,,Other
+Glendale Police Dept,"Glendale city, Missouri",place,municipal_police,14,25,883,78.6,0.0,0.44,0.0,0.0,0.15,0.0,35.7,False,0,False,,,Other
+Lamar Police Dept,"Lamar city, Missouri",place,municipal_police,21,24,840,14.3,4.17,1.61,2.59,4.17,4.22,0.99,57.1,False,0,False,,,Other
+Aurora Police Dept,"Aurora city, Missouri",place,municipal_police,57,86,1931,50.9,1.16,4.32,0.27,2.33,5.93,0.39,58.7,True,2,False,,,SW Missouri
+Lafayette County Sheriff's Dept,"Lafayette County, Missouri",county,county_sheriff,45,124,2757,175.6,0.81,0.58,1.4,2.42,3.58,0.68,54.8,True,1,False,,,Lafayette County
+Festus Police Dept,"Festus city, Missouri",place,municipal_police,22,32,3156,45.5,9.38,1.95,4.81,15.62,3.42,4.57,47.1,False,0,False,,,Other
+Osceola Police Dept,"Osceola city, Missouri",place,municipal_police,13,26,711,100.0,0.0,4.69,0.0,3.85,15.08,0.26,3.8,False,0,False,,,Other
+St Joseph Police Dept,"St Joseph city, Missouri",place,municipal_police,471,813,9885,72.6,2.95,3.02,0.98,2.21,2.33,0.95,65.9,False,0,False,,,Other
+Sparta Police Dept,"Sparta city, Missouri",place,municipal_police,9,22,1293,144.4,4.55,2.1,2.17,4.55,1.13,4.03,34.8,False,0,False,,,Other
+Moberly Police Dept,"Moberly city, Missouri",place,municipal_police,11,36,2107,227.3,11.11,4.47,2.49,5.56,8.0,0.69,47.2,False,0,False,,,Other
+Gladstone Dept of Public Safety,"Gladstone city, Missouri",place,municipal_police,115,190,4569,65.2,3.68,4.32,0.85,0.53,1.88,0.28,61.7,True,4,False,,,KC Metro (Jackson/Clay)
+Rogersville Police Dept,"Rogersville city, Missouri",place,municipal_police,28,26,1658,-7.1,0.0,1.57,0.0,0.0,1.44,0.0,34.6,True,1,False,,,Other
+Seymour Police Dept,"Seymour city, Missouri",place,municipal_police,10,24,1222,140.0,0.0,1.21,0.0,8.33,5.0,1.67,46.4,False,0,False,,,Other
+Cameron Police Dept,"Cameron city, Missouri",place,municipal_police,28,93,3320,232.1,3.23,2.75,1.17,2.15,1.91,1.13,40.4,False,0,False,,,Other
+Lawrence County Sheriff's Dept,"Lawrence County, Missouri",county,county_sheriff,90,210,2817,133.3,6.19,3.6,1.72,5.24,2.56,2.05,29.4,False,0,False,,,Lawrence County
+Weatherby Lake Police Dept,"Weatherby Lake city, Missouri",place,municipal_police,28,100,727,257.1,0.0,0.19,0.0,0.0,0.19,0.0,14.0,True,3,False,,,Other
+Newton County Sheriff's Dept,"Newton County, Missouri",county,county_sheriff,181,194,4547,7.2,3.09,4.97,0.62,5.15,5.18,0.99,47.2,False,0,False,,,Newton County
+Webster Groves Police Dept,"Webster Groves city, Missouri",place,municipal_police,14,67,3487,378.6,2.99,0.94,3.18,4.48,0.77,5.82,51.8,True,1,False,,,St. Louis County
