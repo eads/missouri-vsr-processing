@@ -1,0 +1,19 @@
+{
+  "name": "regional-charts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
+    "svelte": "^5.55.1",
+    "vite": "^8.0.4"
+  },
+  "dependencies": {
+    "d3": "^7.9.0"
+  }
+}

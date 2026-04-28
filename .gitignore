@@ -178,6 +178,8 @@ cython_debug/
 /data/src/287g/*
 !/data/src/287g/*.xlsx
 !/data/src/287g/snapshots.jsonl
+# Observable notebook data (analysis/)
+!analysis/src/data/
 
 # The classic
 .DS_Store
