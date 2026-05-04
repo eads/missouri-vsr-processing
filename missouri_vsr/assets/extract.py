@@ -35,13 +35,34 @@ YEAR_URLS: Dict[int, str] = {
     2022: "https://ago.mo.gov/wp-content/uploads/vsrreport2022.pdf",
     2021: "https://ago.mo.gov/wp-content/uploads/2021-VSR-Agency-Specific-Report.pdf",
     2020: "https://ago.mo.gov/wp-content/uploads/2020-VSR-Agency-Specific-Report.pdf",
+    # Pre-2020 format (different layout — see _parse_pre2020_pdftotext_lines)
+    2019: "https://ago.mo.gov/wp-content/uploads/2019agencyreports.pdf",
+    2018: "https://ago.mo.gov/wp-content/uploads/2018agencyreports.pdf",
+    2017: "https://ago.mo.gov/wp-content/uploads/2017agencyreports.pdf",
+    2016: "https://ago.mo.gov/wp-content/uploads/2016agencyreports.pdf",
+    2015: "https://ago.mo.gov/wp-content/uploads/2015agencyreports.pdf",
+    2014: "https://ago.mo.gov/wp-content/uploads/2014agencyreports.pdf",
+    2013: "https://ago.mo.gov/wp-content/uploads/2013-agency-reports.pdf",
+    2012: "https://ago.mo.gov/wp-content/uploads/2012agencyreport.pdf",
+    2011: "https://ago.mo.gov/wp-content/uploads/2011agencyreport.pdf",
+    2010: "https://ago.mo.gov/wp-content/uploads/2010agencyreports.pdf",
+    2009: "https://ago.mo.gov/wp-content/uploads/2009agencyreports.pdf",
+    2008: "https://ago.mo.gov/wp-content/uploads/2008agencyreports.pdf",
+    2007: "https://ago.mo.gov/wp-content/uploads/2007agencyreports.pdf",
+    2006: "https://ago.mo.gov/wp-content/uploads/2006agencyreports.pdf",
+    2005: "https://ago.mo.gov/wp-content/uploads/2005agencyreports.pdf",
+    2004: "https://ago.mo.gov/wp-content/uploads/2004agencyreports.pdf",
+    2003: "https://ago.mo.gov/wp-content/uploads/2003agencyreports.pdf",
+    2002: "https://ago.mo.gov/wp-content/uploads/2002agencyreports.pdf",
+    2001: "https://ago.mo.gov/wp-content/uploads/2001agencyreports.pdf",
+    2000: "https://ago.mo.gov/wp-content/uploads/2000agencyreports.pdf",
 }
 
 # ------------------------------------------------------------------------------
 # Download PDFs (one logical asset per year)
 # ------------------------------------------------------------------------------
 @multi_asset(
-    outs={str(year): AssetOut(metadata={"url": url}) for year, url in YEAR_URLS.items()},
+    outs={str(year): AssetOut(metadata={"url": url}, is_required=False) for year, url in YEAR_URLS.items()},
     group_name="reports",
     can_subset=True,
     required_resource_keys={"data_dir_report_pdfs"},
@@ -151,6 +172,37 @@ RACE_COLUMNS = [
     "Native American",
     "Asian",
     "Other",
+]
+
+# Pre-2020 PDFs use "Am. Indian" and put Asian before Am. Indian
+RACE_COLUMNS_PRE2020 = [
+    "Total",
+    "White",
+    "Black",
+    "Hispanic",
+    "Asian",
+    "Am. Indian",
+    "Other",
+]
+
+EXTRACT_COLUMNS_PRE2020 = [
+    "Total",
+    "White",
+    "Black",
+    "Hispanic",
+    "Asian",
+    "Am. Indian",
+    "Other",
+    "year",
+    "row_key",
+    "agency",
+    "table",
+    "table_id",
+    "section",
+    "section_id",
+    "metric",
+    "metric_id",
+    "row_id",
 ]
 
 def _normalize_text(text: str) -> str:
@@ -345,6 +397,488 @@ def _parse_plain_section_header(line: str) -> str | None:
     return None
 
 
+# ------------------------------------------------------------------------------
+# Pre-2020 parser helpers
+# ------------------------------------------------------------------------------
+
+# Null placeholder tokens that appear in numeric columns (treat as None slots)
+_LEGACY_NULL_RE = re.compile(r"^(N/A|#Num!|#NUM!|#Error|#ERROR|#VALUE!|#Div/0!|#DIV/0!)$", re.IGNORECASE)
+
+# Banner lines that signal the start of a new agency block
+_PRE2020_BANNER_RE = re.compile(
+    r"^(RACIAL PROFILING DATA[/\s]\d{4}|VEHICLE STOPS DATA\s+\d{4})\s*$",
+    re.IGNORECASE,
+)
+
+# Agency name line after the banner: optionally prefixed with "Agency:"
+# and suffixed with population info. Strip both.
+_PRE2020_AGENCY_RE = re.compile(
+    r"^(?:Agency:\s*)?(.+?)\s+(?:\d{4}\s+)?Population:.*$",
+    re.IGNORECASE,
+)
+
+# Page-continuation header like "Adair County Sheriff's Dept.: page 2"
+_PRE2020_PAGE_CONT_RE = re.compile(r"^(.+?):\s+page\s+\d+\s*$", re.IGNORECASE)
+
+# Table title keywords (all-caps headers in pre-2020 PDFs)
+_PRE2020_TABLES = {
+    "KEY INDICATORS": ("Key Indicators", "key-indicators"),
+    "VEHICLE STOP STATS": ("Vehicle Stop Stats", "vehicle-stop-stats"),
+    "SEARCH STATS": ("Search Stats", "search-stats"),
+}
+
+# Section triggers scoped to each table type.
+# KEY INDICATORS has no sub-sections — never apply triggers there.
+_STOP_STATS_TRIGGERS: Dict[str, str | None] = {
+    "reason": "Reason for stop",
+    "stop": "Stop outcome",
+    "location": "Location of stop",
+    "driver": None,  # disambiguated by metric below
+}
+
+_SEARCH_STATS_TRIGGERS: Dict[str, str | None] = {
+    "probable": "Probable cause/authority to search",
+    "what": "What searched",
+    "search": "Search duration",
+    "contra-": "Contraband found",
+    "arrest": "Arrest charge",
+}
+
+# "Probable cause/authority to search" and "Contraband found" span 3 PDF lines;
+# the secondary label fragments appear on the same line as the next metric.
+# Strip these tokens when they lead the label so they don't pollute metric names.
+_SEARCH_STATS_SECONDARY_FRAGMENTS = {"authority", "band", "found"}
+
+# Second words of multi-line section headers that appear on a no-value line AFTER the
+# trigger word. When seen while a pending_metric_label is set, the remainder of the
+# line should be appended to pending_metric_label rather than replacing it.
+# e.g. 2000 format: "Arrest Outstanding\ncharge warrant\n[values]"
+#   → section trigger "arrest" fires, pending = "Outstanding"
+#   → "charge warrant" → "charge" is a header continuation → append "warrant" → pending = "Outstanding warrant"
+_SEARCH_STATS_HEADER_CONTINUATIONS = {"charge"}
+
+_PRE2020_DRIVER_GENDER_METRICS = {"male", "female"}
+
+
+def _is_pre2020_race_header(line: str) -> bool:
+    """Detect the pre-2020 race column header (Asian before Am. Indian)."""
+    tokens = [t.strip().lower() for t in line.split() if t.strip()]
+    target = ["total", "white", "black", "hispanic", "asian", "am.", "indian", "other"]
+    idx = 0
+    for tok in tokens:
+        if idx < len(target) and tok == target[idx]:
+            idx += 1
+            if idx == len(target):
+                return True
+    return False
+
+
+def _parse_legacy_metric_line(
+    line: str,
+) -> tuple[str, list[str | None]] | None:
+    """
+    Like _parse_metric_line but treats N/A and #Num! as null slots.
+
+    Accepts rows with exactly 6 numeric/null tokens when the PDF wraps a value
+    to the next line.  Heuristic for padding to 7 columns:
+    - If the leftmost found value is a null token (N/A) → Total is present but
+      Am. Indian (position 5) is blank → insert None at position 5.
+    - Otherwise → Total is missing (wrapped to next line) → insert None at
+      position 0 (Total).
+    """
+    tokens = [t for t in line.split() if t]
+    if not tokens:
+        return None
+
+    values: list[str | None] = []
+    first_value_idx: int | None = None
+
+    for idx in range(len(tokens) - 1, -1, -1):
+        tok = tokens[idx]
+        if _LEGACY_NULL_RE.match(tok):
+            values.append(None)
+            first_value_idx = idx
+        else:
+            cleaned = _normalize_numeric_token(tok, allow_dot=True)
+            if cleaned is None:
+                break
+            values.append(None if cleaned == "." else cleaned)
+            first_value_idx = idx
+        if len(values) == 7:
+            break
+
+    if len(values) < 6 or first_value_idx is None:
+        return None
+
+    values = list(reversed(values))
+
+    if len(values) == 6:
+        # Heuristic: was the leftmost value a null token (e.g. N/A)?
+        first_tok = tokens[first_value_idx]
+        if _LEGACY_NULL_RE.match(first_tok):
+            # Total present (N/A), Am. Indian column blank → pad at index 5
+            values.insert(5, None)
+        else:
+            # Total wrapped to next line → pad at index 0
+            values.insert(0, None)
+
+    label_tokens = [
+        t for t in tokens[:first_value_idx]
+        if not (_DOTS_RE.match(t) or t == ".")
+    ]
+    label = " ".join(label_tokens).strip()
+    if not label:
+        return None
+    return label, values
+
+
+def _split_pre2020_section_metric(
+    label: str,
+    current_section: str | None,
+    table_id: str | None,
+) -> tuple[str, str | None]:
+    """
+    Given a raw label from a pre-2020 data row, split off any leading section
+    trigger word and return (metric, new_section).
+
+    Rules vary by table:
+    - key-indicators: no sub-sections; return unchanged.
+    - vehicle-stop-stats: apply _STOP_STATS_TRIGGERS.
+    - search-stats: apply _SEARCH_STATS_TRIGGERS; also strip secondary
+      fragments ("authority", "band", "found") that bleed from multi-line
+      section labels onto adjacent metric lines.
+    """
+    if table_id == "key-indicators":
+        return label, current_section
+
+    tokens = label.split()
+    if not tokens:
+        return label, current_section
+
+    trigger = tokens[0].lower()
+
+    if table_id == "vehicle-stop-stats":
+        trigger_map = _STOP_STATS_TRIGGERS
+        secondary_frags: set[str] = set()
+    elif table_id == "search-stats":
+        trigger_map = _SEARCH_STATS_TRIGGERS
+        secondary_frags = _SEARCH_STATS_SECONDARY_FRAGMENTS
+    else:
+        return label, current_section
+
+    # Strip secondary section-label fragments (e.g. "authority", "found")
+    # Also handle two-word fragment "to search" (4th line of "Probable cause/authority to search")
+    if trigger in secondary_frags:
+        metric = " ".join(tokens[1:]).strip()
+        return metric or label, current_section
+    if (
+        table_id == "search-stats"
+        and len(tokens) >= 2
+        and tokens[0].lower() == "to"
+        and tokens[1].lower() == "search"
+    ):
+        metric = " ".join(tokens[2:]).strip()
+        return metric or label, current_section
+
+    if trigger not in trigger_map:
+        return label, current_section
+
+    full_section = trigger_map[trigger]
+    metric = " ".join(tokens[1:]).strip()
+
+    if full_section is None:
+        # "driver" — disambiguate by first metric token
+        metric_lower = metric.lower()
+        if any(metric_lower.startswith(g) for g in _PRE2020_DRIVER_GENDER_METRICS):
+            full_section = "Driver gender"
+        else:
+            full_section = "Driver age"
+
+    return metric, full_section
+
+
+def _extract_values_only(line: str) -> list[str | None] | None:
+    """
+    If the line contains ONLY numeric/null tokens (no text label), return the
+    rightmost 7 values; otherwise return None.
+
+    Used to handle the "Reasonable suspicion-weapon" pattern where the data
+    appears on a line between two label-fragment lines.
+    """
+    tokens = [t for t in line.split() if t]
+    if not tokens:
+        return None
+    values: list[str | None] = []
+    for tok in tokens:
+        if _LEGACY_NULL_RE.match(tok):
+            values.append(None)
+        else:
+            cleaned = _normalize_numeric_token(tok, allow_dot=True)
+            if cleaned is None:
+                return None  # text found — not a values-only line
+            values.append(None if cleaned == "." else cleaned)
+    return values[-7:] if len(values) >= 7 else None
+
+
+def _parse_pre2020_pdftotext_lines(
+    lines: list[str], log, *, year: int | None, pdf_name: str
+) -> pd.DataFrame:
+    """
+    State-machine parser for pre-2020 VSR PDFs (2014–2019 layout).
+
+    Key differences from the 2020+ parser:
+    - Agency detected via banner line (RACIAL PROFILING DATA / VEHICLE STOPS DATA)
+      followed by an "Agency: name  Population: ..." line.
+    - Tables identified by all-caps keywords (KEY INDICATORS, VEHICLE STOP STATS,
+      SEARCH STATS) rather than "Table N: … for …".
+    - Race column order: Total White Black Hispanic Asian Am. Indian Other.
+    - Section labels are inline: trigger word on the same line as the first metric row,
+      continuation text (e.g. "for stop") on the next line with no data.
+    - N/A and #Num! are null placeholders in numeric columns.
+    - Table ends on "Notes:" or "Agency response".
+    """
+    # Parser state
+    expect_agency_name = False
+    current_agency: str | None = None
+    current_table_title: str | None = None
+    current_table_id: str | None = None
+    current_section: str | None = None
+    has_columns = False
+    tables_allowed = False  # True only after banner + confirmed agency; blocks appendix tables
+    pending_metric_label: str | None = None  # for multi-line labels (e.g. "Reasonable / [data] / suspicion-weapon")
+
+    records: list[dict] = []
+    unparsed_counts: dict[tuple[str | None, str | None], int] = {}
+    record_counts: dict[tuple[str | None, str | None], int] = {}
+    stats = {
+        "total_lines": 0,
+        "blank_lines": 0,
+        "banner_lines": 0,
+        "agency_headers": 0,
+        "table_headers": 0,
+        "race_headers": 0,
+        "section_continuations": 0,
+        "metric_rows": 0,
+        "notes_lines": 0,
+        "unparsed_lines": 0,
+    }
+
+    def _emit(metric_label: str, values: list[str | None], section: str | None) -> None:
+        if not current_table_id or not current_agency:
+            return
+        section_id = _build_section_id(section)
+        metric_id = _build_metric_id(metric_label)
+        records.append({
+            "Total": values[0],
+            "White": values[1],
+            "Black": values[2],
+            "Hispanic": values[3],
+            "Asian": values[4],
+            "Am. Indian": values[5],
+            "Other": values[6],
+            "year": year,
+            "row_key": _build_row_key(current_table_id, section_id, metric_id),
+            "agency": current_agency,
+            "table": current_table_title,
+            "table_id": current_table_id,
+            "section": section,
+            "section_id": section_id,
+            "metric": metric_label,
+            "metric_id": metric_id,
+            "row_id": _build_row_id(year, current_agency, current_table_id, section_id, metric_id),
+        })
+        key = (current_agency, current_table_id)
+        record_counts[key] = record_counts.get(key, 0) + 1
+        stats["metric_rows"] += 1
+
+    for raw in lines:
+        stats["total_lines"] += 1
+        line = _normalize_line(raw)
+
+        if not line:
+            stats["blank_lines"] += 1
+            continue
+
+        # Lone page-number lines (digits only) — skip everywhere
+        if _is_page_number(line):
+            continue
+
+        # ── Banner line: signals a new agency block follows ──────────────────
+        if _PRE2020_BANNER_RE.match(line):
+            stats["banner_lines"] += 1
+            expect_agency_name = True
+            tables_allowed = False  # wait for agency confirmation
+            current_table_title = None
+            current_table_id = None
+            current_section = None
+            has_columns = False
+            continue
+
+        # ── Agency name line (immediately after banner) ───────────────────────
+        if expect_agency_name:
+            # Skip page-continuation headers ("Dept.: page 2")
+            if _PRE2020_PAGE_CONT_RE.match(line):
+                continue
+            m = _PRE2020_AGENCY_RE.match(line)
+            if m:
+                current_agency = _clean_agency_name(m.group(1))
+                tables_allowed = True
+                stats["agency_headers"] += 1
+                log.debug("Agency: %s (%s)", current_agency, pdf_name)
+                expect_agency_name = False
+                continue
+            # If it doesn't match the agency pattern, still stop expecting
+            expect_agency_name = False
+
+        # Skip until we have an agency
+        if not current_agency:
+            continue
+
+        # ── Page-continuation header (page 2, 3 …) ───────────────────────────
+        if _PRE2020_PAGE_CONT_RE.match(line):
+            # Keep current agency but reset table state
+            current_table_title = None
+            current_table_id = None
+            current_section = None
+            has_columns = False
+            continue
+
+        # ── Table header ──────────────────────────────────────────────────────
+        # Table headers have the race columns on the same line, so match by prefix.
+        upper = line.strip().upper()
+        matched_table = False
+        for key, (title, tid) in _PRE2020_TABLES.items():
+            if upper == key or upper.startswith(key + " ") or upper.startswith(key + "\t"):
+                if tables_allowed:
+                    current_table_title = title
+                    current_table_id = tid
+                    current_section = None
+                    has_columns = True  # race columns are on the same line as the header
+                    stats["table_headers"] += 1
+                matched_table = True
+                break
+
+        if matched_table:
+            continue
+
+        # Skip until we have a table
+        if not current_table_title:
+            continue
+
+        # ── End-of-table markers ──────────────────────────────────────────────
+        low = line.lower()
+        if low.startswith("notes:") or low.startswith("agency response"):
+            stats["notes_lines"] += 1
+            if low.startswith("agency response"):
+                tables_allowed = False  # this agency's block is complete
+            current_table_title = None
+            current_table_id = None
+            current_section = None
+            has_columns = False
+            pending_metric_label = None
+            continue
+
+        # ── Race column header ────────────────────────────────────────────────
+        if _is_pre2020_race_header(line):
+            has_columns = True
+            stats["race_headers"] += 1
+            continue
+
+        if not has_columns:
+            continue
+
+        # ── Data row ──────────────────────────────────────────────────────────
+        parsed = _parse_legacy_metric_line(line)
+        if parsed:
+            raw_label, values = parsed
+            if not raw_label.strip() and pending_metric_label:
+                raw_label = pending_metric_label
+            pending_metric_label = None
+            metric, new_section = _split_pre2020_section_metric(raw_label, current_section, current_table_id)
+            if new_section != current_section:
+                current_section = new_section
+            if metric:
+                _emit(metric, values, current_section)
+            continue
+
+        # ── Values-only line (label appears on a different line) ──────────────
+        # Handles "Reasonable\n  [data line]\nsuspicion-weapon" pattern.
+        if pending_metric_label:
+            values_only = _extract_values_only(line)
+            if values_only is not None:
+                metric, new_section = _split_pre2020_section_metric(
+                    pending_metric_label, current_section, current_table_id
+                )
+                pending_metric_label = None
+                if new_section != current_section:
+                    current_section = new_section
+                if metric:
+                    _emit(metric, values_only, current_section)
+                continue
+
+        # ── No-number lines: section continuation or pending metric label ─────
+        # Save the stripped text as a candidate label.  If the next data line
+        # has no label of its own (values-only), this becomes the metric name.
+        # This handles e.g. "Reasonable\n  [data]\nsuspicion-weapon".
+        # Also fires section triggers that appear on no-value lines (e.g. 2000
+        # "Arrest Outstanding" / "charge warrant" / "[values]" pattern).
+        tokens = [t for t in line.split() if t]
+        if tokens and not any(_is_numeric(t) for t in tokens):
+            stats["section_continuations"] += 1
+            trigger = tokens[0].lower()
+            # Fire section triggers even when the line has no values
+            if current_table_id == "search-stats" and trigger in _SEARCH_STATS_TRIGGERS:
+                new_section = _SEARCH_STATS_TRIGGERS[trigger]
+                if new_section is not None:
+                    current_section = new_section
+                remaining = " ".join(tokens[1:]).strip()
+                pending_metric_label = remaining if remaining else None
+                continue
+            # Append to pending label when this is a multi-line section-header continuation
+            # (e.g. "charge" as the second word of "Arrest charge")
+            if (
+                current_table_id == "search-stats"
+                and pending_metric_label is not None
+                and trigger in _SEARCH_STATS_HEADER_CONTINUATIONS
+            ):
+                remaining = " ".join(tokens[1:]).strip()
+                if remaining:
+                    pending_metric_label = pending_metric_label + " " + remaining
+                continue
+            pending_metric_label = line  # already stripped by _normalize_line
+            continue
+
+        # ── Unparsed ──────────────────────────────────────────────────────────
+        key = (current_agency, current_table_id)
+        count = unparsed_counts.get(key, 0)
+        if count < 5:
+            log.warning(
+                "Pre-2020 unparsed line (%s, %s, %s): %s",
+                pdf_name, current_agency, current_table_id, line,
+            )
+        unparsed_counts[key] = count + 1
+        stats["unparsed_lines"] += 1
+
+    if record_counts:
+        sample = sorted(record_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+        log.info("Pre-2020 parsed records by agency/table (top 5): %s", sample)
+    if unparsed_counts:
+        worst = sorted(unparsed_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+        log.warning("Pre-2020 unparsed line counts (top 5): %s", worst)
+    log.info("Pre-2020 parser summary (%s): %s", pdf_name, {k: v for k, v in stats.items() if v})
+
+    df = pd.DataFrame(records)
+    if df.empty:
+        return pd.DataFrame(columns=EXTRACT_COLUMNS_PRE2020)
+
+    df = df.reindex(columns=EXTRACT_COLUMNS_PRE2020)
+    numeric_cols = ["Total", "White", "Black", "Hispanic", "Asian", "Am. Indian", "Other"]
+    for col in numeric_cols:
+        df[col] = pd.to_numeric(df[col].map(_clean_numeric_str), errors="coerce")
+    return df
+
+
+# ------------------------------------------------------------------------------
 def _ensure_pdftotext(pdf_path: Path, log) -> Path | None:
     txt_path = pdf_path.with_suffix(".layout.txt")
     try:
@@ -896,7 +1430,10 @@ def parse_page_range(context, pdf_path: str, page_range: str) -> pd.DataFrame:
     year_match = re.search(r"(\d{4})", pdf_file.name)
     year = int(year_match.group(1)) if year_match else None
     lines = text.splitlines()
-    df = _parse_pdftotext_lines(lines, context.log, year=year, pdf_name=pdf_file.name)
+    if year is not None and year < 2020:
+        df = _parse_pre2020_pdftotext_lines(lines, context.log, year=year, pdf_name=pdf_file.name)
+    else:
+        df = _parse_pdftotext_lines(lines, context.log, year=year, pdf_name=pdf_file.name)
     _add_extract_metadata(context, df, f"extract_page_range_{pdf_file.name}")
     return df
 

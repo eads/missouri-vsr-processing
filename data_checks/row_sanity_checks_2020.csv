@@ -1,0 +1,151 @@
+row_key,agency,Total,White,Black,Hispanic,Native American,Asian,Other,year,checked
+search-statistics--arrest-charge--resist-arrest,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+search-statistics--probable-cause--reas-susp-weapon,Fair Grove Police Dept,3,3,0,0,0,0,0,2020,0
+search-statistics--search-duration--31-minutes,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--warning,Fair Grove Police Dept,432,414,9,7,1,0,1,2020,0
+search-statistics--arrest-charge--off-against-person,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--non-resident-stops,Fair Grove Police Dept,344,319,11,8,3,1,2,2020,0
+search-statistics--arrest-charge--outstanding-warrant,Fair Grove Police Dept,9,9,0,0,0,0,0,2020,0
+disparity-index-by-race--population--2019-population,Fair Grove Police Dept,1057,1037,0,13,0,4,6,2020,0
+number-of-stops-by-race--reason-for-stop--equpiment,Fair Grove Police Dept,89,86,1,1,0,0,1,2020,0
+number-of-stops-by-race--location-of-stop--city-street,Fair Grove Police Dept,286,278,3,4,1,0,0,2020,0
+number-of-stops-by-race--reason-for-stop--moving,Fair Grove Police Dept,310,298,5,6,1,0,0,2020,0
+search-statistics--probable-cause--consent,Fair Grove Police Dept,21,19,0,1,1,0,0,2020,0
+number-of-stops-by-race--stop-outcome--contraband,Fair Grove Police Dept,19,16,1,1,1,0,0,2020,0
+search-statistics--contraband-found--drugs-alcohol,Fair Grove Police Dept,18,15,1,1,1,0,0,2020,0
+number-of-stops-by-race--stop-outcome--citation,Fair Grove Police Dept,196,187,2,3,2,1,1,2020,0
+search-statistics--search-duration--0-15-minutes,Fair Grove Police Dept,37,36,1,0,0,0,0,2020,0
+number-of-stops-by-race--driver-age--17-and-under,Fair Grove Police Dept,23,22,1,0,0,0,0,2020,0
+rates-by-race--stop-rate-residents--arrest-rate,Lincoln University Police Dept,7.32,4.76,8.47,0,,,,2020,0
+number-of-stops-by-race--location-of-stop--state-hwy,Fair Grove Police Dept,18,16,1,1,0,0,0,2020,0
+number-of-stops-by-race--driver-age--40-and-over,Fair Grove Police Dept,200,198,1,0,1,0,0,2020,0
+rates-by-race--rates--stop-rate-residents,Ashland Police Dept,15.16,14.83,112.5,12.12,,,0,2020,0
+disparity-index-by-race--stops--all-stops,Fair Grove Police Dept,626,599,11,10,3,1,2,2020,0
+rates-by-race--totals--all-stops,Fair Grove Police Dept,626,599,11,10,3,1,2,2020,0
+search-statistics--search-duration--16-30-minutes,Fair Grove Police Dept,11,9,0,1,1,0,0,2020,0
+number-of-stops-by-race--stop-outcome--no-action,Fair Grove Police Dept,3,3,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--arrests,Fair Grove Police Dept,43,42,0,1,0,0,0,2020,0
+search-statistics--arrest-charge--dwi-bac,Fair Grove Police Dept,6,5,0,1,0,0,0,2020,0
+search-statistics--probable-cause--other,Fair Grove Police Dept,1,1,0,0,0,0,0,2020,0
+number-of-stops-by-race--resident-stops,Fair Grove Police Dept,282,280,0,2,0,0,0,2020,0
+disparity-index-by-race--disparity-index--all-stops,Ashland Police Dept,,0.894,19.597,1.357,,,0,2020,0
+search-statistics--contraband-found--weapon,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+rates-by-race--stop-rate-residents--contraband-hit-rate,Lincoln University Police Dept,40,100,25,,,,,2020,0
+rates-by-race--rates--search-rate,Ashland Police Dept,5.68,4.34,17.14,5,0,0,,2020,0
+search-statistics--probable-cause--plain-view-contra,Fair Grove Police Dept,7,6,0,1,0,0,0,2020,0
+rates-by-race--stop-rate-residents--search-rate,UCM-Dept of Public Safety,11.88,11.5,15.87,0,,7.14,0,2020,0
+rates-by-race--totals--searches,Fair Grove Police Dept,48,45,1,1,1,0,0,2020,0
+search-statistics--arrest-charge--other,Fair Grove Police Dept,36,34,0,2,0,0,0,2020,0
+rates-by-race--rates--contraband-hit-rate,Poplar Bluff Police Dept,40.38,39.86,43.55,0,,,,2020,0
+disparity-index-by-race--disparity-index--resident-stops,Osage County Sheriff's Dept,,1.014,0,0,0,0,0,2020,0
+rates-by-race--stop-rate-residents--citation-rate,Lincoln University Police Dept,4.88,4.76,5.08,0,,,,2020,0
+number-of-stops-by-race--reason-for-stop--investigative,Fair Grove Police Dept,17,16,1,0,0,0,0,2020,0
+rates-by-race--rates--stop-rate,Ashland Police Dept,44.65,39.9,875,60.61,,,0,2020,0
+number-of-stops-by-race--location-of-stop--us-hwy,Fair Grove Police Dept,312,295,7,5,2,1,2,2020,0
+rates-by-race--population--2019-population,Fair Grove Police Dept,1057,1037,0,13,0,4,6,2020,0
+search-statistics--what-searched--driver,Fair Grove Police Dept,16,16,0,0,0,0,0,2020,0
+search-statistics--what-searched--car-property,Fair Grove Police Dept,4,3,1,0,0,0,0,2020,0
+rates-by-race--rates--citation-rate,Poplar Bluff Police Dept,41.44,40.41,47.91,25,0,0,0,2020,0
+rates-by-race--totals--citations,Fair Grove Police Dept,196,187,2,3,2,1,1,2020,0
+search-statistics--contraband-found--stolen-property,Fair Grove Police Dept,1,0,1,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--searches,Fair Grove Police Dept,48,45,1,1,1,0,0,2020,0
+number-of-stops-by-race--location-of-stop--other,Fair Grove Police Dept,9,9,0,0,0,0,0,2020,0
+search-statistics--probable-cause--drug-dog-alert,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+disparity-index-by-race--population--2019-population-pct,Fair Grove Police Dept,100,98.11,0,1.23,0,0.38,0.57,2020,0
+search-statistics--arrest-charge--traffic-violation,Fair Grove Police Dept,112,101,5,3,1,1,1,2020,0
+rates-by-race--rates--arrest-rate,Poplar Bluff Police Dept,2.65,2.05,5.32,8.33,0,0,0,2020,0
+number-of-stops-by-race--driver-age--30-39,Fair Grove Police Dept,145,134,2,4,2,1,2,2020,0
+search-statistics--contraband-found--other,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--location-of-stop--interstate-hwy,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--driver-age--18-29,Fair Grove Police Dept,265,257,3,5,0,0,0,2020,0
+search-statistics--arrest-charge--drug-violation,Fair Grove Police Dept,11,8,1,1,1,0,0,2020,0
+search-statistics--what-searched--driver-property,Fair Grove Police Dept,29,27,0,1,1,0,0,2020,0
+search-statistics--probable-cause--inventory,Fair Grove Police Dept,18,16,1,1,0,0,0,2020,0
+rates-by-race--totals--resident-stops,Fair Grove Police Dept,282,280,0,2,0,0,0,2020,0
+disparity-index-by-race--stops--resident-stops,Fair Grove Police Dept,282,280,0,2,0,0,0,2020,0
+number-of-stops-by-race--reason-for-stop--license,Fair Grove Police Dept,270,256,6,4,2,1,1,2020,0
+rates-by-race--population--2019-population-pct,Fair Grove Police Dept,100,98.11,0,1.23,0,0.38,0.57,2020,0
+rates-by-race--contraband-hit-rate--citation-rate,Mercer County Sheriff's Dept,48.48,46.43,,75,,0,,2020,0
+search-statistics--probable-cause--drug-alcohol-odor,Fair Grove Police Dept,7,6,0,1,0,0,0,2020,0
+search-statistics--probable-cause--incident-to-arrest,Fair Grove Police Dept,21,20,1,0,0,0,0,2020,0
+search-statistics--arrest-charge--property-offense,Fair Grove Police Dept,1,0,1,0,0,0,0,2020,0
+rates-by-race--totals--contraband,Fair Grove Police Dept,19,16,1,1,1,0,0,2020,0
+number-of-stops-by-race--location-of-stop--county-road,Fair Grove Police Dept,1,1,0,0,0,0,0,2020,0
+number-of-stops-by-race--driver-gender--male,Fair Grove Police Dept,370,350,8,7,2,1,2,2020,0
+rates-by-race--totals--arrests,Fair Grove Police Dept,43,42,0,1,0,0,0,2020,0
+rates-by-race--contraband-hit-rate--arrest-rate,Mercer County Sheriff's Dept,12.12,14.29,,0,,0,,2020,0
+number-of-stops-by-race--driver-gender--female,Fair Grove Police Dept,255,249,2,3,1,0,0,2020,0
+search-statistics--contraband-found--currency,Fair Grove Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--all-stops,Fair Grove Police Dept,626,599,11,10,3,1,2,2020,0
+search-statistics--arrest-charge--drug-violation,Cassville Police Dept,7,6,0,1,0,0,0,2020,0
+rates-by-race--rates--arrest-rate,Olivette Police Dept,2.11,1.62,2.88,0,0,0,1.33,2020,0
+search-statistics--arrest-charge--property-offense,Qulin Police Dept,0,0,0,0,0,0,0,2020,0
+search-statistics--what-searched--driver,Crane Police Dept,55,55,0,0,0,0,0,2020,0
+rates-by-race--rates--arrest-rate,Adair County Sheriff's Dept,0,0,0,0,,0,,2020,0
+number-of-stops-by-race--driver-age--40-and-over,Savannah Police Dept,174,172,1,0,1,0,0,2020,0
+search-statistics--contraband-found--drugs-alcohol,Dixon Police Dept,37,36,1,0,0,0,0,2020,0
+search-statistics--what-searched--driver,Perry Police Dept,1,1,0,0,0,0,0,2020,0
+number-of-stops-by-race--location-of-stop--interstate-hwy,Jasper Police Dept,40,40,0,0,0,0,0,2020,0
+number-of-stops-by-race--location-of-stop--county-road,Troy Police Dept,13,13,0,0,0,0,0,2020,0
+search-statistics--arrest-charge--dwi-bac,SE MO State University-Dept of Public Safety,0,0,0,0,0,0,0,2020,0
+search-statistics--probable-cause--inventory,Missouri Dept of Conservation Protection Branch,3,3,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--searches,New Haven Police Dept,61,55,4,2,0,0,0,2020,0
+number-of-stops-by-race--driver-gender--male,Byrnes Mill Police Dept,506,430,15,2,0,0,59,2020,0
+search-statistics--search-duration--0-15-minutes,Bridgeton Police Dept,123,53,67,3,0,0,0,2020,0
+search-statistics--what-searched--car-property,Boone County Sheriff's Dept,118,69,46,3,0,0,0,2020,0
+rates-by-race--totals--citations,Herculaneum Police Dept,683,635,41,5,0,1,1,2020,0
+number-of-stops-by-race--reason-for-stop--investigative,Louisiana Police Dept,7,6,0,1,0,0,0,2020,0
+search-statistics--what-searched--driver-property,Pineville Police Dept,32,28,1,3,0,0,0,2020,0
+number-of-stops-by-race--all-stops,Sullivan Police Dept,606,590,7,6,0,1,2,2020,0
+rates-by-race--rates--search-rate,Marceline Police Dept,2.46,2.37,9.09,0,,,0,2020,0
+number-of-stops-by-race--driver-age--18-29,Bellefontaine Neighbors Police Dept,425,19,400,0,1,0,5,2020,0
+search-statistics--arrest-charge--dwi-bac,Seneca Police Dept,33,30,2,1,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--contraband,Concordia Police Dept,6,6,0,0,0,0,0,2020,0
+rates-by-race--totals--resident-stops,Bridgeton Police Dept,228,130,78,14,0,1,5,2020,0
+number-of-stops-by-race--all-stops,Arnold Police Dept,4396,4013,318,28,8,29,0,2020,0
+rates-by-race--population--2019-population,Marshfield Police Dept,5314,4885,79,46,92,9,215,2020,0
+disparity-index-by-race--disparity-index--all-stops,Joplin Police Dept,,1.044,2.387,0.573,0.147,0.251,0.02,2020,0
+rates-by-race--rates--stop-rate-residents,Steelville Police Dept,2.51,2.73,0,0,,0,0,2020,0
+number-of-stops-by-race--driver-age--40-and-over,Liberty Police Dept,822,733,52,10,1,7,19,2020,0
+number-of-stops-by-race--driver-age--18-29,Dade County Sheriff's Dept,106,104,1,1,0,0,0,2020,0
+rates-by-race--contraband-hit-rate--arrest-rate,Oregon Police Dept,0,0,,,,,,2020,0
+search-statistics--probable-cause--drug-dog-alert,Henrietta Police Dept,0,0,0,0,0,0,0,2020,0
+search-statistics--arrest-charge--other,Battlefield Police Dept,1,0,1,0,0,0,0,2020,0
+search-statistics--arrest-charge--resist-arrest,Oregon Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--driver-age--40-and-over,St Charles Police Dept,2267,1713,447,21,5,14,67,2020,0
+rates-by-race--contraband-hit-rate--citation-rate,Braymer Police Dept,13.33,13.33,,,,,,2020,0
+number-of-stops-by-race--stop-outcome--contraband,Pleasant Valley Police Dept,49,35,13,0,0,0,1,2020,0
+search-statistics--probable-cause--plain-view-contra,Nixa Police Dept,14,14,0,0,0,0,0,2020,0
+search-statistics--arrest-charge--off-against-person,Farmington Police Dept,1,1,0,0,0,0,0,2020,0
+search-statistics--search-duration--16-30-minutes,Linn Police Dept,0,0,0,0,0,0,0,2020,0
+rates-by-race--population--2019-population,Missouri Southern State University,,,,,,,,2020,0
+search-statistics--contraband-found--stolen-property,Braymer Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--non-resident-stops,Gower Police Dept,462,421,11,21,0,7,2,2020,0
+number-of-stops-by-race--resident-stops,Arbyrd Police Dept,21,18,0,3,0,0,0,2020,0
+search-statistics--probable-cause--incident-to-arrest,Ralls County Sheriff's Dept,16,13,3,0,0,0,0,2020,0
+search-statistics--probable-cause--drug-dog-alert,Oronogo Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--reason-for-stop--equpiment,Morley Police Dept,8,7,0,1,0,0,0,2020,0
+number-of-stops-by-race--location-of-stop--interstate-hwy,Lexington Police Dept,0,0,0,0,0,0,0,2020,0
+search-statistics--contraband-found--currency,Buckner Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--arrests,Washington Police Dept,92,87,3,2,0,0,0,2020,0
+search-statistics--probable-cause--plain-view-contra,Thayer Police Dept,2,2,0,0,0,0,0,2020,0
+search-statistics--what-searched--driver-property,Duenweg Police Dept,13,11,2,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--searches,Moline Acres Police Dept,0,0,0,0,0,0,0,2020,0
+search-statistics--arrest-charge--dwi-bac,Kingsville Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--location-of-stop--county-road,Cardwell Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--searches,Indian Point Police Dept,12,12,0,0,0,0,0,2020,0
+disparity-index-by-race--stops--all-stops,New Madrid County Sheriff's Dept,116,71,39,6,0,0,0,2020,0
+number-of-stops-by-race--reason-for-stop--license,Liberty Police Dept,746,629,77,14,0,1,25,2020,0
+search-statistics--arrest-charge--traffic-violation,Caruthersville Police Dept,0,0,0,0,0,0,0,2020,0
+number-of-stops-by-race--driver-age--18-29,Hazelwood Police Dept,4965,1193,3607,44,2,22,97,2020,0
+search-statistics--arrest-charge--resist-arrest,Centralia Police Dept,0,0,0,0,0,0,0,2020,0
+rates-by-race--rates--search-rate,Warrenton Police Dept,9.46,8.55,18.24,13.51,33.33,,15.38,2020,0
+number-of-stops-by-race--stop-outcome--searches,Texas County Sheriff's Dept,76,76,0,0,0,0,0,2020,0
+number-of-stops-by-race--stop-outcome--no-action,Country Club Village Police Dept,3,3,0,0,0,0,0,2020,0
+rates-by-race--stop-rate-residents--search-rate,University of Missouri-Columbia Police Dept,9.38,8.44,13.59,18.42,0,2.8,4.08,2020,0
+rates-by-race--totals--contraband,Independence Police Dept,351,283,52,14,0,1,1,2020,0
+search-statistics--probable-cause--plain-view-contra,Sugar Creek Police Dept,8,7,1,0,0,0,0,2020,0
+search-statistics--arrest-charge--off-against-person,Henrietta Police Dept,0,0,0,0,0,0,0,2020,0
+rates-by-race--totals--all-stops,Brookfield Police Dept,1672,1556,75,30,0,7,4,2020,0
+rates-by-race--contraband-hit-rate--citation-rate,Bertrand Police Dept,17.92,19.59,15.29,16.67,,0,,2020,0
+number-of-stops-by-race--location-of-stop--other,Stone County Sheriff's Dept,9,8,1,0,0,0,0,2020,0

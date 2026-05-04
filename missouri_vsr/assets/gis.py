@@ -495,10 +495,23 @@ def _run_command(cmd: List[str], log) -> None:
         if result.stdout:
             log.debug("Command stdout: %s", result.stdout.strip())
         if result.stderr:
-            log.debug("Command stderr: %s", result.stderr.strip())
+            # Suppress tippecanoe percentage-progress lines (start with a digit)
+            non_progress = [
+                line for line in result.stderr.splitlines()
+                if not line.strip()[:1].isdigit()
+            ]
+            if non_progress:
+                log.debug("Command stderr: %s", "\n".join(non_progress))
     except subprocess.CalledProcessError as exc:
-        stderr = exc.stderr.strip() if exc.stderr else str(exc)
-        raise RuntimeError(f"Command failed: {' '.join(cmd)}\n{stderr}") from exc
+        stderr = exc.stderr or str(exc)
+        # Strip progress lines; surface last 50 non-progress lines as the error
+        error_lines = [
+            line for line in stderr.splitlines()
+            if not line.strip()[:1].isdigit()
+        ]
+        raise RuntimeError(
+            f"Command failed: {' '.join(cmd)}\n" + "\n".join(error_lines[-50:])
+        ) from exc
 
 
 @multi_asset(
@@ -1110,21 +1123,13 @@ def build_agency_relationships(
             out_path.write_text(json.dumps(payload))
             geojson_paths.append(out_path)
 
-    base_dir = Path(context.resources.data_dir_out.get_path())
-    upload_targets = [relationships_path, *geojson_paths]
-    uploaded = upload_paths(
-        context,
-        upload_targets,
-        base_dir=base_dir,
+    context.log.info(
+        "Wrote %d agency boundary GeoJSON files → %s/ (use dist_sync to upload)",
+        len(geojson_paths), boundaries_dir,
     )
-    if uploaded:
-        context.log.info("Uploaded %d agency relationship artifacts to S3", len(uploaded))
-
     try:
+        base_dir = Path(context.resources.data_dir_out.get_path())
         metadata = {"local_path": str(relationships_path), "row_count": len(relationships)}
-        s3_path = s3_uri_for_path(context, relationships_path, base_dir)
-        if s3_path:
-            metadata["s3_path"] = s3_path
         s3_folder = s3_uri_for_dir(context, boundaries_dir, base_dir)
         if s3_folder:
             metadata["s3_folder"] = s3_folder
@@ -1169,11 +1174,11 @@ def agency_boundaries_index(context) -> str:
 
     payload = {"count": len(slugs), "slugs": slugs}
 
-    out_path = Path(context.resources.data_dir_out.get_path()) / "dist" / "agency_boundaries_index.json"
+    out_path = Path(context.resources.data_dir_out.get_path()) / "agency_boundaries_index.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2))
 
-    base_dir = Path(context.resources.data_dir_out.get_path()) / "dist"
+    base_dir = Path(context.resources.data_dir_out.get_path())
     uploaded = upload_paths(context, [out_path], base_dir=base_dir)
     if uploaded:
         context.log.info("Uploaded agency boundaries index to S3")

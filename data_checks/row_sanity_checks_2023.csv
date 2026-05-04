@@ -1,0 +1,151 @@
+row_key,agency,Total,White,Black,Hispanic,Native American,Asian,Other,year,checked
+rates-by-race--totals--all-stops,Adair County Sheriff's Dept,317,281,25,8,0,2,1,2023,1
+rates-by-race--totals--resident-stops,Adair County Sheriff's Dept,196,171,20,3,0,2,0,2023,1
+rates-by-race--totals--searches,Adair County Sheriff's Dept,5,4,1,0,0,0,0,2023,1
+rates-by-race--totals--contraband,Adair County Sheriff's Dept,1,1,0,0,0,0,0,2023,1
+rates-by-race--totals--arrests,Adair County Sheriff's Dept,3,2,1,0,0,0,0,2023,1
+rates-by-race--totals--citations,Adair County Sheriff's Dept,29,22,5,2,0,0,0,2023,1
+rates-by-race--rates--stop-rate,Adair County Sheriff's Dept,1.49,1.48,3.47,1.5,0,0.47,0.15,2023,1
+rates-by-race--rates--stop-rate-residents,Adair County Sheriff's Dept,0.92,0.9,2.77,0.56,0,0.47,0,2023,1
+rates-by-race--rates--search-rate,Adair County Sheriff's Dept,1.58,1.42,4,0,,0,0,2023,1
+rates-by-race--rates--contraband-hit-rate,Adair County Sheriff's Dept,20,25,0,,,,,2023,1
+rates-by-race--rates--arrest-rate,Adair County Sheriff's Dept,0.95,0.71,4,0,,0,0,2023,1
+rates-by-race--rates--citation-rate,Adair County Sheriff's Dept,9.15,7.83,20,25,,0,0,2023,1
+number-of-stops-by-race--resident-stops,Lake Winnebago Police Dept,109,105,1,0,0,0,3,2023,1
+rates-by-race--totals--all-stops,St Louis City Police Dept,27742,10077,16424,551,50,241,399,2023,1
+rates-by-race--rates--stop-rate,St Louis City Police Dept,11.18,8.44,16.01,5.92,9.75,2.56,3.15,2023,1
+rates-by-race--rates--search-rate,Benton County Sheriff's Dept,20.47,20.08,25,33.33,,,,2023,1
+rates-by-race--rates--stop-rate,Benton County Sheriff's Dept,3.09,3.17,11.85,2.73,0,0,0,2023,1
+number-of-stops-by-race--stop-outcome--warning,St James Police Dept,1540,1402,76,34,6,13,9,2023,1
+number-of-stops-by-race--officer-assignment--general-parol,St Joseph Police Dept,7264,5762,949,449,6,36,62,2023,1
+number-of-stops-by-race--officer-assignment--general-parol,Adair County Sheriff's Dept,256,226,19,8,0,2,1,2023,1
+number-of-stops-by-race--stop-outcome--citation,Neosho Police Dept,1127,947,29,110,5,36,0,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Ste Genevieve Police Dept,541,496,31,4,4,3,3,2023,0
+search-statistics--probable-cause--inventory,Pike County Sheriff's Dept,6,4,2,0,,0,0,2023,0
+number-of-stops-by-race--officer-assignment--dedicated-traffic,Jefferson County Sheriff's Dept,10192,9756,324,2,11,42,57,2023,0
+number-of-stops-by-race--location-of-stop--interstate-hwy,Lincoln County Sheriff's Dept,63,51,8,3,0,0,1,2023,0
+rates-by-race--rates--search-rate,Richmond Police Dept,11.27,10.84,15.46,10,25,12.5,15.38,2023,0
+search-statistics--probable-cause--reas-susp-weapon,St Charles County Sheriff's Dept,1,1,0,0,,0,0,2023,0
+number-of-stops-by-race--stop-outcome--contraband,Carl Junction Police Dept,24,23,1,0,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--state-hwy,Laurie Police Dept,455,444,3,5,2,1,0,2023,0
+number-of-stops-by-race--reason-for-stop--other,Wood Heights Police Dept,0,0,0,0,0,0,0,2023,0
+rates-by-race--contraband-hit-rate--citation-rate,Nixa Schools Police Dept,0,0,,,,,,2023,0
+number-of-stops-by-race--driver-age--17-and-under,Pierce City Police Dept,12,11,1,0,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--us-hwy,Sullivan County Sheriff's Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--property,Richland Police Dept,0,0,0,0,0,0,0,2023,0
+rates-by-race--rates--search-rate,Winona Police Dept,4.17,4.17,,,,,,2023,0
+rates-by-race--totals--searches,Butler County Sheriff's Dept,37,29,7,1,0,0,0,2023,0
+rates-by-race--rates--arrest-rate,Harrisonville Police Dept,9.77,9.65,15.79,6.45,,0,0,2023,0
+number-of-stops-by-race--non-resident-stops,Lone Jack Police Dept,1678,1432,216,8,1,14,7,2023,0
+number-of-stops-by-race--non-resident-stops,Bernie Police Dept,441,367,60,9,0,1,4,2023,0
+number-of-stops-by-race--reason-for-stop--other,Jonesburg Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--other,Versailles Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--all-stops,St Robert Police Dept,2084,1453,444,109,2,22,54,2023,0
+rates-by-race--totals--contraband,Missouri State Highway Patrol,2252,1789,335,105,6,17,0,2023,0
+number-of-stops-by-race--arrest-violation--dwi-bac,Osage County Sheriff's Dept,4,4,0,0,0,0,0,2023,0
+number-of-stops-by-race--officer-assignment--general-parol,O'Fallon Police Dept,16543,12644,3295,321,13,124,146,2023,0
+number-of-stops-by-race--reason-for-stop--moving,Pierce City Police Dept,105,91,3,10,0,1,0,2023,0
+number-of-stops-by-race--officer-assignment--dedicated-traffic,Carroll County Sheriff's Dept,0,0,0,0,,,0,2023,0
+number-of-stops-by-race--stop-outcome--contraband,Battlefield Police Dept,3,3,0,0,0,0,0,2023,0
+number-of-stops-by-race--officer-assignment--general-parol,Archie Police Dept,234,182,14,13,6,7,12,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Metropolitan Community College Police Dept,1,1,0,0,0,0,0,2023,0
+number-of-stops-by-race--driver-gender--female,Platte City Police Dept,291,229,38,16,0,3,5,2023,0
+number-of-stops-by-race--arrest-violation--off-against-person,Goodman Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--contraband-found--other,Benton Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--what-searched--driver-property,Vinita Park Police Dept,28,3,24,0,0,0,1,2023,0
+number-of-stops-by-race--driver-age--30-39,Salisbury Police Dept,16,14,0,1,0,1,0,2023,0
+search-statistics--probable-cause--other,Velda City Police Dept,10,0,10,0,0,0,0,2023,0
+rates-by-race--population--2020-decennial-pop,Senath Police Dept,1202,821,29,322,5,0,25,2023,0
+number-of-stops-by-race--reason-for-stop--officer-initiative,Franklin County Sheriff's Dept,66,62,2,1,0,1,0,2023,0
+rates-by-race--totals--citations,Cole County Sheriff's Dept,542,420,95,18,0,5,4,2023,0
+number-of-stops-by-race--stop-outcome--searches,Dent County Sheriff's Dept,40,40,0,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--no-action,Doolittle Police Dept,10,10,0,0,0,0,0,2023,0
+search-statistics--probable-cause--consent,Liberal Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--called-for-service,Ripley County Sheriff's Dept,2,2,0,0,0,0,0,2023,0
+search-statistics--probable-cause--inventory,Buchanan County Sheriff's Dept,2,2,0,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--contraband,Lincoln Police Dept,5,5,0,0,0,0,0,2023,0
+rates-by-race--totals--all-stops,Lee's Summit Police Dept,24780,18030,5358,285,24,260,823,2023,0
+search-statistics--probable-cause--drug-alcohol-odor,Iberia Police Dept,1,1,0,0,0,0,0,2023,0
+number-of-stops-by-race--driver-gender--female,Steelville Police Dept,206,202,1,2,0,0,1,2023,0
+search-statistics--search-duration--0-15-minutes,Kimberling City Police Dept,92,76,4,12,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--moving,Howardville Police Dept,60,44,15,1,0,0,0,2023,0
+search-statistics--contraband-found--other,Union Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--resident-stops,Missouri Dept of Conservation Protection Branch,336,327,3,2,0,4,0,2023,0
+search-statistics--contraband-found--other,Clayton Police Dept,1,0,0,0,0,0,1,2023,0
+rates-by-race--population--2020-decennial-pop-pct,Kansas City Police Dept,100,56.64,24.53,10.35,0.39,3.17,4.92,2023,0
+rates-by-race--contraband-hit-rate--citation-rate,Howardville Police Dept,90.63,89.36,93.75,100,,,,2023,0
+number-of-stops-by-race--arrest-violation--property,Bates City Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--probable-cause--inventory,Polk County Sheriff's Dept,6,5,0,1,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--county-road,Pettis County Sheriff's Dept,121,108,5,8,0,0,0,2023,0
+search-statistics--search-duration--16-30-minutes,Monroe City Police Dept,22,13,2,2,1,1,3,2023,0
+rates-by-race--rates--arrest-rate,Kennett Police Dept,7.7,7.02,8.76,10.86,0,0,,2023,0
+rates-by-race--totals--contraband,Shelbina Police Dept,3,3,0,0,0,0,0,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Carrollton Police Dept,229,216,7,3,0,3,0,2023,0
+search-statistics--contraband-found--drugs,Pilot Knob Police Dept,1,1,0,0,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--county-road,Morgan County Sheriff's Dept,52,50,2,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--searches,Mansfield Police Dept,75,74,1,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--other,Linn Creek Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--driver-age--40-64,Nixa Police Dept,4251,4100,73,4,6,17,51,2023,0
+number-of-stops-by-race--stop-outcome--citation,Hannibal Police Dept,2630,2130,411,58,1,9,21,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Monroe County Sheriff's Dept,333,280,33,12,1,1,6,2023,0
+search-statistics--probable-cause--inventory,City of Bellerive Acres,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--license,High Hill Police Dept,2,2,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--off-against-person,Normandy Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--search-duration--16-30-minutes,St Peters Police Dept,58,46,9,3,0,0,0,2023,0
+number-of-stops-by-race--resident-stops,NW MO State University Police Dept,16,14,1,1,0,0,0,2023,0
+rates-by-race--totals--resident-stops,Lee's Summit Police Dept,11617,8865,2192,115,14,143,288,2023,0
+search-statistics--what-searched--car-property,Linn Creek Police Dept,3,3,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--off-against-person,Phelps County Sheriff's Dept,1,1,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--other,NW MO State University Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--other,Sullivan Police Dept,41,38,2,1,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--det-crime-bulletin,Monroe County Sheriff's Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--officer-initiative,Mansfield Police Dept,2,2,0,0,0,0,0,2023,0
+search-statistics--contraband-found--weapon,St Louis County Park Rangers,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--officer-assignment--dedicated-traffic,Missouri Western State University Police Dept,1,1,0,0,0,0,0,2023,0
+search-statistics--contraband-found--alcohol,Liberal Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--interstate-hwy,Eureka Police Dept,566,474,50,5,0,3,34,2023,0
+search-statistics--probable-cause--reas-susp-weapon,Texas County Sheriff's Dept,1,1,0,0,0,0,0,2023,0
+rates-by-race--rates--arrest-rate,Cassville Police Dept,2.05,1.71,0,6.82,0,0,0,2023,0
+number-of-stops-by-race--location-of-stop--city-street,Hornersville Police Dept,23,21,0,2,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--arrests,Mexico Police Dept,41,30,9,1,0,0,1,2023,0
+number-of-stops-by-race--arrest-violation--other,Laurie Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--arrests,Gasconade County Sheriff's Dept,35,32,3,0,0,0,0,2023,0
+search-statistics--probable-cause--incident-to-arrest,City of California Police Dept,5,4,0,1,0,0,0,2023,0
+number-of-stops-by-race--citation-warning-violation--license-registration,St Joseph Police Dept,5832,4675,747,340,8,27,35,2023,0
+rates-by-race--rates--citation-rate,Cassville Police Dept,27.69,28.52,0,27.27,0,0,0,2023,0
+search-statistics--contraband-found--currency,Senath Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--arrests,Canton Police Dept,8,5,2,1,0,0,0,2023,0
+rates-by-race--totals--citations,Marion County Sheriff's Dept,141,119,16,4,0,1,1,2023,0
+search-statistics--contraband-found--currency,St Charles Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--probable-cause--consent,Festus Police Dept,18,18,0,0,0,0,0,2023,0
+search-statistics--search-duration--0-15-minutes,Rockaway Beach Police Dept,12,12,0,0,0,0,0,2023,0
+number-of-stops-by-race--officer-assignment--special-assignment,Hayti Police Dept,2,0,2,0,0,0,0,2023,0
+rates-by-race--totals--citations,Steelville Police Dept,105,98,2,5,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--investigative,Poplar Bluff Police Dept,103,78,25,0,0,0,0,2023,0
+number-of-stops-by-race--stop-outcome--warning,Napoleon Police Dept,41,35,3,3,0,0,0,2023,0
+rates-by-race--rates--stop-rate,Northwoods Police Dept,18.5,7.97,19.48,,,,3.57,2023,0
+number-of-stops-by-race--resident-stops,Iberia Police Dept,192,168,22,1,0,1,0,2023,0
+number-of-stops-by-race--reason-for-stop--called-for-service,Pilot Knob Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Higginsville Police Dept,558,461,72,20,1,2,2,2023,0
+rates-by-race--rates--contraband-hit-rate,Licking Police Dept,27.5,28.21,,0,,,,2023,0
+search-statistics--contraband-found--drugs,Pulaski County Sheriff's Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--driver-age--18-29,Cape Girardeau Co Sheriff's Dept,1218,947,228,24,1,2,16,2023,0
+number-of-stops-by-race--arrest-violation--resist-arrest,Newburg Police Dept,0,0,0,0,0,0,0,2023,0
+rates-by-race--rates--stop-rate-residents,Wheaton Police Dept,4.75,5.16,,,0,,0,2023,0
+number-of-stops-by-race--arrest-violation--traffic,Daviess County Sheriff's Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--probable-cause--drug-alcohol-odor,Andrew County Sheriff's Dept,13,13,0,0,0,0,0,2023,0
+number-of-stops-by-race--driver-age--18-29,Winfield Police Dept,260,232,16,4,0,1,7,2023,0
+search-statistics--search-duration--31-minutes,Cleveland Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--drug-violation,Ashland Police Dept,3,3,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--officer-initiative,St Clair Police Dept,39,37,0,2,0,0,0,2023,0
+search-statistics--probable-cause--plain-view-contra,Pilot Knob Police Dept,0,0,0,0,0,0,0,2023,0
+search-statistics--probable-cause--other,Warsaw Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--other,Greenfield Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--citation-warning-violation--moving,Shannon County Sheriff's Dept,4,4,0,0,0,0,0,2023,0
+number-of-stops-by-race--arrest-violation--off-against-person,Hillsboro Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--reason-for-stop--investigative,Reeds Spring Police Dept,14,13,1,0,0,0,0,2023,0
+rates-by-race--rates--stop-rate,Monett Police Dept,36.1,39.98,206.9,26.17,1.28,32.47,0.31,2023,0
+number-of-stops-by-race--reason-for-stop--officer-initiative,Butterfield Police Dept,0,0,0,0,0,0,0,2023,0
+number-of-stops-by-race--resident-stops,Linn Police Dept,13,13,0,0,0,0,0,2023,0
+search-statistics--probable-cause--drug-alcohol-odor,Ava Police Dept,6,6,0,0,0,0,0,2023,0
+search-statistics--probable-cause--drug-dog-alert,Monett Police Dept,0,0,0,0,0,0,0,2023,0

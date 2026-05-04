@@ -272,6 +272,59 @@ def test_build_agency_index_records_includes_census_geoid():
     assert agency["census_geoid"] == "2970000"
 
 
+def test_build_agency_index_records_years_with_data():
+    pivoted = pd.DataFrame([
+        {"agency": "Foo PD", "year": 2022, "rates-by-race--totals--all-stops__Total": 100},
+        {"agency": "Foo PD", "year": 2023, "rates-by-race--totals--all-stops__Total": 120},
+        {"agency": "Bar PD", "year": 2021, "rates-by-race--totals--all-stops__Total": 50},
+    ])
+    years_by_agency = {
+        "Foo PD": [2022, 2023],
+        "Bar PD": [2021],
+    }
+    records = build_agency_index_records(pivoted, pd.DataFrame(), years_by_agency=years_by_agency)
+    foo = next(r for r in records if r["canonical_name"] == "Foo PD")
+    bar = next(r for r in records if r["canonical_name"] == "Bar PD")
+
+    assert foo["years_with_data"] == [2022, 2023]
+    assert foo["latest_year_with_data"] == 2023
+    assert bar["years_with_data"] == [2021]
+    assert bar["latest_year_with_data"] == 2021
+
+
+def test_build_agency_index_records_years_with_data_multiple_names():
+    """Years are unioned across all names that map to the same entry."""
+    pivoted = pd.DataFrame([
+        {"agency": "Foo Police Dept",       "year": 2020, "rates-by-race--totals--all-stops__Total": 100},
+        {"agency": "Foo Police Department", "year": 2019, "rates-by-race--totals--all-stops__Total": 90},
+    ])
+    # "Foo Police Department" is an alternate name for the same entry
+    ref = pd.DataFrame([{
+        "Department": "Foo Police Dept",
+        "Canonical": "Foo Police Dept",
+        "Raw": "Foo Police Department",
+    }])
+    years_by_agency = {
+        "Foo Police Dept":       [2020],
+        "Foo Police Department": [2019],
+    }
+    records = build_agency_index_records(pivoted, ref, years_by_agency=years_by_agency)
+    foo = next(r for r in records if r["canonical_name"] == "Foo Police Dept")
+    assert sorted(foo["years_with_data"]) == [2019, 2020]
+    assert foo["latest_year_with_data"] == 2020
+
+
+def test_build_agency_index_records_years_missing_when_not_provided():
+    """When years_by_agency is not passed, the fields are absent."""
+    pivoted = pd.DataFrame([
+        {"agency": "Foo PD", "year": 2023, "rates-by-race--totals--all-stops__Total": 100},
+    ])
+    records = build_agency_index_records(pivoted, pd.DataFrame())
+    foo = next(r for r in records if r["canonical_name"] == "Foo PD")
+    assert "years_with_data" not in foo
+    assert "latest_year_with_data" not in foo
+
+
 def test_build_agency_index_records_census_geoid_none_for_unclassified():
     pivoted = pd.DataFrame([{
         "agency": "Some State Agency",

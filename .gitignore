@@ -163,9 +163,14 @@ cython_debug/
 
 # Our own data folder
 data/
+# ...except tracked reference/config CSVs in data/src/
+!data/src/*.csv
 
 # The classic
 .DS_Store
 
 # Marimo notebook state
 __marimo__/
+
+# Local notes (not for version control)
+notes/

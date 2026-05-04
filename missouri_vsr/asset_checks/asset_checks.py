@@ -1,12 +1,18 @@
 import csv
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from dagster import AssetCheckResult, AssetKey, MetadataValue, asset_check
 
+from missouri_vsr.assets.extract import EXTRACT_COLUMNS, EXTRACT_COLUMNS_PRE2020, RACE_COLUMNS, RACE_COLUMNS_PRE2020, YEAR_URLS
 from missouri_vsr.assets.reports import combine_all_reports
+from missouri_vsr.assets.reports import _build_agency_name_lookup
+from missouri_vsr.cli.crosswalk import _normalize_name
 
-EXPECTED_COLUMNS = [
+# Combined asset collapses pre-2020 'Am. Indian' into 'Native American' at layer 2,
+# so downstream only sees a single Native American column populated across all eras.
+EXPECTED_COLUMNS_COMBINED = [
     "Total",
     "White",
     "Black",
@@ -14,6 +20,7 @@ EXPECTED_COLUMNS = [
     "Native American",
     "Asian",
     "Other",
+    "canonical_key",  # era-independent concept name; None for era-specific metrics
     "year",
     "row_key",
     "agency",
@@ -26,7 +33,7 @@ EXPECTED_COLUMNS = [
     "row_id",
 ]
 
-NUMERIC_COLS = [
+NUMERIC_COLS_COMBINED = [
     "Total",
     "White",
     "Black",
@@ -34,22 +41,25 @@ NUMERIC_COLS = [
     "Native American",
     "Asian",
     "Other",
-]  # Just the race-specific numbers
+]
 
 
-def _coerce_row(raw: dict) -> dict:
-    """
-    Convert the string values coming from csv.DictReader to the
-    types used in the DataFrame so comparisons line up.
-    """
+def _year_race_cols(year: int) -> list[str]:
+    return RACE_COLUMNS_PRE2020 if year < 2020 else RACE_COLUMNS
+
+
+def _year_expected_cols(year: int) -> list[str]:
+    return EXTRACT_COLUMNS_PRE2020 if year < 2020 else EXTRACT_COLUMNS
+
+
+def _coerce_row(raw: dict, numeric_cols: list[str]) -> dict:
     out = {}
     for k, v in raw.items():
-        if v == "":            # empty cell → treat as missing
+        if v == "":
             out[k] = None
         elif k == "year" and v.isdigit():
             out[k] = int(v)
-        elif k in NUMERIC_COLS:
-            # keep integers as int, everything else as float
+        elif k in numeric_cols:
             out[k] = int(v) if v.isdigit() else float(v)
         else:
             out[k] = v
@@ -66,86 +76,13 @@ def _rename_check_fields(d: dict) -> dict:
     return {RENAME_CHECK_FIELDS.get(k, k): v for k, v in d.items()}
 
 
-with open("data_checks/row_sanity_checks.csv") as f:
-    ROW_EXPECTATIONS = [_rename_check_fields(_coerce_row(r)) for r in csv.DictReader(f)]
-
-
-# Schema check for extracted pdf data – ensure *exact* match with `EXPECTED_COLUMNS`.
-@asset_check(asset=combine_all_reports)
-def check_expected_columns(df: pd.DataFrame) -> AssetCheckResult:
-    missing = [c for c in EXPECTED_COLUMNS if c not in df.columns]
-    extra = [c for c in df.columns if c not in EXPECTED_COLUMNS]
-
-    passed = not missing and not extra
-    return AssetCheckResult(
-        passed=passed,
-        metadata={
-            "missing_columns": missing,
-            "extra_columns": extra,
-        },
-    )
-
-
-# Duplicate row_key check – combination of agency/row_key/year must be unique.
-@asset_check(asset=combine_all_reports)
-def check_no_duplicate_row_keys(df: pd.DataFrame) -> AssetCheckResult:
-    dupes = df[df.duplicated(["agency", "row_key", "year"], keep=False)]
-    passed = dupes.empty
-
-    # Include both agency and row_key for each duplicate row
-    example_duplicates = dupes[["agency", "row_key", "year"]].drop_duplicates().to_dict(orient="records")
-
-    return AssetCheckResult(
-        passed=passed,
-        metadata={
-            "duplicate_count": len(dupes),
-            "example_duplicates": example_duplicates,
-        },
-    )
-
-
-# Duplicate row_id check – row_id + year must be unique.
-@asset_check(asset=combine_all_reports)
-def check_no_duplicate_row_ids(df: pd.DataFrame) -> AssetCheckResult:
-    if "row_id" not in df.columns or "year" not in df.columns:
-        return AssetCheckResult(
-            passed=False,
-            metadata={"reason": "row_id/year columns missing"},
-        )
-
-    dupes = df[df.duplicated(["row_id", "year"], keep=False)]
-    passed = dupes.empty
-    example_duplicates = (
-        dupes[["row_id", "year", "agency", "row_key"]]
-        .drop_duplicates()
-        .head(25)
-        .to_dict(orient="records")
-    )
-
-    return AssetCheckResult(
-        passed=passed,
-        metadata={
-            "duplicate_count": len(dupes),
-            "example_duplicates": example_duplicates,
-        },
-    )
-
-
-# Verify every numeric cell parses as a number or is NaN.
-@asset_check(asset=combine_all_reports)
-def check_numeric_columns_parse(df: pd.DataFrame) -> AssetCheckResult:
-    numeric_parsed = df[NUMERIC_COLS].apply(lambda s: pd.to_numeric(s, errors="coerce"))
-
-    non_numeric_mask = numeric_parsed.isna() & df[NUMERIC_COLS].notna()
-    problem_cells = non_numeric_mask.stack()
-
-    passed = not problem_cells.any()
-    return AssetCheckResult(
-        passed=passed,
-        metadata={
-            "non_numeric_cells": int(problem_cells.sum()),
-        },
-    )
+def _load_year_expectations(year: int) -> list[dict]:
+    csv_path = Path(f"data_checks/row_sanity_checks_{year}.csv")
+    if not csv_path.exists():
+        return []
+    numeric_cols = _year_race_cols(year)
+    with open(csv_path) as f:
+        return [_rename_check_fields(_coerce_row(r, numeric_cols)) for r in csv.DictReader(f)]
 
 
 def _convert_types(obj):
@@ -163,29 +100,129 @@ def _convert_types(obj):
         return obj
 
 
-def _make_year_expectation_check(asset, year: int, rows: list[dict]):
-    """Return an `asset_check` enforcing that all rows for a year match."""
+# ------------------------------------------------------------------------------
+# Combined asset checks (cross-year consistency)
+# ------------------------------------------------------------------------------
 
-    check_name = f"row_expectations_{year}"
+@asset_check(asset=combine_all_reports)
+def check_expected_columns(df: pd.DataFrame) -> AssetCheckResult:
+    missing = [c for c in EXPECTED_COLUMNS_COMBINED if c not in df.columns]
+    extra = [c for c in df.columns if c not in EXPECTED_COLUMNS_COMBINED]
+    return AssetCheckResult(
+        passed=not missing and not extra,
+        metadata={"missing_columns": missing, "extra_columns": extra},
+    )
 
-    @asset_check(name=check_name, asset=asset)
+
+@asset_check(asset=combine_all_reports)
+def check_no_duplicate_row_keys(df: pd.DataFrame) -> AssetCheckResult:
+    dupes = df[df.duplicated(["agency", "row_key", "year"], keep=False)]
+    example_duplicates = dupes[["agency", "row_key", "year"]].drop_duplicates().to_dict(orient="records")
+    return AssetCheckResult(
+        passed=dupes.empty,
+        metadata={"duplicate_count": len(dupes), "example_duplicates": example_duplicates},
+    )
+
+
+@asset_check(asset=combine_all_reports)
+def check_no_duplicate_row_ids(df: pd.DataFrame) -> AssetCheckResult:
+    if "row_id" not in df.columns or "year" not in df.columns:
+        return AssetCheckResult(passed=False, metadata={"reason": "row_id/year columns missing"})
+    dupes = df[df.duplicated(["row_id", "year"], keep=False)]
+    example_duplicates = (
+        dupes[["row_id", "year", "agency", "row_key"]]
+        .drop_duplicates()
+        .head(25)
+        .to_dict(orient="records")
+    )
+    return AssetCheckResult(
+        passed=dupes.empty,
+        metadata={"duplicate_count": len(dupes), "example_duplicates": example_duplicates},
+    )
+
+
+@asset_check(asset=combine_all_reports)
+def check_numeric_columns_parse(df: pd.DataFrame) -> AssetCheckResult:
+    cols = [c for c in NUMERIC_COLS_COMBINED if c in df.columns]
+    numeric_parsed = df[cols].apply(lambda s: pd.to_numeric(s, errors="coerce"))
+    non_numeric_mask = numeric_parsed.isna() & df[cols].notna()
+    problem_cells = non_numeric_mask.stack()
+    return AssetCheckResult(
+        passed=not problem_cells.any(),
+        metadata={"non_numeric_cells": int(problem_cells.sum())},
+    )
+
+
+# ------------------------------------------------------------------------------
+# Per-year extract asset check factories
+# ------------------------------------------------------------------------------
+
+def _make_schema_check(year: int):
+    expected = _year_expected_cols(year)
+    asset_key = AssetKey(f"extract_pdf_data_{year}")
+
+    @asset_check(name="schema", asset=asset_key)
     def _check(df: pd.DataFrame) -> AssetCheckResult:
-        year_df = df[df["year"] == year].copy()
-        if year_df.empty:
-            return AssetCheckResult(
-                passed=False,
-                metadata={"reason": f"no rows found for year {year}"},
-            )
+        missing = [c for c in expected if c not in df.columns]
+        extra = [c for c in df.columns if c not in expected]
+        return AssetCheckResult(
+            passed=not missing and not extra,
+            metadata={"missing_columns": missing, "extra_columns": extra},
+        )
 
-        year_df = year_df.drop_duplicates(["row_key", "agency", "year"])
-        year_index = year_df.set_index(["row_key", "agency", "year"], drop=False)
+    return _check
+
+
+def _make_no_duplicate_row_keys_check(year: int):
+    asset_key = AssetKey(f"extract_pdf_data_{year}")
+
+    @asset_check(name="no_duplicate_row_keys", asset=asset_key)
+    def _check(df: pd.DataFrame) -> AssetCheckResult:
+        dupes = df[df.duplicated(["agency", "row_key"], keep=False)]
+        example_duplicates = dupes[["agency", "row_key"]].drop_duplicates().to_dict(orient="records")
+        return AssetCheckResult(
+            passed=dupes.empty,
+            metadata={"duplicate_count": len(dupes), "example_duplicates": example_duplicates},
+        )
+
+    return _check
+
+
+def _make_numeric_check(year: int):
+    race_cols = _year_race_cols(year)
+    asset_key = AssetKey(f"extract_pdf_data_{year}")
+
+    @asset_check(name="numeric_columns_parse", asset=asset_key)
+    def _check(df: pd.DataFrame) -> AssetCheckResult:
+        cols = [c for c in race_cols if c in df.columns]
+        numeric_parsed = df[cols].apply(lambda s: pd.to_numeric(s, errors="coerce"))
+        non_numeric_mask = numeric_parsed.isna() & df[cols].notna()
+        problem_cells = non_numeric_mask.stack()
+        return AssetCheckResult(
+            passed=not problem_cells.any(),
+            metadata={"non_numeric_cells": int(problem_cells.sum())},
+        )
+
+    return _check
+
+
+def _make_row_sanity_check(year: int, rows: list[dict]):
+    asset_key = AssetKey(f"extract_pdf_data_{year}")
+
+    @asset_check(name="row_expectations", asset=asset_key)
+    def _check(df: pd.DataFrame) -> AssetCheckResult:
+        if df.empty:
+            return AssetCheckResult(passed=False, metadata={"reason": "empty DataFrame"})
+
+        deduped = df.drop_duplicates(["row_key", "agency"])
+        year_index = deduped.set_index(["row_key", "agency"], drop=False)
 
         missing = []
         mismatches = []
         for check in rows:
-            key = (check.get("row_key"), check.get("agency"), check.get("year"))
+            key = (check.get("row_key"), check.get("agency"))
             if key not in year_index.index:
-                missing.append({"row_key": key[0], "agency": key[1], "year": key[2]})
+                missing.append({"row_key": key[0], "agency": key[1]})
                 continue
 
             actual_row = year_index.loc[key]
@@ -193,73 +230,89 @@ def _make_year_expectation_check(asset, year: int, rows: list[dict]):
                 actual_row = actual_row.iloc[0]
 
             row_mismatches = []
-            for field, expected in check.items():
-                if field in ("row_key", "agency", "checked"):
+            for field, expected_val in check.items():
+                if field in ("row_key", "agency", "year", "checked"):
                     continue
-
                 actual_val = actual_row.get(field)
-
-                # Treat both None and NaN as equivalent
-                if pd.isna(actual_val) and expected is None:
+                if pd.isna(actual_val) and expected_val is None:
                     continue
-
-                # Otherwise, check for (fairly) strict equality
-                if actual_val != expected:
-                    row_mismatches.append(
-                        {"field": field, "expected": expected, "actual": actual_val}
-                    )
+                if actual_val != expected_val:
+                    row_mismatches.append({"field": field, "expected": expected_val, "actual": actual_val})
 
             if row_mismatches:
-                mismatches.append(
-                    {
-                        "row_key": key[0],
-                        "agency": key[1],
-                        "year": key[2],
-                        "mismatches": row_mismatches,
-                    }
-                )
+                mismatches.append({"row_key": key[0], "agency": key[1], "mismatches": row_mismatches})
 
         sample_limit = 20
-        missing_sample = _convert_types(missing[:sample_limit])
-        mismatches_sample = _convert_types(mismatches[:sample_limit])
-
-        passed = not missing and not mismatches
         return AssetCheckResult(
-            passed=passed,
+            passed=not missing and not mismatches,
             metadata={
-                "year": year,
                 "expected_rows": len(rows),
                 "missing_count": len(missing),
                 "mismatch_count": len(mismatches),
-                "missing_sample": MetadataValue.json(missing_sample),
-                "mismatch_sample": MetadataValue.json(mismatches_sample),
+                "missing_sample": MetadataValue.json(_convert_types(missing[:sample_limit])),
+                "mismatch_sample": MetadataValue.json(_convert_types(mismatches[:sample_limit])),
             },
         )
 
     return _check
 
 
-ROWS_BY_YEAR: dict[int, list[dict]] = {}
-for check in ROW_EXPECTATIONS:
-    year = check.get("year")
-    if isinstance(year, int):
-        ROWS_BY_YEAR.setdefault(year, []).append(check)
-    elif isinstance(year, str) and year.isdigit():
-        ROWS_BY_YEAR.setdefault(int(year), []).append(check)
+# Build per-year extract checks for all years in YEAR_URLS
+per_year_extract_checks = []
+for _yr in sorted(YEAR_URLS):
+    per_year_extract_checks.append(_make_schema_check(_yr))
+    per_year_extract_checks.append(_make_no_duplicate_row_keys_check(_yr))
+    per_year_extract_checks.append(_make_numeric_check(_yr))
+    _rows = _load_year_expectations(_yr)
+    if _rows:
+        per_year_extract_checks.append(_make_row_sanity_check(_yr, _rows))
 
 
-year_expectation_checks = [
-    _make_year_expectation_check(combine_all_reports, year, rows)
-    for year, rows in sorted(ROWS_BY_YEAR.items())
-]
+_AGENCY_CROSSWALK_PATH = Path("data/src/agency_crosswalk.csv")
 
-# Aggregate if you need to expose the list for Dagster’s loader utilities
+
+@asset_check(asset=combine_all_reports)
+def check_agency_names_normalized(df: pd.DataFrame) -> AssetCheckResult:
+    """Verify that all agency names in the combined dataset have been canonicalized.
+
+    Any agency name that maps to a *different* canonical via the crosswalk should not
+    appear in the output — it means the normalization step was skipped or the crosswalk
+    is missing an entry.
+    """
+    if "agency" not in df.columns:
+        return AssetCheckResult(passed=False, metadata={"reason": "agency column missing"})
+
+    lookup = _build_agency_name_lookup(_AGENCY_CROSSWALK_PATH)
+    if not lookup:
+        return AssetCheckResult(
+            passed=True,
+            metadata={"skipped": True, "reason": "agency_crosswalk.csv not found or empty"},
+        )
+
+    violations: list[dict] = []
+    for raw in df["agency"].dropna().unique():
+        raw_str = str(raw)
+        canonical = lookup.get(_normalize_name(raw_str))
+        if canonical and canonical != raw_str:
+            count = int((df["agency"] == raw).sum())
+            violations.append({"raw": raw_str, "expected_canonical": canonical, "row_count": count})
+
+    return AssetCheckResult(
+        passed=not violations,
+        metadata={
+            "violation_count": len(violations),
+            "violations": MetadataValue.json(violations[:25]),
+        },
+    )
+
+
 asset_checks = [
     check_expected_columns,
     check_no_duplicate_row_keys,
     check_no_duplicate_row_ids,
     check_numeric_columns_parse,
-    *year_expectation_checks,
+    check_agency_names_normalized,
+    *per_year_extract_checks,
 ]
 
 

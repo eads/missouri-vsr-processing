@@ -1,0 +1,540 @@
+row_key,agency,Total,White,Black,Hispanic,Asian,Am. Indian,Other,year,checked
+key-indicators--stops,Adair County Sheriff's Dept,675,622,34,14,2,0,3,2018,1
+key-indicators--arrests,Adair County Sheriff's Dept,22,19,2,1,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Adair County Sheriff's Dept,486,445,27,10,2,0,2,2018,1
+vehicle-stop-stats--stop-outcome--citation,Adair County Sheriff's Dept,139,125,8,5,1,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Adair County Sheriff's Dept,13,9,4,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Adair County Sheriff's Dept,4,3,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Adair County Sheriff's Dept,2,2,0,0,0,0,0,2018,1
+key-indicators--stops,Appleton City Police Dept,11,11,0,0,0,0,0,2018,1
+key-indicators--arrests,Appleton City Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Appleton City Police Dept,6,6,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Appleton City Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Appleton City Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Appleton City Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Appleton City Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Audrain County Sheriff's Dept,1222,1065,128,17,4,2,6,2018,1
+key-indicators--arrests,Audrain County Sheriff's Dept,111,90,19,1,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Audrain County Sheriff's Dept,536,461,58,12,1,1,3,2018,1
+vehicle-stop-stats--stop-outcome--citation,Audrain County Sheriff's Dept,109,92,16,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Audrain County Sheriff's Dept,104,90,12,1,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Audrain County Sheriff's Dept,45,37,8,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Audrain County Sheriff's Dept,33,27,6,0,0,0,0,2018,1
+key-indicators--stops,Bates City Police Dept,271,258,5,7,1,0,0,2018,1
+key-indicators--arrests,Bates City Police Dept,37,37,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Bates City Police Dept,187,176,5,5,1,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Bates City Police Dept,125,119,2,4,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Bates City Police Dept,8,7,0,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Bates City Police Dept,14,14,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Bates City Police Dept,16,16,0,0,0,0,0,2018,1
+key-indicators--stops,Bellflower Police Dept,45,45,0,0,0,0,0,2018,1
+key-indicators--arrests,Bellflower Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Bellflower Police Dept,30,30,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Bellflower Police Dept,4,4,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Bellflower Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Bellflower Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Bellflower Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Billings Police Dept,1125,1064,8,43,6,0,4,2018,1
+key-indicators--arrests,Billings Police Dept,12,11,0,1,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Billings Police Dept,593,550,5,29,5,0,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Billings Police Dept,221,208,2,6,3,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Billings Police Dept,18,17,0,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Billings Police Dept,6,6,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Billings Police Dept,2,2,0,0,0,0,0,2018,1
+key-indicators--stops,Bonne Terre Police Dept,1009,984,19,4,0,1,1,2018,1
+key-indicators--arrests,Bonne Terre Police Dept,100,97,3,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Bonne Terre Police Dept,306,300,5,1,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Bonne Terre Police Dept,512,499,10,1,0,1,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Bonne Terre Police Dept,112,108,3,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Bonne Terre Police Dept,66,65,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Bonne Terre Police Dept,32,31,1,0,0,0,0,2018,1
+key-indicators--stops,Brentwood Police Dept,1403,829,510,15,26,5,18,2018,1
+key-indicators--arrests,Brentwood Police Dept,16,5,11,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Brentwood Police Dept,772,497,235,11,14,4,11,2018,1
+vehicle-stop-stats--stop-outcome--citation,Brentwood Police Dept,1000,545,408,11,19,3,14,2018,1
+search-stats--probable-cause-authority-to-search--consent,Brentwood Police Dept,5,2,3,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Brentwood Police Dept,8,3,5,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Brentwood Police Dept,5,3,2,0,0,0,0,2018,1
+key-indicators--stops,Buffalo Police Dept,457,454,2,1,0,0,0,2018,1
+key-indicators--arrests,Buffalo Police Dept,46,46,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Buffalo Police Dept,164,163,0,1,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Buffalo Police Dept,76,76,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Buffalo Police Dept,30,30,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Buffalo Police Dept,16,16,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Buffalo Police Dept,7,7,0,0,0,0,0,2018,1
+key-indicators--stops,California Police Dept,382,352,9,20,0,0,1,2018,1
+key-indicators--arrests,California Police Dept,15,12,1,1,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,California Police Dept,181,166,3,11,0,0,1,2018,1
+vehicle-stop-stats--stop-outcome--citation,California Police Dept,108,98,4,5,0,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,California Police Dept,32,26,3,2,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,California Police Dept,14,10,3,0,0,0,1,2018,1
+search-stats--arrest-charge--drug-violation,California Police Dept,9,7,1,0,0,0,1,2018,1
+key-indicators--stops,Canton Police Dept,478,417,45,8,2,0,6,2018,1
+key-indicators--arrests,Canton Police Dept,11,10,0,0,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Canton Police Dept,317,271,35,6,1,0,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Canton Police Dept,95,80,12,1,0,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Canton Police Dept,6,5,1,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Canton Police Dept,2,1,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Canton Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Carthage Police Dept,6730,5406,236,1037,29,11,11,2018,1
+key-indicators--arrests,Carthage Police Dept,638,472,28,132,4,2,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Carthage Police Dept,2298,1806,90,386,13,2,1,2018,1
+vehicle-stop-stats--stop-outcome--citation,Carthage Police Dept,4435,3202,177,1027,17,7,5,2018,1
+search-stats--probable-cause-authority-to-search--consent,Carthage Police Dept,285,232,13,36,2,1,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Carthage Police Dept,308,240,19,46,2,1,0,2018,1
+search-stats--arrest-charge--drug-violation,Carthage Police Dept,152,127,5,20,0,0,0,2018,1
+key-indicators--stops,Chariton County Sheriff's Dept,339,320,18,1,0,0,0,2018,1
+key-indicators--arrests,Chariton County Sheriff's Dept,12,9,3,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Chariton County Sheriff's Dept,276,260,15,1,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Chariton County Sheriff's Dept,58,54,4,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Chariton County Sheriff's Dept,7,6,1,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Chariton County Sheriff's Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Chariton County Sheriff's Dept,2,2,0,0,0,0,0,2018,1
+key-indicators--stops,Clark Police Dept,170,156,8,3,1,0,2,2018,1
+key-indicators--arrests,Clark Police Dept,5,4,1,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Clark Police Dept,98,90,5,2,0,0,1,2018,1
+vehicle-stop-stats--stop-outcome--citation,Clark Police Dept,54,46,4,1,1,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Clark Police Dept,2,2,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Clark Police Dept,6,5,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Clark Police Dept,4,3,1,0,0,0,0,2018,1
+key-indicators--stops,Clinton County Sheriff's Dept,1841,1714,78,31,13,0,5,2018,1
+key-indicators--arrests,Clinton County Sheriff's Dept,66,60,3,3,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Clinton County Sheriff's Dept,1245,1148,57,24,11,0,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Clinton County Sheriff's Dept,269,242,14,7,2,0,4,2018,1
+search-stats--probable-cause-authority-to-search--consent,Clinton County Sheriff's Dept,92,87,4,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Clinton County Sheriff's Dept,52,48,3,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Clinton County Sheriff's Dept,19,19,0,0,0,0,0,2018,1
+key-indicators--stops,Corder Police Dept,32,32,0,0,0,0,0,2018,1
+key-indicators--arrests,Corder Police Dept,1,1,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Corder Police Dept,29,29,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Corder Police Dept,4,4,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Corder Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Corder Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Corder Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Crocker Police Dept,888,821,26,22,13,0,6,2018,1
+key-indicators--arrests,Crocker Police Dept,51,47,2,1,1,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Crocker Police Dept,541,481,22,21,11,0,6,2018,1
+vehicle-stop-stats--stop-outcome--citation,Crocker Police Dept,188,170,5,9,3,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Crocker Police Dept,110,108,1,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Crocker Police Dept,58,55,2,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Crocker Police Dept,22,21,0,1,0,0,0,2018,1
+key-indicators--stops,DeKalb County Sheriff's Dept,179,170,2,4,1,0,2,2018,1
+key-indicators--arrests,DeKalb County Sheriff's Dept,2,2,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,DeKalb County Sheriff's Dept,111,106,2,3,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,DeKalb County Sheriff's Dept,6,4,1,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,DeKalb County Sheriff's Dept,13,11,1,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,DeKalb County Sheriff's Dept,2,1,0,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,DeKalb County Sheriff's Dept,1,1,0,0,0,0,0,2018,1
+key-indicators--stops,Dixon Police Dept,836,788,25,12,3,0,8,2018,1
+key-indicators--arrests,Dixon Police Dept,37,37,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Dixon Police Dept,423,388,21,7,3,0,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Dixon Police Dept,318,294,15,6,0,0,3,2018,1
+search-stats--probable-cause-authority-to-search--consent,Dixon Police Dept,28,22,6,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Dixon Police Dept,8,8,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Dixon Police Dept,7,7,0,0,0,0,0,2018,1
+key-indicators--stops,East Lynne Police Dept,51,51,0,0,0,0,0,2018,1
+key-indicators--arrests,East Lynne Police Dept,1,1,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,East Lynne Police Dept,48,48,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,East Lynne Police Dept,51,51,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,East Lynne Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,East Lynne Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,East Lynne Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Ellington Police Dept,18,18,0,0,0,0,0,2018,1
+key-indicators--arrests,Ellington Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Ellington Police Dept,10,10,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Ellington Police Dept,30,30,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Ellington Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Ellington Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Ellington Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Exeter Police Dept,99,91,2,2,4,0,0,2018,1
+key-indicators--arrests,Exeter Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Exeter Police Dept,88,80,2,2,4,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Exeter Police Dept,54,50,0,0,4,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Exeter Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Exeter Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Exeter Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Ferrelview Police Dept,42,31,7,1,0,0,3,2018,1
+key-indicators--arrests,Ferrelview Police Dept,2,2,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Ferrelview Police Dept,18,13,3,0,0,0,2,2018,1
+vehicle-stop-stats--stop-outcome--citation,Ferrelview Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Ferrelview Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Ferrelview Police Dept,2,1,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Ferrelview Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Frankford Police Dept,96,88,7,1,0,0,0,2018,1
+key-indicators--arrests,Frankford Police Dept,2,2,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Frankford Police Dept,94,86,7,1,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Frankford Police Dept,104,95,8,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Frankford Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Frankford Police Dept,3,3,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Frankford Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Gasconade Police Dept,20,20,0,0,0,0,0,2018,1
+key-indicators--arrests,Gasconade Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Gasconade Police Dept,20,20,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Gasconade Police Dept,20,20,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Gasconade Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Gasconade Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Gasconade Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Gower Police Dept,741,691,17,28,1,0,4,2018,1
+key-indicators--arrests,Gower Police Dept,5,5,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Gower Police Dept,479,443,12,20,0,0,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Gower Police Dept,207,186,9,10,0,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Gower Police Dept,9,8,0,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Gower Police Dept,6,5,0,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Gower Police Dept,2,2,0,0,0,0,0,2018,1
+key-indicators--stops,Greenwood Police Dept,1167,1008,123,16,10,1,9,2018,1
+key-indicators--arrests,Greenwood Police Dept,26,15,10,0,1,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Greenwood Police Dept,864,745,89,13,7,1,9,2018,1
+vehicle-stop-stats--stop-outcome--citation,Greenwood Police Dept,708,610,71,10,8,1,8,2018,1
+search-stats--probable-cause-authority-to-search--consent,Greenwood Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Greenwood Police Dept,6,2,3,0,1,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Greenwood Police Dept,5,2,2,0,1,0,0,2018,1
+key-indicators--stops,Hartville Police Dept,231,230,0,0,0,1,0,2018,1
+key-indicators--arrests,Hartville Police Dept,1,1,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Hartville Police Dept,152,152,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Hartville Police Dept,95,94,0,0,0,1,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Hartville Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Hartville Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Hartville Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Hickory County Sheriff's Dept,1111,1100,5,4,0,2,0,2018,1
+key-indicators--arrests,Hickory County Sheriff's Dept,455,455,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Hickory County Sheriff's Dept,401,394,3,2,0,2,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Hickory County Sheriff's Dept,383,383,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Hickory County Sheriff's Dept,102,102,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Hickory County Sheriff's Dept,31,31,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Hickory County Sheriff's Dept,31,31,0,0,0,0,0,2018,1
+key-indicators--stops,Hollister Police Dept,1948,1795,43,95,6,4,5,2018,1
+key-indicators--arrests,Hollister Police Dept,72,64,3,5,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Hollister Police Dept,1242,1138,27,67,3,3,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Hollister Police Dept,396,353,7,34,2,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Hollister Police Dept,56,51,2,3,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Hollister Police Dept,38,34,3,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Hollister Police Dept,20,16,3,1,0,0,0,2018,1
+key-indicators--stops,Humansville Police Dept,267,223,20,10,4,0,10,2018,1
+key-indicators--arrests,Humansville Police Dept,4,3,1,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Humansville Police Dept,233,195,19,10,4,0,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Humansville Police Dept,191,157,17,8,4,0,5,2018,1
+search-stats--probable-cause-authority-to-search--consent,Humansville Police Dept,1,0,1,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Humansville Police Dept,1,0,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Humansville Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Jackson County Sheriff's Dept,5961,3874,1741,133,35,4,174,2018,1
+key-indicators--arrests,Jackson County Sheriff's Dept,582,367,167,28,1,1,18,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Jackson County Sheriff's Dept,3071,1920,940,84,25,3,99,2018,1
+vehicle-stop-stats--stop-outcome--citation,Jackson County Sheriff's Dept,2888,1730,965,78,21,3,91,2018,1
+search-stats--probable-cause-authority-to-search--consent,Jackson County Sheriff's Dept,138,118,17,3,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Jackson County Sheriff's Dept,121,84,27,7,0,0,3,2018,1
+search-stats--arrest-charge--drug-violation,Jackson County Sheriff's Dept,57,42,11,2,0,0,2,2018,1
+key-indicators--stops,Johnson County Sheriff's Dept,1377,1154,156,31,10,3,23,2018,1
+key-indicators--arrests,Johnson County Sheriff's Dept,121,100,19,1,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Johnson County Sheriff's Dept,555,438,85,14,4,1,13,2018,1
+vehicle-stop-stats--stop-outcome--citation,Johnson County Sheriff's Dept,153,115,35,2,0,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Johnson County Sheriff's Dept,144,126,18,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Johnson County Sheriff's Dept,66,47,19,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Johnson County Sheriff's Dept,24,19,5,0,0,0,0,2018,1
+key-indicators--stops,Keytesville Police Dept,43,42,1,0,0,0,0,2018,1
+key-indicators--arrests,Keytesville Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Keytesville Police Dept,21,21,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Keytesville Police Dept,16,15,1,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Keytesville Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Keytesville Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Keytesville Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,La Grange Police Dept,267,247,17,2,0,1,0,2018,1
+key-indicators--arrests,La Grange Police Dept,18,18,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,La Grange Police Dept,207,194,10,2,0,1,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,La Grange Police Dept,76,71,5,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,La Grange Police Dept,27,22,5,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,La Grange Police Dept,13,13,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,La Grange Police Dept,8,8,0,0,0,0,0,2018,1
+key-indicators--stops,Lake Ozark Police Dept,2506,2345,94,43,11,5,8,2018,1
+key-indicators--arrests,Lake Ozark Police Dept,135,123,5,6,1,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Lake Ozark Police Dept,1532,1424,64,27,8,3,6,2018,1
+vehicle-stop-stats--stop-outcome--citation,Lake Ozark Police Dept,1058,985,44,21,4,1,3,2018,1
+search-stats--probable-cause-authority-to-search--consent,Lake Ozark Police Dept,132,129,2,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Lake Ozark Police Dept,95,83,7,4,1,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Lake Ozark Police Dept,29,23,3,2,1,0,0,2018,1
+key-indicators--stops,Lanagan Police Dept,598,461,19,76,17,13,12,2018,1
+key-indicators--arrests,Lanagan Police Dept,22,20,0,1,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Lanagan Police Dept,446,339,16,58,13,9,11,2018,1
+vehicle-stop-stats--stop-outcome--citation,Lanagan Police Dept,365,268,12,54,14,8,9,2018,1
+search-stats--probable-cause-authority-to-search--consent,Lanagan Police Dept,3,3,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Lanagan Police Dept,3,3,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Lanagan Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Lee's Summit Police Dept,17075,12948,3338,181,114,14,480,2018,1
+key-indicators--arrests,Lee's Summit Police Dept,845,477,330,13,4,0,21,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Lee's Summit Police Dept,9882,7894,1576,69,63,8,272,2018,1
+vehicle-stop-stats--stop-outcome--citation,Lee's Summit Police Dept,6484,4714,1453,59,35,4,219,2018,1
+search-stats--probable-cause-authority-to-search--consent,Lee's Summit Police Dept,283,187,89,2,0,0,5,2018,1
+search-stats--contraband-found--drugs-alcohol,Lee's Summit Police Dept,318,189,118,3,1,0,7,2018,1
+search-stats--arrest-charge--drug-violation,Lee's Summit Police Dept,185,118,59,2,1,0,5,2018,1
+key-indicators--stops,Lincoln County Sheriff's Dept,5441,5007,274,54,7,4,95,2018,1
+key-indicators--arrests,Lincoln County Sheriff's Dept,115,103,10,2,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Lincoln County Sheriff's Dept,2052,1869,103,21,4,2,53,2018,1
+vehicle-stop-stats--stop-outcome--citation,Lincoln County Sheriff's Dept,258,239,12,5,1,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Lincoln County Sheriff's Dept,151,129,16,6,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Lincoln County Sheriff's Dept,58,51,7,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Lincoln County Sheriff's Dept,12,11,1,0,0,0,0,2018,1
+key-indicators--stops,Louisiana Police Dept,1074,980,71,13,2,0,8,2018,1
+key-indicators--arrests,Louisiana Police Dept,54,46,8,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Louisiana Police Dept,561,516,32,7,1,0,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Louisiana Police Dept,291,263,20,5,1,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Louisiana Police Dept,36,30,6,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Louisiana Police Dept,18,12,6,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Louisiana Police Dept,12,7,5,0,0,0,0,2018,1
+key-indicators--stops,Maplewood Police Dept,2596,1788,722,16,35,9,26,2018,1
+key-indicators--arrests,Maplewood Police Dept,100,46,49,3,0,1,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Maplewood Police Dept,1604,1216,335,11,20,8,14,2018,1
+vehicle-stop-stats--stop-outcome--citation,Maplewood Police Dept,1875,1276,538,11,25,9,16,2018,1
+search-stats--probable-cause-authority-to-search--consent,Maplewood Police Dept,14,4,9,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Maplewood Police Dept,8,0,8,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Maplewood Police Dept,5,1,4,0,0,0,0,2018,1
+key-indicators--stops,Marston Police Dept,45,30,15,0,0,0,0,2018,1
+key-indicators--arrests,Marston Police Dept,4,2,2,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Marston Police Dept,23,16,7,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Marston Police Dept,38,28,10,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Marston Police Dept,6,5,1,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Marston Police Dept,6,5,1,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Marston Police Dept,4,3,1,0,0,0,0,2018,1
+key-indicators--stops,Mercer County Sheriff's Dept,72,71,0,1,0,0,0,2018,1
+key-indicators--arrests,Mercer County Sheriff's Dept,3,3,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Mercer County Sheriff's Dept,38,37,0,1,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Mercer County Sheriff's Dept,15,15,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Mercer County Sheriff's Dept,4,4,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Mercer County Sheriff's Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Mercer County Sheriff's Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Missouri Capitol Police,254,207,39,5,1,0,2,2018,1
+key-indicators--arrests,Missouri Capitol Police,7,4,2,1,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Missouri Capitol Police,130,110,18,0,0,0,2,2018,1
+vehicle-stop-stats--stop-outcome--citation,Missouri Capitol Police,38,26,11,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Missouri Capitol Police,3,1,1,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Missouri Capitol Police,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Missouri Capitol Police,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Moline Acres Police Dept,1016,46,953,3,9,0,5,2018,1
+key-indicators--arrests,Moline Acres Police Dept,22,1,21,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Moline Acres Police Dept,184,26,149,2,2,0,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Moline Acres Police Dept,1039,43,980,3,9,0,4,2018,1
+search-stats--probable-cause-authority-to-search--consent,Moline Acres Police Dept,221,2,216,0,2,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Moline Acres Police Dept,18,5,13,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Moline Acres Police Dept,3,0,3,0,0,0,0,2018,1
+key-indicators--stops,Morgan County Sheriff's Dept,1146,1111,22,12,0,1,0,2018,1
+key-indicators--arrests,Morgan County Sheriff's Dept,82,79,1,2,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Morgan County Sheriff's Dept,377,362,9,6,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Morgan County Sheriff's Dept,107,103,2,2,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Morgan County Sheriff's Dept,222,215,5,2,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Morgan County Sheriff's Dept,88,86,1,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Morgan County Sheriff's Dept,45,45,0,0,0,0,0,2018,1
+key-indicators--stops,Nevada Police Dept,3119,3012,53,30,5,1,18,2018,1
+key-indicators--arrests,Nevada Police Dept,47,40,7,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Nevada Police Dept,1660,1584,38,25,5,0,8,2018,1
+vehicle-stop-stats--stop-outcome--citation,Nevada Police Dept,1324,1285,16,19,0,0,4,2018,1
+search-stats--probable-cause-authority-to-search--consent,Nevada Police Dept,42,37,4,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Nevada Police Dept,37,33,4,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Nevada Police Dept,27,24,3,0,0,0,0,2018,1
+key-indicators--stops,Newburg Police Dept,147,144,3,0,0,0,0,2018,1
+key-indicators--arrests,Newburg Police Dept,6,6,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Newburg Police Dept,135,132,3,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Newburg Police Dept,57,57,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Newburg Police Dept,6,6,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Newburg Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Newburg Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,North Kansas City Police Dept,6305,4082,1539,387,167,7,123,2018,1
+key-indicators--arrests,North Kansas City Police Dept,250,105,109,28,3,1,4,2018,1
+vehicle-stop-stats--reason-for-stop--moving,North Kansas City Police Dept,3271,2167,738,203,89,3,71,2018,1
+vehicle-stop-stats--stop-outcome--citation,North Kansas City Police Dept,1642,936,478,156,36,2,34,2018,1
+search-stats--probable-cause-authority-to-search--consent,North Kansas City Police Dept,15,7,5,2,1,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,North Kansas City Police Dept,50,23,22,4,1,0,0,2018,1
+search-stats--arrest-charge--drug-violation,North Kansas City Police Dept,25,12,11,2,0,0,0,2018,1
+key-indicators--stops,Oran Police Dept,38,38,0,0,0,0,0,2018,1
+key-indicators--arrests,Oran Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Oran Police Dept,31,31,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Oran Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Oran Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Oran Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Oran Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Otterville Police Dept,45,45,0,0,0,0,0,2018,1
+key-indicators--arrests,Otterville Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Otterville Police Dept,45,45,0,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Otterville Police Dept,25,25,0,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Otterville Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Otterville Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Otterville Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Park Hills Police Dept,892,855,20,9,1,2,5,2018,1
+key-indicators--arrests,Park Hills Police Dept,54,46,5,3,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Park Hills Police Dept,516,496,10,2,1,2,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Park Hills Police Dept,439,420,11,4,0,1,3,2018,1
+search-stats--probable-cause-authority-to-search--consent,Park Hills Police Dept,107,98,6,3,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Park Hills Police Dept,28,23,3,2,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Park Hills Police Dept,16,14,2,0,0,0,0,2018,1
+key-indicators--stops,Pevely Police Dept,2156,1957,162,16,5,3,13,2018,1
+key-indicators--arrests,Pevely Police Dept,137,117,19,0,0,1,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Pevely Police Dept,1624,1474,118,13,4,2,13,2018,1
+vehicle-stop-stats--stop-outcome--citation,Pevely Police Dept,1424,1281,123,10,2,3,5,2018,1
+search-stats--probable-cause-authority-to-search--consent,Pevely Police Dept,101,88,12,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Pevely Police Dept,70,57,12,0,0,1,0,2018,1
+search-stats--arrest-charge--drug-violation,Pevely Police Dept,22,18,3,0,0,1,0,2018,1
+key-indicators--stops,Platte City Police Dept,1113,982,82,27,7,3,12,2018,1
+key-indicators--arrests,Platte City Police Dept,38,30,8,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Platte City Police Dept,688,582,64,23,7,3,9,2018,1
+vehicle-stop-stats--stop-outcome--citation,Platte City Police Dept,787,696,56,16,7,1,11,2018,1
+search-stats--probable-cause-authority-to-search--consent,Platte City Police Dept,5,3,2,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Platte City Police Dept,9,6,3,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Platte City Police Dept,3,3,0,0,0,0,0,2018,1
+key-indicators--stops,Poplar Bluff Police Dept,2521,2206,292,17,2,0,4,2018,1
+key-indicators--arrests,Poplar Bluff Police Dept,130,112,18,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Poplar Bluff Police Dept,782,694,76,8,1,0,3,2018,1
+vehicle-stop-stats--stop-outcome--citation,Poplar Bluff Police Dept,1110,959,143,6,1,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Poplar Bluff Police Dept,84,71,12,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Poplar Bluff Police Dept,97,81,15,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Poplar Bluff Police Dept,32,23,9,0,0,0,0,2018,1
+key-indicators--stops,Queen City Police Dept,139,130,4,2,0,0,3,2018,1
+key-indicators--arrests,Queen City Police Dept,3,3,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Queen City Police Dept,108,100,3,2,0,0,3,2018,1
+vehicle-stop-stats--stop-outcome--citation,Queen City Police Dept,56,53,1,1,0,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Queen City Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Queen City Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Queen City Police Dept,1,1,0,0,0,0,0,2018,1
+key-indicators--stops,Republic Police Dept,4719,4427,134,103,34,3,18,2018,1
+key-indicators--arrests,Republic Police Dept,170,151,9,9,1,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Republic Police Dept,1934,1781,56,59,25,2,11,2018,1
+vehicle-stop-stats--stop-outcome--citation,Republic Police Dept,897,822,40,29,4,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,Republic Police Dept,293,268,9,15,1,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Republic Police Dept,128,118,5,5,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Republic Police Dept,29,26,2,1,0,0,0,2018,1
+key-indicators--stops,Riverside Police Dept,3210,1935,917,216,62,4,76,2018,1
+key-indicators--arrests,Riverside Police Dept,655,283,290,59,10,0,13,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Riverside Police Dept,1193,798,254,83,27,4,27,2018,1
+vehicle-stop-stats--stop-outcome--citation,Riverside Police Dept,1863,1078,570,143,28,3,41,2018,1
+search-stats--probable-cause-authority-to-search--consent,Riverside Police Dept,121,79,35,4,2,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Riverside Police Dept,99,58,27,14,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Riverside Police Dept,43,26,11,6,0,0,0,2018,1
+key-indicators--stops,SE MO State Univ - DPS,29,24,4,0,0,0,1,2018,1
+key-indicators--arrests,SE MO State Univ - DPS,1,0,1,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,SE MO State Univ - DPS,22,19,2,0,0,0,1,2018,1
+vehicle-stop-stats--stop-outcome--citation,SE MO State Univ - DPS,3,2,0,0,0,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,SE MO State Univ - DPS,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,SE MO State Univ - DPS,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,SE MO State Univ - DPS,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Scott City Police Dept,2230,2017,176,22,9,0,6,2018,1
+key-indicators--arrests,Scott City Police Dept,92,74,16,2,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Scott City Police Dept,1443,1284,130,15,9,0,5,2018,1
+vehicle-stop-stats--stop-outcome--citation,Scott City Police Dept,659,577,67,10,4,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Scott City Police Dept,111,98,11,2,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Scott City Police Dept,59,47,11,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Scott City Police Dept,10,9,1,0,0,0,0,2018,1
+key-indicators--stops,Shelbina Police Dept,1600,1192,200,91,44,18,55,2018,1
+key-indicators--arrests,Shelbina Police Dept,105,73,26,4,2,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Shelbina Police Dept,1449,1049,195,88,44,18,55,2018,1
+vehicle-stop-stats--stop-outcome--citation,Shelbina Police Dept,1178,859,160,76,34,10,39,2018,1
+search-stats--probable-cause-authority-to-search--consent,Shelbina Police Dept,63,56,4,1,1,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Shelbina Police Dept,43,29,14,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Shelbina Police Dept,37,24,13,0,0,0,0,2018,1
+key-indicators--stops,Southwest City Police Dept,29,9,1,14,2,2,1,2018,1
+key-indicators--arrests,Southwest City Police Dept,3,0,0,2,0,1,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Southwest City Police Dept,24,7,1,13,1,1,1,2018,1
+vehicle-stop-stats--stop-outcome--citation,Southwest City Police Dept,26,8,1,13,2,1,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Southwest City Police Dept,4,0,0,3,0,1,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Southwest City Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Southwest City Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,St Charles County Parks & Rec,69,66,2,1,0,0,0,2018,1
+key-indicators--arrests,St Charles County Parks & Rec,2,2,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,St Charles County Parks & Rec,39,37,2,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,St Charles County Parks & Rec,14,13,0,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,St Charles County Parks & Rec,2,2,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,St Charles County Parks & Rec,2,2,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,St Charles County Parks & Rec,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,St John Police Dept,3298,1068,2073,95,14,6,42,2018,1
+key-indicators--arrests,St John Police Dept,162,59,85,18,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,St John Police Dept,1464,509,880,43,9,1,22,2018,1
+vehicle-stop-stats--stop-outcome--citation,St John Police Dept,2592,820,1653,66,11,5,37,2018,1
+search-stats--probable-cause-authority-to-search--consent,St John Police Dept,163,79,82,1,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,St John Police Dept,187,71,111,4,0,0,1,2018,1
+search-stats--arrest-charge--drug-violation,St John Police Dept,46,20,24,2,0,0,0,2018,1
+key-indicators--stops,Ste Genevieve Co Sheriff's Dept,3298,2892,340,27,19,6,14,2018,1
+key-indicators--arrests,Ste Genevieve Co Sheriff's Dept,224,192,27,2,0,3,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Ste Genevieve Co Sheriff's Dept,2258,1939,263,22,17,5,12,2018,1
+vehicle-stop-stats--stop-outcome--citation,Ste Genevieve Co Sheriff's Dept,543,420,106,5,5,4,3,2018,1
+search-stats--probable-cause-authority-to-search--consent,Ste Genevieve Co Sheriff's Dept,148,133,12,2,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Ste Genevieve Co Sheriff's Dept,154,134,18,1,0,0,1,2018,1
+search-stats--arrest-charge--drug-violation,Ste Genevieve Co Sheriff's Dept,91,85,6,0,0,0,0,2018,1
+key-indicators--stops,Strasburg Police Dept,162,157,3,2,0,0,0,2018,1
+key-indicators--arrests,Strasburg Police Dept,5,5,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Strasburg Police Dept,100,95,3,2,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Strasburg Police Dept,80,78,1,1,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Strasburg Police Dept,2,2,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Strasburg Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Strasburg Police Dept,1,1,0,0,0,0,0,2018,1
+key-indicators--stops,Sweet Springs Police Dept,323,289,14,11,1,1,7,2018,1
+key-indicators--arrests,Sweet Springs Police Dept,11,9,0,1,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Sweet Springs Police Dept,172,149,9,9,1,0,4,2018,1
+vehicle-stop-stats--stop-outcome--citation,Sweet Springs Police Dept,91,84,4,1,1,0,1,2018,1
+search-stats--probable-cause-authority-to-search--consent,Sweet Springs Police Dept,8,6,1,0,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,Sweet Springs Police Dept,6,5,0,0,0,0,1,2018,1
+search-stats--arrest-charge--drug-violation,Sweet Springs Police Dept,2,2,0,0,0,0,0,2018,1
+key-indicators--stops,Tipton Police Dept,219,194,9,12,2,0,2,2018,1
+key-indicators--arrests,Tipton Police Dept,7,5,1,1,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Tipton Police Dept,94,86,3,4,1,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Tipton Police Dept,32,26,3,3,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Tipton Police Dept,26,23,2,1,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Tipton Police Dept,12,10,1,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Tipton Police Dept,5,4,1,0,0,0,0,2018,1
+key-indicators--stops,UCM - Dept of Public Safety,621,403,164,16,12,0,26,2018,1
+key-indicators--arrests,UCM - Dept of Public Safety,57,30,24,1,0,0,2,2018,1
+vehicle-stop-stats--reason-for-stop--moving,UCM - Dept of Public Safety,463,305,120,12,6,0,20,2018,1
+vehicle-stop-stats--stop-outcome--citation,UCM - Dept of Public Safety,148,92,47,2,0,0,7,2018,1
+search-stats--probable-cause-authority-to-search--consent,UCM - Dept of Public Safety,24,11,12,0,0,0,1,2018,1
+search-stats--contraband-found--drugs-alcohol,UCM - Dept of Public Safety,48,22,22,2,0,0,2,2018,1
+search-stats--arrest-charge--drug-violation,UCM - Dept of Public Safety,18,8,8,2,0,0,0,2018,1
+key-indicators--stops,Urbana Police Dept,230,217,6,1,0,0,6,2018,1
+key-indicators--arrests,Urbana Police Dept,1,1,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Urbana Police Dept,100,89,4,1,0,0,6,2018,1
+vehicle-stop-stats--stop-outcome--citation,Urbana Police Dept,94,87,2,1,0,0,4,2018,1
+search-stats--probable-cause-authority-to-search--consent,Urbana Police Dept,4,4,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Urbana Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Urbana Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Vienna Police Dept,728,647,35,16,10,1,19,2018,1
+key-indicators--arrests,Vienna Police Dept,9,7,1,0,0,0,1,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Vienna Police Dept,631,564,29,12,8,1,17,2018,1
+vehicle-stop-stats--stop-outcome--citation,Vienna Police Dept,308,278,13,7,3,0,7,2018,1
+search-stats--probable-cause-authority-to-search--consent,Vienna Police Dept,8,5,1,0,0,0,2,2018,1
+search-stats--contraband-found--drugs-alcohol,Vienna Police Dept,9,7,1,0,0,0,1,2018,1
+search-stats--arrest-charge--drug-violation,Vienna Police Dept,4,2,1,0,0,0,1,2018,1
+key-indicators--stops,Warson Woods Police Dept,280,246,26,5,3,0,0,2018,1
+key-indicators--arrests,Warson Woods Police Dept,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Warson Woods Police Dept,202,183,13,3,3,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Warson Woods Police Dept,171,150,14,4,3,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Warson Woods Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Warson Woods Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Warson Woods Police Dept,0,0,0,0,0,0,0,2018,1
+key-indicators--stops,Weatherby Lake Police Dept,651,559,49,32,11,0,0,2018,1
+key-indicators--arrests,Weatherby Lake Police Dept,4,4,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Weatherby Lake Police Dept,490,406,45,28,11,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Weatherby Lake Police Dept,186,152,18,12,4,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Weatherby Lake Police Dept,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Weatherby Lake Police Dept,1,1,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Weatherby Lake Police Dept,1,1,0,0,0,0,0,2018,1
+key-indicators--stops,West Plains Police Dept,1828,1775,37,10,4,0,2,2018,1
+key-indicators--arrests,West Plains Police Dept,3,3,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,West Plains Police Dept,770,734,27,5,2,0,2,2018,1
+vehicle-stop-stats--stop-outcome--citation,West Plains Police Dept,955,923,22,6,2,0,2,2018,1
+search-stats--probable-cause-authority-to-search--consent,West Plains Police Dept,48,45,3,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,West Plains Police Dept,51,49,2,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,West Plains Police Dept,33,33,0,0,0,0,0,2018,1
+key-indicators--stops,Woodson Terrace Police Dept,1788,572,1088,74,7,0,47,2018,1
+key-indicators--arrests,Woodson Terrace Police Dept,45,27,18,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Woodson Terrace Police Dept,591,214,328,21,4,0,24,2018,1
+vehicle-stop-stats--stop-outcome--citation,Woodson Terrace Police Dept,1527,471,953,64,3,0,36,2018,1
+search-stats--probable-cause-authority-to-search--consent,Woodson Terrace Police Dept,84,47,34,3,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Woodson Terrace Police Dept,57,28,28,1,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Woodson Terrace Police Dept,18,11,7,0,0,0,0,2018,1
+key-indicators--stops,Missouri Dept Ntrl Res-Park Ranger,4671,4471,133,0,53,14,0,2018,1
+key-indicators--arrests,Missouri Dept Ntrl Res-Park Ranger,189,179,8,0,1,1,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Missouri Dept Ntrl Res-Park Ranger,2444,2334,81,0,23,6,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Missouri Dept Ntrl Res-Park Ranger,1532,1463,42,0,18,9,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Missouri Dept Ntrl Res-Park Ranger,74,67,6,0,0,1,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Missouri Dept Ntrl Res-Park Ranger,130,121,7,0,1,1,0,2018,1
+search-stats--arrest-charge--drug-violation,Missouri Dept Ntrl Res-Park Ranger,115,106,7,0,1,1,0,2018,1
+key-indicators--stops,Terminal Railroad Association of STL,2,1,1,0,0,0,0,2018,1
+key-indicators--arrests,Terminal Railroad Association of STL,0,0,0,0,0,0,0,2018,1
+vehicle-stop-stats--reason-for-stop--moving,Terminal Railroad Association of STL,2,1,1,0,0,0,0,2018,1
+vehicle-stop-stats--stop-outcome--citation,Terminal Railroad Association of STL,1,0,1,0,0,0,0,2018,1
+search-stats--probable-cause-authority-to-search--consent,Terminal Railroad Association of STL,0,0,0,0,0,0,0,2018,1
+search-stats--contraband-found--drugs-alcohol,Terminal Railroad Association of STL,0,0,0,0,0,0,0,2018,1
+search-stats--arrest-charge--drug-violation,Terminal Railroad Association of STL,0,0,0,0,0,0,0,2018,1
