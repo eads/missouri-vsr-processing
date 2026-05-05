@@ -32,26 +32,9 @@ from missouri_vsr.assets.s3_utils import (
 # ------------------------------------------------------------------------------
 MSHP_DEPARTMENT_NAME = "Missouri State Highway Patrol"
 DOWNLOAD_PREFIX = f"missouri_vsr_{min(YEAR_URLS)}_{max(YEAR_URLS)}_"
-METRIC_YEAR_SUBSET_KEYS = [
-    # Canonical keys (post-collapse row_key = canonical_key)
-    "stops",
-    "arrests",
-    "citations",
-    "searches",
-    "contraband-total",
-    "resident-stops",
-    "search-rate",
-    "arrest-rate",
-    "citation-rate",
-    "contraband-hit-rate",
-    "resident-stop-rate",
-    "equipment-stop-rate",
-    "license-stop-rate",
-    "moving-stop-rate",
-    "male-driver-rate",
-    "warning-rate",
-    "stop-outcome--warning",
-]
+# Row_keys excluded from metric_year_subset (not user-facing in the homepage picker).
+# Anything else present in the canonical combined parquet will be emitted.
+METRIC_YEAR_SUBSET_EXCLUDE_PREFIXES = ("rates-population",)
 STATEWIDE_SUMS_SUBSET_KEYS = [
     # Canonical keys (post-collapse row_key = canonical_key)
     "stops",
@@ -1270,7 +1253,26 @@ def write_metric_year_subset_json(context, combined: pd.DataFrame) -> str:
     out_root.mkdir(parents=True, exist_ok=True)
     out_path = out_root / "metric_year_subset.json"
 
-    subset = combined[combined["row_key"].isin(METRIC_YEAR_SUBSET_KEYS)].copy()
+    # Only emit canonical metrics — rows whose canonical_key is null are
+    # era-specific or pre-canonical leftovers (OCR-mangled slugs, deprecated
+    # row_keys) and never appear in manifest.canonical_metrics.
+    canonical_only = combined
+    if "canonical_key" in combined.columns:
+        canonical_only = combined[combined["canonical_key"].notna()]
+    all_keys = (
+        canonical_only["row_key"]
+        .dropna()
+        .astype(str)
+        .loc[lambda s: s.str.strip() != ""]
+        .unique()
+        .tolist()
+    )
+    subset_keys = sorted(
+        k for k in all_keys
+        if not k.startswith(METRIC_YEAR_SUBSET_EXCLUDE_PREFIXES)
+    )
+
+    subset = combined[combined["row_key"].isin(subset_keys)].copy()
     subset = subset.sort_values(["row_key", "agency", "year"], na_position="last")
 
     agencies = (
@@ -1297,7 +1299,7 @@ def write_metric_year_subset_json(context, combined: pd.DataFrame) -> str:
 
     rows_by_key: dict[str, list[list]] = {}
     total_rows = 0
-    for key in METRIC_YEAR_SUBSET_KEYS:
+    for key in subset_keys:
         group = subset[subset["row_key"] == key]
         rows: List[list] = []
         for _, row in group.iterrows():
@@ -1340,7 +1342,7 @@ def write_metric_year_subset_json(context, combined: pd.DataFrame) -> str:
         "agencies": agencies,
         "years": years,
         "columns": columns,
-        "row_keys": list(METRIC_YEAR_SUBSET_KEYS),
+        "row_keys": list(subset_keys),
     }
     (split_dir / "_index.json").write_text(json.dumps(index_payload, separators=(",", ":")))
     for key, rows in rows_by_key.items():
@@ -1360,7 +1362,7 @@ def write_metric_year_subset_json(context, combined: pd.DataFrame) -> str:
         stale.unlink()
     by_year_columns = ["agency_idx", *value_cols]
     rows_by_year_key: dict[int, dict[str, list[list]]] = {
-        year: {key: [] for key in METRIC_YEAR_SUBSET_KEYS} for year in years
+        year: {key: [] for key in subset_keys} for year in years
     }
     for key, rows in rows_by_key.items():
         for entry in rows:
@@ -1392,7 +1394,7 @@ def write_metric_year_subset_json(context, combined: pd.DataFrame) -> str:
     try:
         metadata = {
             "local_path": str(out_path),
-            "row_key_count": len(METRIC_YEAR_SUBSET_KEYS),
+            "row_key_count": len(subset_keys),
             "row_count": total_rows,
         }
         s3_path = s3_uri_for_path(context, out_path, base_dir)
