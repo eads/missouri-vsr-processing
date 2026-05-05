@@ -25,6 +25,8 @@ const iceArrestsMonthly = await FileAttachment("data/ice_arrests_monthly.csv").c
 const iceFacilities = await FileAttachment("data/ice_detainers_by_facility.csv").csv({typed: true});
 const licArrestProxy = await FileAttachment("data/license_arrest_proxy.csv").csv({typed: true});
 const vsrIceCrossref = await FileAttachment("data/vsr_ice_crossref.csv").csv({typed: true});
+const agencies287g = await FileAttachment("data/agencies_287g.csv").csv({typed: true});
+const mo287gAgreements = await FileAttachment("data/mo_287g_agreements.csv").csv({typed: true});
 ```
 
 ```js
@@ -936,9 +938,44 @@ The surge in Hispanic stops predates — but now intersects with — a rapid exp
 
 The Missouri State Highway Patrol signed a 287(g) task force agreement with ICE on March 21, 2025. Under the task force model, troopers can ask about immigration status during routine traffic stops. The program went operational September 26, 2025. Since then, MSHP has contacted ICE about 53 people and obtained detainers on 44.
 
-As of March 2026, more than 60 agencies across Missouri have signed 287(g) agreements. At least 28 use the task force model — the most aggressive type, which embeds immigration enforcement into everyday traffic policing.
+As of May 2026, 79 agencies across Missouri have signed 287(g) agreements. At least 67 use the task force model — the most aggressive type, which embeds immigration enforcement into everyday traffic policing.
 
 The data in this notebook shows the Hispanic stop pattern was already escalating from 2022–2024, before most agreements were signed. The question: was the enforcement culture already shifting before the formal agreements made it policy?
+
+```js
+const typeFilter = view(Inputs.select(["All types", "Task Force Model", "Jail Enforcement Model", "Warrant Service Officer"], {label: "Filter by type"}));
+```
+
+```js
+const filteredAgreements = typeFilter === "All types"
+  ? mo287gAgreements
+  : mo287gAgreements.filter(d => d.agreement_type.trim() === typeFilter);
+
+Inputs.table(filteredAgreements.map(d => ({
+  Agency: d.agency,
+  County: d.county || "—",
+  "Agreement type": d.agreement_type.trim(),
+  Signed: d.signed,
+})), {sort: "Signed", width: {Agency: 260, County: 160, "Agreement type": 180, Signed: 100}})
+```
+
+### All 79 Missouri 287(g) agencies, matched to VSR data
+
+As of May 2026, 79 Missouri agencies have signed 287(g) agreements with ICE. All 79 appear in the VSR data. The table below shows each agency's Hispanic stop count in 2014 and 2024 — before any of these agreements existed — alongside the agreement type and sign date.
+
+```js
+Inputs.table(agencies287g.map(d => ({
+  Agency: d.agency_287g,
+  County: d.county || "—",
+  "Type": d.support_type,
+  "Signed": d.signed,
+  "Hisp stops 2014": d.hisp_stops_2014 || "—",
+  "Hisp stops 2024": d.hisp_stops_2024 || "—",
+  "Change": d.hisp_change_pct != null && d.hisp_change_pct !== "" ? d3.format("+.0f")(+d.hisp_change_pct) + "%" : "—",
+})), {sort: "Signed", width: {Agency: 240, County: 160, Type: 180, Signed: 100}})
+```
+
+67 of the 79 signed Task Force Model agreements — the most aggressive type, which embeds immigration enforcement into routine traffic stops. Many agencies had already seen sharp Hispanic stop increases *before* they signed: Christian County (+514%), Southwest City (+271%), Jefferson County (+245%). The agreements formalize an enforcement culture that was already shifting.
 
 ### ICE enforcement in Missouri: the detainer data
 
