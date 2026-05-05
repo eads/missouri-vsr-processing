@@ -162,9 +162,22 @@ cython_debug/
 #.idea/
 
 # Our own data folder
-data/
-# ...except tracked reference/config CSVs in data/src/
-!data/src/*.csv
+/data/*
+!/data/src/
+/data/src/*
+!/data/src/*.csv
+# Reports + examples dirs exist on disk but only specific files are tracked.
+!/data/src/reports/
+/data/src/reports/*
+!/data/src/reports/.gitkeep
+!/data/src/examples/
+/data/src/examples/*
+!/data/src/examples/VSRreport2023.pdf
+# 287g snapshots: track the xlsx files + the snapshots.jsonl log.
+!/data/src/287g/
+/data/src/287g/*
+!/data/src/287g/*.xlsx
+!/data/src/287g/snapshots.jsonl
 
 # The classic
 .DS_Store
