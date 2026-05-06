@@ -35,6 +35,29 @@ DOWNLOAD_PREFIX = f"missouri_vsr_{min(YEAR_URLS)}_{max(YEAR_URLS)}_"
 # Row_keys excluded from metric_year_subset (not user-facing in the homepage picker).
 # Anything else present in the canonical combined parquet will be emitted.
 METRIC_YEAR_SUBSET_EXCLUDE_PREFIXES = ("rates-population",)
+
+# Cross-rate pairings (e.g. "stop-rate-residents--arrest-rate") are scatter-chart
+# inputs only — they're kept in metric_year_subset/{key}.json so the scatter
+# components can read them by name, but excluded from manifest.canonical_metrics
+# so they don't surface in the homepage picker.
+_RATE_HALVES = {
+    "search-rate",
+    "arrest-rate",
+    "contraband-hit-rate",
+    "stop-rate",
+    "citation-rate",
+    "stop-rate-residents",
+}
+
+
+def _is_cross_rate_pairing(key: str) -> bool:
+    """True iff key is a top-level pairing of two rate-shaped halves (X--Y)."""
+    if "--" not in key:
+        return False
+    parts = key.split("--")
+    if len(parts) != 2:
+        return False
+    return all(p in _RATE_HALVES or p.endswith("-rate") for p in parts)
 STATEWIDE_SUMS_SUBSET_KEYS = [
     # Canonical keys (post-collapse row_key = canonical_key)
     "stops",
@@ -2421,7 +2444,7 @@ def dist_manifest_json(context) -> str:
     con.close()
 
     years = [int(r[0]) for r in years_rows]
-    canonical_metrics = [r[0] for r in canonical_rows]
+    canonical_metrics = [r[0] for r in canonical_rows if not _is_cross_rate_pairing(r[0])]
 
     manifest = {
         "version": "2.0",
