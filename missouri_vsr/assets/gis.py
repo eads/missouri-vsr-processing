@@ -56,6 +56,10 @@ def _out_agency_boundaries_dir(context) -> Path:
     return Path(context.resources.data_dir_out.get_path()) / "agency_boundaries"
 
 
+def _out_dist_dir(context) -> Path:
+    return Path(context.resources.data_dir_out.get_path()) / "dist"
+
+
 def _zip_has_gpkg(path: Path) -> bool:
     try:
         with zipfile.ZipFile(path) as zf:
@@ -1192,4 +1196,196 @@ def agency_boundaries_index(context) -> str:
     except Exception:
         pass
 
+    return str(out_path)
+
+
+LOCATOR_SVG_NAME = "mo_locator.svg"
+LOCATOR_SIMPLIFY_TOLERANCE = 0.003  # degrees; ~330m at MO latitudes
+LOCATOR_COORD_PRECISION = 4
+
+
+def _format_coord(value: float) -> str:
+    text = f"{value:.{LOCATOR_COORD_PRECISION}f}"
+    if "." in text:
+        text = text.rstrip("0").rstrip(".")
+    return text or "0"
+
+
+def _ring_to_path_d(coords, project) -> str:
+    parts: list[str] = []
+    for idx, (lng, lat) in enumerate(coords):
+        x, y = project(lng, lat)
+        cmd = "M" if idx == 0 else "L"
+        parts.append(f"{cmd}{_format_coord(x)} {_format_coord(y)}")
+    parts.append("Z")
+    return "".join(parts)
+
+
+def _geometry_to_path_d(geom, project) -> str:
+    from shapely.geometry import MultiPolygon, Polygon  # type: ignore
+
+    pieces: list[str] = []
+
+    def _add_polygon(poly: "Polygon") -> None:
+        if poly.is_empty:
+            return
+        pieces.append(_ring_to_path_d(list(poly.exterior.coords), project))
+        for interior in poly.interiors:
+            pieces.append(_ring_to_path_d(list(interior.coords), project))
+
+    if isinstance(geom, Polygon):
+        _add_polygon(geom)
+    elif isinstance(geom, MultiPolygon):
+        for poly in geom.geoms:
+            _add_polygon(poly)
+    return "".join(pieces)
+
+
+@asset(
+    name="mo_locator_svg",
+    group_name="dist",
+    deps=[AssetKey("agency_relationships")],
+    ins={"mo_counties": AssetIn(key=AssetKey("mo_counties"))},
+    required_resource_keys={"data_dir_out", "s3"},
+    description=(
+        "Static MO locator SVG with per-agency <path id=\"agency-{slug}\"> for "
+        "frontend cards (issue #25). Inline once and <use> per card; CSS handles "
+        "highlighting."
+    ),
+)
+def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
+    import math
+
+    from shapely.geometry import shape  # type: ignore
+    from shapely.ops import unary_union  # type: ignore
+
+    boundaries_dir = _out_agency_boundaries_dir(context)
+    if not boundaries_dir.exists():
+        raise RuntimeError(
+            f"Expected agency boundaries at {boundaries_dir}; materialize agency_relationships first."
+        )
+
+    geojson_paths = sorted(boundaries_dir.glob("*.geojson"))
+    if not geojson_paths:
+        raise RuntimeError(f"No agency boundary GeoJSONs found in {boundaries_dir}")
+
+    state_geom = unary_union([g for g in mo_counties["geometry"] if g is not None and not g.is_empty])
+    if state_geom.is_empty:
+        raise RuntimeError("Empty MO state geometry from mo_counties")
+
+    min_lng, min_lat, max_lng, max_lat = state_geom.bounds
+    mid_lat = (min_lat + max_lat) / 2.0
+    cos_mid = math.cos(math.radians(mid_lat))
+
+    def project(lng: float, lat: float) -> tuple[float, float]:
+        return lng * cos_mid, -lat
+
+    proj_xs = [min_lng * cos_mid, max_lng * cos_mid]
+    proj_ys = [-max_lat, -min_lat]
+    vb_x = min(proj_xs)
+    vb_y = min(proj_ys)
+    vb_w = max(proj_xs) - vb_x
+    vb_h = max(proj_ys) - vb_y
+
+    state_simplified = state_geom.simplify(LOCATOR_SIMPLIFY_TOLERANCE, preserve_topology=True)
+    state_d = _geometry_to_path_d(state_simplified, project)
+
+    agency_paths: list[str] = []
+    centroid_circles: list[str] = []
+    seen_slugs: set[str] = set()
+    skipped = 0
+
+    for path in geojson_paths:
+        try:
+            payload = json.loads(path.read_text())
+        except Exception as exc:
+            context.log.warning("Could not read %s: %s", path, exc)
+            skipped += 1
+            continue
+        features = payload.get("features") or []
+        if not features:
+            skipped += 1
+            continue
+        feat = features[0]
+        props = feat.get("properties") or {}
+        slug = props.get("agency_slug") or _agency_slug(path.stem)
+        if slug in seen_slugs:
+            slug = f"{slug}-{path.stem}"
+        seen_slugs.add(slug)
+
+        try:
+            geom = shape(feat["geometry"])
+        except Exception as exc:
+            context.log.warning("Bad geometry in %s: %s", path, exc)
+            skipped += 1
+            continue
+
+        geom = geom.simplify(LOCATOR_SIMPLIFY_TOLERANCE, preserve_topology=True)
+        if geom.is_empty:
+            skipped += 1
+            continue
+
+        d = _geometry_to_path_d(geom, project)
+        if not d:
+            skipped += 1
+            continue
+        agency_paths.append(f'<path id="agency-{slug}" class="agency" d="{d}"/>')
+
+        try:
+            centroid = geom.representative_point()
+            cx, cy = project(centroid.x, centroid.y)
+            centroid_circles.append(
+                f'<circle class="centroid" data-slug="{slug}" '
+                f'cx="{_format_coord(cx)}" cy="{_format_coord(cy)}" r="0.015"/>'
+            )
+        except Exception:
+            pass
+
+    viewbox = (
+        f"{_format_coord(vb_x)} {_format_coord(vb_y)} "
+        f"{_format_coord(vb_w)} {_format_coord(vb_h)}"
+    )
+
+    svg_parts = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" '
+        'preserveAspectRatio="xMidYMid meet">',
+        f'<path class="state" d="{state_d}"/>',
+        '<g class="agencies">',
+        *agency_paths,
+        '</g>',
+        '<g class="centroids">',
+        *centroid_circles,
+        '</g>',
+        '</svg>',
+    ]
+    svg_text = "\n".join(svg_parts) + "\n"
+
+    dist_dir = _out_dist_dir(context)
+    _ensure_dir(dist_dir)
+    out_path = dist_dir / LOCATOR_SVG_NAME
+    out_path.write_text(svg_text)
+
+    base_dir = Path(context.resources.data_dir_out.get_path())
+    upload_paths(context, [out_path], base_dir=base_dir)
+
+    metadata: Dict[str, Any] = {
+        "local_path": str(out_path),
+        "agency_count": len(agency_paths),
+        "skipped": skipped,
+        "size_bytes": out_path.stat().st_size,
+        "viewbox": viewbox,
+    }
+    s3_path = s3_uri_for_path(context, out_path, base_dir)
+    if s3_path:
+        metadata["s3_path"] = s3_path
+    context.add_output_metadata(metadata)
+
+    context.log.info(
+        "Wrote MO locator SVG → %s (%d agencies, %d bytes, skipped=%d)",
+        out_path,
+        len(agency_paths),
+        out_path.stat().st_size,
+        skipped,
+    )
     return str(out_path)
