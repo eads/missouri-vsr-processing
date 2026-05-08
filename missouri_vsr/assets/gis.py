@@ -606,7 +606,7 @@ def load_mo_roads(context, mo_roads_shp: str):
     if gdf.crs is None or str(gdf.crs).lower() != "epsg:4326":
         gdf = gdf.to_crs("EPSG:4326")
 
-    keep_cols = [c for c in ("LINEARID", "FULLNAME", "MTFCC", "geometry") if c in gdf.columns]
+    keep_cols = [c for c in ("LINEARID", "FULLNAME", "RTTYP", "MTFCC", "geometry") if c in gdf.columns]
     gdf = gdf[keep_cols].copy()
     if "MTFCC" in gdf.columns:
         gdf = gdf[gdf["MTFCC"].isin(["S1100", "S1200"])].copy()
@@ -616,14 +616,14 @@ def load_mo_roads(context, mo_roads_shp: str):
     out_path = gis_dir / ROADS_PARQUET_NAME
     gdf.to_parquet(out_path, index=False)
 
-    by_mtfcc = gdf["MTFCC"].value_counts().to_dict() if "MTFCC" in gdf.columns else {}
-    context.log.info("Wrote MO roads → %s (%d features, %s)", out_path, len(gdf), by_mtfcc)
+    by_rttyp = gdf["RTTYP"].value_counts().to_dict() if "RTTYP" in gdf.columns else {}
+    context.log.info("Wrote MO roads → %s (%d features, by RTTYP=%s)", out_path, len(gdf), by_rttyp)
     yield Output(
         gdf,
         output_name="mo_roads",
         metadata={
             "row_count": len(gdf),
-            "by_mtfcc": by_mtfcc,
+            "by_rttyp": by_rttyp,
             "local_path": str(out_path),
         },
     )
@@ -1287,6 +1287,12 @@ LOCATOR_SVG_NAME = "mo_locator.svg"
 LOCATOR_SIMPLIFY_TOLERANCE = 0.003  # degrees; ~330m at MO latitudes
 LOCATOR_COORD_PRECISION = 4
 
+# Major-roads filter. TIGER PRISECROADS RTTYP codes:
+#   I = Interstate, U = US route, S = State route,
+#   M = Named/business loop (very noisy), C = County, O = Other
+LOCATOR_ROAD_RTTYP = ("I", "U", "S")
+LOCATOR_ROAD_CLASS = {"I": "interstate", "U": "us-highway", "S": "state-highway"}
+
 
 def _format_coord(value: float) -> str:
     text = f"{value:.{LOCATOR_COORD_PRECISION}f}"
@@ -1448,25 +1454,32 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame, mo_roads: pd.DataFrame) -
             pass
 
     road_paths: list[str] = []
-    by_mtfcc = {"S1100": 0, "S1200": 0}
-    if mo_roads is not None and len(mo_roads):
-        mtfcc_to_class = {"S1100": "primary", "S1200": "secondary"}
-        for _, row in mo_roads.iterrows():
-            mtfcc = row.get("MTFCC")
-            cls = mtfcc_to_class.get(mtfcc)
+    by_class: Dict[str, int] = {v: 0 for v in LOCATOR_ROAD_CLASS.values()}
+    if mo_roads is not None and len(mo_roads) and "RTTYP" in mo_roads.columns:
+        from shapely.ops import unary_union  # type: ignore
+
+        roads = mo_roads[mo_roads["RTTYP"].isin(LOCATOR_ROAD_RTTYP)].copy()
+        roads["_route"] = (
+            roads["FULLNAME"].fillna("").astype(str).str.strip().str.replace(r"\s+", " ", regex=True)
+        )
+        roads.loc[roads["_route"].eq(""), "_route"] = roads["LINEARID"].astype(str)
+
+        for (rttyp, route_name), group in roads.groupby(["RTTYP", "_route"], sort=False):
+            cls = LOCATOR_ROAD_CLASS.get(rttyp)
             if cls is None:
                 continue
-            geom = row.get("geometry")
-            if geom is None or getattr(geom, "is_empty", True):
+            geoms = [g for g in group["geometry"] if g is not None and not g.is_empty]
+            if not geoms:
                 continue
-            geom = geom.simplify(LOCATOR_SIMPLIFY_TOLERANCE, preserve_topology=True)
-            if geom.is_empty:
+            merged = unary_union(geoms).simplify(LOCATOR_SIMPLIFY_TOLERANCE, preserve_topology=True)
+            if merged.is_empty:
                 continue
-            d = _geometry_to_path_d(geom, project)
+            d = _geometry_to_path_d(merged, project)
             if not d:
                 continue
-            road_paths.append(f'<path class="road {cls}" d="{d}"/>')
-            by_mtfcc[mtfcc] = by_mtfcc.get(mtfcc, 0) + 1
+            slug = slugify(route_name, lowercase=True) or "route"
+            road_paths.append(f'<path id="route-{slug}" class="road {cls}" d="{d}"/>')
+            by_class[cls] = by_class.get(cls, 0) + 1
 
     viewbox = (
         f"{_format_coord(vb_x)} {_format_coord(vb_y)} "
@@ -1503,7 +1516,7 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame, mo_roads: pd.DataFrame) -
         "local_path": str(out_path),
         "agency_count": len(agency_paths),
         "road_count": len(road_paths),
-        "roads_by_mtfcc": by_mtfcc,
+        "roads_by_class": by_class,
         "skipped": skipped,
         "size_bytes": out_path.stat().st_size,
         "viewbox": viewbox,
