@@ -56,10 +56,6 @@ def _out_agency_boundaries_dir(context) -> Path:
     return Path(context.resources.data_dir_out.get_path()) / "agency_boundaries"
 
 
-def _out_dist_dir(context) -> Path:
-    return Path(context.resources.data_dir_out.get_path()) / "dist"
-
-
 def _zip_has_gpkg(path: Path) -> bool:
     try:
         with zipfile.ZipFile(path) as zf:
@@ -1361,9 +1357,9 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
     ]
     svg_text = "\n".join(svg_parts) + "\n"
 
-    dist_dir = _out_dist_dir(context)
-    _ensure_dir(dist_dir)
-    out_path = dist_dir / LOCATOR_SVG_NAME
+    out_dir = Path(context.resources.data_dir_out.get_path())
+    _ensure_dir(out_dir)
+    out_path = out_dir / LOCATOR_SVG_NAME
     out_path.write_text(svg_text)
 
     base_dir = Path(context.resources.data_dir_out.get_path())
