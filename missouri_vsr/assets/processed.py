@@ -816,11 +816,45 @@ def _add_canonical_names(
     return result
 
 
+def _load_program_287g_by_canonical(processed_dir: Path) -> dict[str, dict]:
+    """Build {canonical_agency_name: program_287g_payload} from ice_287g_latest.parquet.
+
+    Returns {} when no snapshot has been materialized.
+    """
+    path = processed_dir / "ice_287g_latest.parquet"
+    if not path.exists():
+        return {}
+    df = pd.read_parquet(path)
+    if df.empty or "agency_canonical" not in df.columns:
+        return {}
+    df = df[df["agency_canonical"].notna()].copy()
+    out: dict[str, dict] = {}
+    for canonical, group in df.groupby("agency_canonical", sort=False):
+        agreements = []
+        for _, r in group.sort_values("signed_date", na_position="last").iterrows():
+            agreements.append(
+                {
+                    "support_type": r.get("support_type"),
+                    "signed_date": r.get("signed_date"),
+                    "moa_status": r.get("moa_status"),
+                    "moa_url": r.get("moa_url"),
+                }
+            )
+        first = group.iloc[0]
+        out[str(canonical)] = {
+            "snapshot_date": first.get("snapshot_date"),
+            "snapshot_filename": first.get("snapshot_filename"),
+            "agreements": agreements,
+        }
+    return out
+
+
 def build_agency_index_records(
     pivoted: pd.DataFrame,
     agency_reference_geocoded: pd.DataFrame,
     combined: pd.DataFrame | None = None,
     years_by_agency: dict[str, list[int]] | None = None,
+    program_287g_by_canonical: dict[str, dict] | None = None,
 ) -> list[dict]:
     """Build agency index records with optional filtering for agencies with data."""
     names_by_key: dict[str, dict] = {}
@@ -982,6 +1016,16 @@ def build_agency_index_records(
             sorted_years = sorted(years)
             entry["years_with_data"] = sorted_years
             entry["latest_year_with_data"] = sorted_years[-1] if sorted_years else None
+
+    if program_287g_by_canonical:
+        for entry in names_by_key.values():
+            payload = None
+            for candidate in [entry.get("canonical_name"), *(entry.get("names") or [])]:
+                if candidate and candidate in program_287g_by_canonical:
+                    payload = program_287g_by_canonical[candidate]
+                    break
+            if payload is not None:
+                entry["program_287g"] = payload
 
     records = sorted(names_by_key.values(), key=lambda item: item["agency_slug"])
     if allowed_keys is None:
@@ -1467,6 +1511,7 @@ def write_agency_index_json(
     agency_reference_geocoded: pd.DataFrame,
     combined: pd.DataFrame | None = None,
     years_by_agency: dict[str, list[int]] | None = None,
+    program_287g_by_canonical: dict[str, dict] | None = None,
 ) -> str:
     """Write a JSON index of agencies for search/discovery."""
     out_root = Path(context.resources.data_dir_out.get_path())
@@ -1478,6 +1523,7 @@ def write_agency_index_json(
         agency_reference_geocoded,
         combined=combined,
         years_by_agency=years_by_agency,
+        program_287g_by_canonical=program_287g_by_canonical,
     )
     out_path.write_text(json.dumps(records, indent=2))
     context.log.info("Wrote agency index JSON → %s (%d rows)", out_path, len(records))
@@ -2308,7 +2354,11 @@ def metric_year_subset_json(context, canonical_combined_parquet: str) -> str:
 @asset(
     name="agency_index_json",
     group_name="dist",
-    deps=[AssetKey("combine_all_reports"), AssetKey("agency_reference_geocoded")],
+    deps=[
+        AssetKey("combine_all_reports"),
+        AssetKey("agency_reference_geocoded"),
+        AssetKey("ice_287g_latest"),
+    ],
     required_resource_keys={"data_dir_processed", "data_dir_out", "s3"},
     description="Generate an agency index JSON for search and lookup.",
 )
@@ -2356,12 +2406,17 @@ def agency_index_json(context) -> str:
             agency_reference_geocoded = pd.read_parquet(ref_path)
             break
 
+    program_287g = _load_program_287g_by_canonical(processed_dir)
+    if program_287g:
+        context.log.info("Loaded program_287g for %d agencies", len(program_287g))
+
     return write_agency_index_json(
         context,
         stops_rows,
         agency_reference_geocoded,
         combined=agencies_with_data,
         years_by_agency=years_by_agency,
+        program_287g_by_canonical=program_287g,
     )
 
 
@@ -2508,7 +2563,14 @@ def write_download_agency_index(
     combined: pd.DataFrame,
 ) -> dict:
     out_dir = Path(context.resources.data_dir_out.get_path()) / "downloads"
-    records = build_agency_index_records(pivoted, agency_reference_geocoded, combined=combined)
+    processed_dir = Path(context.resources.data_dir_processed.get_path())
+    program_287g = _load_program_287g_by_canonical(processed_dir)
+    records = build_agency_index_records(
+        pivoted,
+        agency_reference_geocoded,
+        combined=combined,
+        program_287g_by_canonical=program_287g,
+    )
     if not records:
         context.log.warning("No agency index records; no download outputs created.")
         return {}
@@ -2545,8 +2607,13 @@ def write_downloads_combined(
     out_dir = Path(context.resources.data_dir_out.get_path()) / "downloads"
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    processed_dir = Path(context.resources.data_dir_processed.get_path())
+    program_287g = _load_program_287g_by_canonical(processed_dir)
     agency_index_records = build_agency_index_records(
-        pivoted, agency_reference_geocoded, combined=combined
+        pivoted,
+        agency_reference_geocoded,
+        combined=combined,
+        program_287g_by_canonical=program_287g,
     )
     agency_index_df = pd.DataFrame(agency_index_records)
 
@@ -2595,7 +2662,11 @@ def downloads_vsr_statistics(context) -> dict:
 @asset(
     name="downloads_agency_index",
     group_name="downloads",
-    deps=[AssetKey("reports_with_rank_percentile"), AssetKey("agency_reference_geocoded")],
+    deps=[
+        AssetKey("reports_with_rank_percentile"),
+        AssetKey("agency_reference_geocoded"),
+        AssetKey("ice_287g_latest"),
+    ],
     required_resource_keys={"data_dir_processed", "data_dir_out", "s3"},
     description="Download bundle for agency_index (parquet/json/csv).",
 )
@@ -2628,6 +2699,7 @@ def downloads_agency_comments(context) -> dict:
         AssetKey("reports_with_rank_percentile"),
         AssetKey("agency_reference_geocoded"),
         AssetKey("agency_comments"),
+        AssetKey("ice_287g_latest"),
     ],
     required_resource_keys={"data_dir_processed", "data_dir_out", "s3"},
     description="Combined downloads bundle (json + parquet).",

@@ -432,3 +432,8 @@ asset_checks.extend(
         check_relationship_columns,
     ]
 )
+
+
+from missouri_vsr.assets.program_287g import check_all_mo_agencies_resolved
+
+asset_checks.append(check_all_mo_agencies_resolved)
