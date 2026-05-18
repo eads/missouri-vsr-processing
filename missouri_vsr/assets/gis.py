@@ -18,9 +18,11 @@ from dagster import AssetIn, AssetKey, AssetOut, Output, asset, graph_asset, mul
 from missouri_vsr.assets.extract import PIVOT_VALUE_COLUMNS
 from missouri_vsr.assets.s3_utils import upload_paths, s3_uri_for_dir, s3_uri_for_path
 GENZ_GPKG_URL = "https://www2.census.gov/geo/tiger/GENZ2024/gpkg/cb_2024_us_all_500k.zip"
+TIGER_ROADS_URL = "https://www2.census.gov/geo/tiger/TIGER2024/PRISECROADS/tl_2024_29_prisecroads.zip"
 
 COUNTY_PARQUET_NAME = "cb2024_mo_counties.parquet"
 PLACE_PARQUET_NAME = "cb2024_mo_places.parquet"
+ROADS_PARQUET_NAME = "tl_2024_29_prisecroads.parquet"
 BOUNDARY_MATCHES_NAME = "agency_boundary_matches.parquet"
 RELATIONSHIPS_NAME = "agency_relationships.parquet"
 PMTILES_NAME = "mo_jurisdictions_2024_500k.pmtiles"
@@ -153,6 +155,26 @@ def _extract_gpkg(zip_path: Path, log) -> Path:
                 target_path.unlink()
             shutil.move(str(extracted_path), str(target_path))
         return target_path
+
+
+def _extract_shapefile(zip_path: Path, log) -> Path:
+    """Extract all members of a TIGER shapefile zip and return the .shp path."""
+    with zipfile.ZipFile(zip_path) as zf:
+        members = zf.namelist()
+        shp_names = [n for n in members if n.lower().endswith(".shp")]
+        if not shp_names:
+            raise ValueError(f"No .shp found in {zip_path}")
+        shp_name = shp_names[0]
+        target_shp = zip_path.parent / Path(shp_name).name
+        if target_shp.exists():
+            try:
+                if target_shp.stat().st_mtime >= zip_path.stat().st_mtime:
+                    return target_shp
+            except Exception:
+                pass
+        log.info("Extracting %d shapefile members from %s", len(members), zip_path)
+        zf.extractall(path=zip_path.parent)
+    return zip_path.parent / Path(shp_name).name
 
 
 def _filter_missouri(gdf: pd.DataFrame) -> pd.DataFrame:
@@ -538,6 +560,72 @@ def download_mo_gis_zips(context):
         str(gpkg_path),
         output_name="us_gpkg",
         metadata={"local_path": str(gpkg_path), "zip_path": str(zip_path), "url": GENZ_GPKG_URL},
+    )
+
+
+@multi_asset(
+    outs={"mo_roads_shp": AssetOut()},
+    group_name="gis",
+    required_resource_keys={"data_dir_source"},
+    description="Download TIGER PRISECROADS shapefile for Missouri (state FIPS 29).",
+)
+def download_mo_roads_zip(context):
+    src_dir = Path(context.resources.data_dir_source.get_path()) / "gis"
+    _ensure_dir(src_dir)
+    force = _env_flag("FORCE_GIS_DOWNLOAD", False)
+
+    zip_path = src_dir / "tl_2024_29_prisecroads.zip"
+    _download_file(TIGER_ROADS_URL, zip_path, context.log, force=force)
+    shp_path = _extract_shapefile(zip_path, context.log)
+
+    yield Output(
+        str(shp_path),
+        output_name="mo_roads_shp",
+        metadata={
+            "local_path": str(shp_path),
+            "zip_path": str(zip_path),
+            "url": TIGER_ROADS_URL,
+        },
+    )
+
+
+@multi_asset(
+    ins={"mo_roads_shp": AssetIn(key=AssetKey("mo_roads_shp"))},
+    outs={"mo_roads": AssetOut()},
+    group_name="gis",
+    required_resource_keys={"data_dir_processed"},
+    description=(
+        "Load MO primary/secondary roads from TIGER PRISECROADS. "
+        "Filtered to MTFCC in (S1100, S1200) and persisted as geoparquet."
+    ),
+)
+def load_mo_roads(context, mo_roads_shp: str):
+    gpd = _require_geopandas()
+    shp_path = Path(mo_roads_shp)
+    gdf = gpd.read_file(shp_path)
+    if gdf.crs is None or str(gdf.crs).lower() != "epsg:4326":
+        gdf = gdf.to_crs("EPSG:4326")
+
+    keep_cols = [c for c in ("LINEARID", "FULLNAME", "RTTYP", "MTFCC", "geometry") if c in gdf.columns]
+    gdf = gdf[keep_cols].copy()
+    if "MTFCC" in gdf.columns:
+        gdf = gdf[gdf["MTFCC"].isin(["S1100", "S1200"])].copy()
+
+    gis_dir = _processed_gis_dir(context)
+    _ensure_dir(gis_dir)
+    out_path = gis_dir / ROADS_PARQUET_NAME
+    gdf.to_parquet(out_path, index=False)
+
+    by_rttyp = gdf["RTTYP"].value_counts().to_dict() if "RTTYP" in gdf.columns else {}
+    context.log.info("Wrote MO roads → %s (%d features, by RTTYP=%s)", out_path, len(gdf), by_rttyp)
+    yield Output(
+        gdf,
+        output_name="mo_roads",
+        metadata={
+            "row_count": len(gdf),
+            "by_rttyp": by_rttyp,
+            "local_path": str(out_path),
+        },
     )
 
 
@@ -1199,6 +1287,12 @@ LOCATOR_SVG_NAME = "mo_locator.svg"
 LOCATOR_SIMPLIFY_TOLERANCE = 0.003  # degrees; ~330m at MO latitudes
 LOCATOR_COORD_PRECISION = 4
 
+# Major-roads filter. TIGER PRISECROADS RTTYP codes:
+#   I = Interstate, U = US route, S = State route,
+#   M = Named/business loop (very noisy), C = County, O = Other
+LOCATOR_ROAD_RTTYP = ("I", "U", "S")
+LOCATOR_ROAD_CLASS = {"I": "interstate", "U": "us-highway", "S": "state-highway"}
+
 
 def _format_coord(value: float) -> str:
     text = f"{value:.{LOCATOR_COORD_PRECISION}f}"
@@ -1207,18 +1301,29 @@ def _format_coord(value: float) -> str:
     return text or "0"
 
 
-def _ring_to_path_d(coords, project) -> str:
+def _coords_to_path_d(coords, project, *, close: bool) -> str:
     parts: list[str] = []
-    for idx, (lng, lat) in enumerate(coords):
+    for idx, pt in enumerate(coords):
+        lng, lat = pt[0], pt[1]
         x, y = project(lng, lat)
         cmd = "M" if idx == 0 else "L"
         parts.append(f"{cmd}{_format_coord(x)} {_format_coord(y)}")
-    parts.append("Z")
+    if close:
+        parts.append("Z")
     return "".join(parts)
 
 
+def _ring_to_path_d(coords, project) -> str:
+    return _coords_to_path_d(coords, project, close=True)
+
+
 def _geometry_to_path_d(geom, project) -> str:
-    from shapely.geometry import MultiPolygon, Polygon  # type: ignore
+    from shapely.geometry import (  # type: ignore
+        LineString,
+        MultiLineString,
+        MultiPolygon,
+        Polygon,
+    )
 
     pieces: list[str] = []
 
@@ -1234,6 +1339,14 @@ def _geometry_to_path_d(geom, project) -> str:
     elif isinstance(geom, MultiPolygon):
         for poly in geom.geoms:
             _add_polygon(poly)
+    elif isinstance(geom, LineString):
+        if not geom.is_empty:
+            pieces.append(_coords_to_path_d(list(geom.coords), project, close=False))
+    elif isinstance(geom, MultiLineString):
+        for line in geom.geoms:
+            if line.is_empty:
+                continue
+            pieces.append(_coords_to_path_d(list(line.coords), project, close=False))
     return "".join(pieces)
 
 
@@ -1241,15 +1354,18 @@ def _geometry_to_path_d(geom, project) -> str:
     name="mo_locator_svg",
     group_name="dist",
     deps=[AssetKey("agency_relationships")],
-    ins={"mo_counties": AssetIn(key=AssetKey("mo_counties"))},
+    ins={
+        "mo_counties": AssetIn(key=AssetKey("mo_counties")),
+        "mo_roads": AssetIn(key=AssetKey("mo_roads")),
+    },
     required_resource_keys={"data_dir_out", "s3"},
     description=(
-        "Static MO locator SVG with per-agency <path id=\"agency-{slug}\"> for "
-        "frontend cards (issue #25). Inline once and <use> per card; CSS handles "
-        "highlighting."
+        "Static MO locator SVG with per-agency <path id=\"agency-{slug}\"> "
+        "and a major-roads overlay (TIGER PRISECROADS) for frontend cards. "
+        "Inline once and <use> per card; CSS handles highlighting."
     ),
 )
-def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
+def mo_locator_svg(context, mo_counties: pd.DataFrame, mo_roads: pd.DataFrame) -> str:
     import math
 
     from shapely.geometry import shape  # type: ignore
@@ -1337,6 +1453,34 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
         except Exception:
             pass
 
+    road_paths: list[str] = []
+    by_class: Dict[str, int] = {v: 0 for v in LOCATOR_ROAD_CLASS.values()}
+    if mo_roads is not None and len(mo_roads) and "RTTYP" in mo_roads.columns:
+        from shapely.ops import unary_union  # type: ignore
+
+        roads = mo_roads[mo_roads["RTTYP"].isin(LOCATOR_ROAD_RTTYP)].copy()
+        roads["_route"] = (
+            roads["FULLNAME"].fillna("").astype(str).str.strip().str.replace(r"\s+", " ", regex=True)
+        )
+        roads.loc[roads["_route"].eq(""), "_route"] = roads["LINEARID"].astype(str)
+
+        for (rttyp, route_name), group in roads.groupby(["RTTYP", "_route"], sort=False):
+            cls = LOCATOR_ROAD_CLASS.get(rttyp)
+            if cls is None:
+                continue
+            geoms = [g for g in group["geometry"] if g is not None and not g.is_empty]
+            if not geoms:
+                continue
+            merged = unary_union(geoms).simplify(LOCATOR_SIMPLIFY_TOLERANCE, preserve_topology=True)
+            if merged.is_empty:
+                continue
+            d = _geometry_to_path_d(merged, project)
+            if not d:
+                continue
+            slug = slugify(route_name, lowercase=True) or "route"
+            road_paths.append(f'<path id="route-{slug}" class="road {cls}" d="{d}"/>')
+            by_class[cls] = by_class.get(cls, 0) + 1
+
     viewbox = (
         f"{_format_coord(vb_x)} {_format_coord(vb_y)} "
         f"{_format_coord(vb_w)} {_format_coord(vb_h)}"
@@ -1349,6 +1493,9 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
         f'<path class="state" d="{state_d}"/>',
         '<g class="agencies">',
         *agency_paths,
+        '</g>',
+        '<g class="roads">',
+        *road_paths,
         '</g>',
         '<g class="centroids">',
         *centroid_circles,
@@ -1368,6 +1515,8 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
     metadata: Dict[str, Any] = {
         "local_path": str(out_path),
         "agency_count": len(agency_paths),
+        "road_count": len(road_paths),
+        "roads_by_class": by_class,
         "skipped": skipped,
         "size_bytes": out_path.stat().st_size,
         "viewbox": viewbox,
@@ -1378,9 +1527,10 @@ def mo_locator_svg(context, mo_counties: pd.DataFrame) -> str:
     context.add_output_metadata(metadata)
 
     context.log.info(
-        "Wrote MO locator SVG → %s (%d agencies, %d bytes, skipped=%d)",
+        "Wrote MO locator SVG → %s (%d agencies, %d roads, %d bytes, skipped=%d)",
         out_path,
         len(agency_paths),
+        len(road_paths),
         out_path.stat().st_size,
         skipped,
     )
