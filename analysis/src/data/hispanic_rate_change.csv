@@ -1,0 +1,26 @@
+Metric,Year,Rate,Change from 2020 (pp),Indexed (2020=100)
+Arrest Rate,2020,4.8,0.0,100.0
+Arrest Rate,2021,4.81,0.01,100.2
+Arrest Rate,2022,5.21,0.41,108.5
+Arrest Rate,2023,5.59,0.79,116.5
+Arrest Rate,2024,6.17,1.37,128.5
+Search Rate,2020,7.63,0.0,100.0
+Search Rate,2021,7.9,0.27,103.5
+Search Rate,2022,7.64,0.01,100.1
+Search Rate,2023,6.41,-1.22,84.0
+Search Rate,2024,6.4,-1.23,83.9
+Investigative Stop Rate,2020,3.32,0.0,100.0
+Investigative Stop Rate,2021,3.78,0.46,113.9
+Investigative Stop Rate,2022,3.67,0.35,110.5
+Investigative Stop Rate,2023,3.49,0.17,105.1
+Investigative Stop Rate,2024,4.0,0.68,120.5
+Equipment Stop Rate,2020,11.65,0.0,100.0
+Equipment Stop Rate,2021,12.08,0.43,103.7
+Equipment Stop Rate,2022,12.14,0.49,104.2
+Equipment Stop Rate,2023,12.45,0.8,106.9
+Equipment Stop Rate,2024,12.99,1.34,111.5
+License Stop Rate,2020,17.76,0.0,100.0
+License Stop Rate,2021,18.31,0.55,103.1
+License Stop Rate,2022,21.22,3.46,119.5
+License Stop Rate,2023,22.77,5.01,128.2
+License Stop Rate,2024,25.89,8.13,145.8
