@@ -669,6 +669,37 @@ def pivot_reports_by_slug_op(context, combined: pd.DataFrame) -> pd.DataFrame:
     return pivoted
 
 
+_WIDE_RACE_SLUGS = {
+    "Total": "total",
+    "White": "white",
+    "Black": "black",
+    "Hispanic": "hispanic",
+    "Native American": "native_american",
+    "Asian": "asian",
+    "Other": "other",
+}
+
+
+def _flatten_to_wide_columns(pivoted: pd.DataFrame) -> pd.DataFrame:
+    """Rename columns from `{row_key}__{Race}` to `{flat_row_key}_{race_slug}`.
+
+    `flat_row_key` replaces row_key's `--` hierarchy markers and inner `-`s with
+    `_`. Race names are lowercased and spaces become underscores. Leaves the
+    `agency` and `year` index columns untouched.
+    """
+    def rename(col: str) -> str:
+        if col in ("agency", "year"):
+            return col
+        rk, _, race = col.rpartition("__")
+        if not rk:
+            return col
+        rk_flat = rk.replace("--", "_").replace("-", "_").lower()
+        race_slug = _WIDE_RACE_SLUGS.get(race, race.lower().replace(" ", "_"))
+        return f"{rk_flat}_{race_slug}"
+
+    return pivoted.rename(columns=rename)
+
+
 @asset(
     name="pivot_reports_by_slug",
     group_name="processed",
@@ -1580,11 +1611,13 @@ def _write_download_bundle(
     *,
     base_name: str,
     out_dir: Path,
+    prefix_override: str | None = None,
 ) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
-    parquet_path = out_dir / f"{DOWNLOAD_PREFIX}{base_name}.parquet"
-    csv_path = out_dir / f"{DOWNLOAD_PREFIX}{base_name}.csv"
-    legacy_json = out_dir / f"{DOWNLOAD_PREFIX}{base_name}.json"
+    prefix = prefix_override if prefix_override is not None else DOWNLOAD_PREFIX
+    parquet_path = out_dir / f"{prefix}{base_name}.parquet"
+    csv_path = out_dir / f"{prefix}{base_name}.csv"
+    legacy_json = out_dir / f"{prefix}{base_name}.json"
 
     df.to_parquet(parquet_path, index=False, engine="pyarrow")
     df.to_csv(csv_path, index=False)
@@ -2713,6 +2746,44 @@ def downloads_combined(context) -> dict:
     agency_ref = pd.read_parquet(processed_dir / "agency_reference_geocoded.parquet")
     agency_comments = pd.read_parquet(processed_dir / "agency_comments.parquet")
     return write_downloads_combined(context, reports, stops_rows, agency_ref, reports, agency_comments)
+
+
+@asset(
+    name="downloads_wide",
+    group_name="downloads",
+    deps=[AssetKey("combine_all_reports")],
+    required_resource_keys={"data_dir_processed", "data_dir_out", "s3"},
+    description=(
+        "Wide-format download bundle: one row per agency-year with columns "
+        "flattened as `<row_key>_<race>` (e.g. `stops_black`, "
+        "`rates_by_race_population_density_white`). Emits an all-years CSV+parquet "
+        "plus one per-year CSV+parquet slice."
+    ),
+)
+def downloads_wide(context) -> dict:
+    processed_dir = Path(context.resources.data_dir_processed.get_path())
+    out_dir = Path(context.resources.data_dir_out.get_path()) / "downloads"
+    combined = pd.read_parquet(processed_dir / "all_combined_output.parquet")
+    pivoted = pivot_reports_by_slug_op(context, combined)
+    wide = _flatten_to_wide_columns(pivoted)
+    context.log.info("Wide pivot shape: %s rows × %s cols", *wide.shape)
+
+    results: dict = {
+        "all_years": _write_download_bundle(
+            context, wide, base_name="wide", out_dir=out_dir
+        )
+    }
+    for year in sorted(wide["year"].dropna().unique()):
+        year_int = int(year)
+        year_slice = wide[wide["year"] == year].drop(columns=["year"])
+        results[f"year_{year_int}"] = _write_download_bundle(
+            context,
+            year_slice,
+            base_name="wide",
+            out_dir=out_dir,
+            prefix_override=f"missouri_vsr_{year_int}_",
+        )
+    return results
 
 
 @asset(
