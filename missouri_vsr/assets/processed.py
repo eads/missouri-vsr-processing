@@ -2786,6 +2786,11 @@ def downloads_wide(context) -> dict:
     return results
 
 
+_WIDE_FILENAME_RE = re.compile(
+    r"^missouri_vsr_(?P<start>\d{4})(?:_(?P<end>\d{4}))?_wide\.(?:csv|parquet)$"
+)
+
+
 @asset(
     name="downloads_manifest",
     group_name="downloads",
@@ -2795,6 +2800,7 @@ def downloads_wide(context) -> dict:
         AssetKey("downloads_agency_index"),
         AssetKey("downloads_agency_comments"),
         AssetKey("downloads_combined"),
+        AssetKey("downloads_wide"),
     ],
     description="Manifest of download bundle files with sizes.",
 )
@@ -2817,7 +2823,16 @@ def write_downloads_manifest(context) -> str:
         except OSError:
             size = None
         suffix = path.suffix.lower().lstrip(".")
-        entries.append({"path": rel, "size_bytes": size, "group": suffix or "unknown"})
+        entry = {"path": rel, "size_bytes": size, "group": suffix or "unknown"}
+
+        wide_match = _WIDE_FILENAME_RE.match(path.name)
+        if wide_match:
+            entry["format"] = "wide"
+            # Per-year files: only `start` is present. All-years: both `start` and `end`.
+            if wide_match.group("end") is None:
+                entry["year"] = int(wide_match.group("start"))
+
+        entries.append(entry)
 
     entries.sort(
         key=lambda item: (item["size_bytes"] is None, -(item["size_bytes"] or 0))
