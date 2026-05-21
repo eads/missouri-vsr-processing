@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 
+import httpx
 import pandas as pd
-from dagster import AssetCheckResult, AssetKey, asset, asset_check, op
+from dagster import AssetCheckResult, AssetKey, asset, asset_check
 from openpyxl import load_workbook
 
 from missouri_vsr.assets.reports import _build_agency_name_lookup
@@ -15,6 +18,13 @@ from missouri_vsr.cli.crosswalk import _normalize_name
 SNAPSHOT_DIR = Path("data/src/287g")
 SNAPSHOTS_LOG = SNAPSHOT_DIR / "snapshots.jsonl"
 ICE_PAGE_URL = "https://www.ice.gov/identify-and-arrest/287g"
+
+# appelson/Tracking_287g runs a daily scraper that mirrors the ICE xlsx into
+# timestamped sheets_YYYYMMDD_HHMMSS/ folders. We use it as a reliable mirror
+# because the ICE page itself is Akamai-protected and blocks plain HTTP.
+APPELSON_REPO = "appelson/Tracking_287g"
+APPELSON_SHEETS_API = f"https://api.github.com/repos/{APPELSON_REPO}/contents/sheets"
+APPELSON_FOLDER_RE = re.compile(r"^sheets_\d{8}_\d{6}$")
 
 # ICE filename: participatingAgenciesMMDDYYYY{am|pm}.xlsx
 _FILENAME_RE = re.compile(
@@ -113,10 +123,123 @@ def _build_canonical_self_lookup(canonical_parquet: Path) -> dict[str, str]:
     return out
 
 
+def _list_appelson_sheets_folders(client: httpx.Client) -> list[str]:
+    """Return appelson sheets_* folder names, newest last (lexical sort works for the timestamp format)."""
+    r = client.get(APPELSON_SHEETS_API, headers={"Accept": "application/vnd.github+json"})
+    r.raise_for_status()
+    names = [
+        item["name"]
+        for item in r.json()
+        if item.get("type") == "dir" and APPELSON_FOLDER_RE.match(item.get("name", ""))
+    ]
+    names.sort()
+    return names
+
+
+def _find_xlsx_in_folder(client: httpx.Client, folder: str) -> dict:
+    """Return GitHub contents entry for the xlsx file inside an appelson sheets_* folder."""
+    r = client.get(f"{APPELSON_SHEETS_API}/{folder}", headers={"Accept": "application/vnd.github+json"})
+    r.raise_for_status()
+    for item in r.json():
+        name = item.get("name", "")
+        if item.get("type") == "file" and _parse_snapshot_filename(name) is not None:
+            return item
+    raise FileNotFoundError(f"No participatingAgencies*.xlsx file found in appelson folder {folder}")
+
+
+def _fetch_latest_appelson_snapshot(snapshot_dir: Path, log) -> dict:
+    """Pull the most recent appelson mirror snapshot into snapshot_dir.
+
+    Idempotent on filename: if the target file already exists locally, skip download
+    and skip appending to snapshots.jsonl. Returns a metadata dict describing the
+    chosen snapshot (whether or not it was just downloaded).
+    """
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    with httpx.Client(timeout=30.0, follow_redirects=True) as client:
+        folders = _list_appelson_sheets_folders(client)
+        if not folders:
+            raise RuntimeError(f"No sheets_* folders found in {APPELSON_REPO}")
+        latest_folder = folders[-1]
+        log.info("appelson latest folder: %s", latest_folder)
+
+        entry = _find_xlsx_in_folder(client, latest_folder)
+        filename = entry["name"]
+        target = snapshot_dir / filename
+        download_url = entry["download_url"]
+
+        if target.exists():
+            log.info("Snapshot %s already present locally — skipping download", filename)
+            return {
+                "filename": filename,
+                "appelson_folder": latest_folder,
+                "download_url": download_url,
+                "downloaded": False,
+                "path": target,
+            }
+
+        log.info("Downloading %s from %s", filename, download_url)
+        r = client.get(download_url)
+        r.raise_for_status()
+        content = r.content
+        target.write_bytes(content)
+        sha256 = hashlib.sha256(content).hexdigest()
+
+        parsed = _parse_snapshot_filename(filename)
+        snap_date, period, _ = parsed  # safe: _find_xlsx_in_folder filtered on parseability
+        record = {
+            "filename": filename,
+            "fetched_at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
+            "source_url_observed": download_url,
+            "snapshot_date": snap_date.isoformat(),
+            "snapshot_period": period,
+            "sha256": sha256,
+            "fetched_by": "appelson_mirror",
+            "notes": f"Mirrored from {APPELSON_REPO} folder {latest_folder}.",
+        }
+        log_path = snapshot_dir / "snapshots.jsonl"
+        with log_path.open("a") as f:
+            f.write(json.dumps(record) + "\n")
+
+        return {
+            "filename": filename,
+            "appelson_folder": latest_folder,
+            "download_url": download_url,
+            "downloaded": True,
+            "sha256": sha256,
+            "path": target,
+        }
+
+
+@asset(
+    name="fetch_287g_snapshot",
+    group_name="program_287g",
+    required_resource_keys={"data_dir_source"},
+    description=(
+        "Pulls the most recent 287g participating-agencies xlsx from the "
+        f"{APPELSON_REPO} daily-scraper mirror into data/src/287g/. "
+        "Idempotent on filename: re-running when the latest mirror snapshot is "
+        "already local is a no-op. Always materialize this before ice_287g_latest."
+    ),
+)
+def fetch_287g_snapshot(context) -> str:
+    src_dir = Path(context.resources.data_dir_source.get_path())
+    snapshot_dir = src_dir / "287g"
+    result = _fetch_latest_appelson_snapshot(snapshot_dir, context.log)
+    context.add_output_metadata(
+        {
+            "filename": result["filename"],
+            "appelson_folder": result["appelson_folder"],
+            "downloaded": result["downloaded"],
+            "source_url": result["download_url"],
+        }
+    )
+    return result["filename"]
+
+
 @asset(
     name="ice_287g_latest",
     group_name="program_287g",
-    deps=[AssetKey("canonical_combined_parquet")],
+    deps=[AssetKey("canonical_combined_parquet"), AssetKey("fetch_287g_snapshot")],
     required_resource_keys={"data_dir_source", "data_dir_processed"},
     description=(
         "Missouri rows from the latest ICE 287g participating-agencies snapshot, "
@@ -193,20 +316,3 @@ def check_all_mo_agencies_resolved(ice_287g_latest: pd.DataFrame) -> AssetCheckR
     )
 
 
-@op(
-    description=(
-        "Stub for fetching a fresh 287g snapshot from ICE. "
-        "Plain HTTP is blocked by Akamai (403 on both the landing page and direct file URL); "
-        "implementing automated fetch needs a headless browser (Playwright) or scraping API. "
-        "For now: download manually from the ICE landing page in a real browser, save to "
-        "data/src/287g/ keeping the original filename (participatingAgenciesMMDDYYYY{am|pm}.xlsx), "
-        "and append an entry to data/src/287g/snapshots.jsonl recording filename, fetched_at, "
-        "source_url_observed, snapshot_date, snapshot_period, sha256."
-    ),
-)
-def fetch_287g_snapshot_stub(context) -> str:
-    raise NotImplementedError(
-        "Automated 287g fetch not implemented — Akamai blocks plain HTTP. "
-        f"Download manually from {ICE_PAGE_URL} and save to data/src/287g/. "
-        "See op description for snapshot conventions."
-    )
