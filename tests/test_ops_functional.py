@@ -54,12 +54,15 @@ def test_add_rank_percentile_rows_op(tmp_path):
     )
     augmented = processed.add_rank_percentile_rows(context, df)
 
-    assert len(augmented) == len(df) * 4
+    # Real-agency rows: base + percentage + rank + percentile = len(df) * 4.
+    # Plus one statewide aggregate base row appended by _build_statewide_canonical_rows.
+    real_agency_rows = augmented[augmented["agency"] != processed.STATEWIDE_AGENCY_NAME]
+    assert len(real_agency_rows) == len(df) * 4
 
     base_row_key = "rates-by-race--totals--all-stops"
     slug_suffixes = {
         row_key.replace(base_row_key, "")
-        for row_key in augmented["row_key"].unique()
+        for row_key in real_agency_rows["row_key"].unique()
         if row_key.startswith(base_row_key)
     }
     assert slug_suffixes == {"", "-percentage", "-rank", "-percentile"}
@@ -77,6 +80,13 @@ def test_add_rank_percentile_rows_op(tmp_path):
     assert base_row["rank_dense"] == 1
     assert base_row["rank_count"] == 3
     assert base_row["rank_method"] == "dense"
+
+    # Statewide aggregate row should be present, with no rank/percentile/percentage variants.
+    statewide = augmented[augmented["agency"] == processed.STATEWIDE_AGENCY_NAME]
+    assert len(statewide) == 1
+    statewide_row = statewide.iloc[0]
+    assert statewide_row["row_key"] == base_row_key
+    assert statewide_row["Total"] == 100 + 200 + 150
 
 
 def test_compute_statewide_baselines_op(tmp_path):

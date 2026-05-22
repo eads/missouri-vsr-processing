@@ -184,6 +184,82 @@ def _compute_statewide_rates(grouped: pd.DataFrame, value_cols: List[str]) -> pd
     return pd.DataFrame(derived_rows)
 
 
+def _build_statewide_canonical_rows(canonical: pd.DataFrame) -> pd.DataFrame:
+    """Build statewide-aggregate rows ('Missouri (all agencies)') matching the canonical schema.
+
+    Rolls up counts across all real agencies per (year, row_key), re-derives rate
+    rows via STATEWIDE_RATE_SPECS, and returns a frame whose columns are a strict
+    superset-compatible reindex of ``canonical.columns``. Skips population-normalized
+    rates — naive aggregation of ACS denominators is misleading because traffic
+    through a place is not who lives there.
+    """
+    if canonical.empty:
+        return pd.DataFrame(columns=canonical.columns)
+
+    value_cols = [c for c in PIVOT_VALUE_COLUMNS if c in canonical.columns]
+    if not value_cols:
+        return pd.DataFrame(columns=canonical.columns)
+
+    base = canonical[canonical["agency"] != STATEWIDE_AGENCY_NAME].copy()
+    derived_mask = base["row_key"].astype(str).str.contains(
+        r"-(?:rank|percentile|percentage)$", regex=True, na=False
+    )
+    base = base[~derived_mask]
+
+    # Exclude rate rows and population rows from aggregation source.
+    # Rates are re-derived from totals; population aggregation is misleading.
+    exclude_mask = (
+        base["row_key"].astype(str).str.endswith("-rate", na=False)
+        | base["row_key"].astype(str).str.startswith("rates-by-race--population", na=False)
+    )
+    count_base = base[~exclude_mask].copy()
+    for col in value_cols:
+        count_base[col] = pd.to_numeric(count_base[col], errors="coerce")
+
+    grouped = (
+        count_base.groupby(["year", "row_key"], dropna=True)[value_cols]
+        .sum(min_count=1)
+        .reset_index()
+    )
+    if grouped.empty:
+        return pd.DataFrame(columns=canonical.columns)
+
+    derived_rates = _compute_statewide_rates(grouped, value_cols)
+    all_rows = (
+        pd.concat([grouped, derived_rates], ignore_index=True)
+        if not derived_rates.empty
+        else grouped
+    )
+
+    meta_cols = ["table", "table_id", "section", "section_id", "metric", "metric_id"]
+    present_meta = [c for c in meta_cols if c in canonical.columns]
+    if present_meta:
+        meta_lookup = (
+            base[["row_key", *present_meta]]
+            .drop_duplicates("row_key", keep="first")
+            .set_index("row_key")
+        )
+        for col in present_meta:
+            all_rows[col] = all_rows["row_key"].map(meta_lookup[col])
+
+    all_rows["agency"] = STATEWIDE_AGENCY_NAME
+    if "canonical_key" in canonical.columns:
+        all_rows["canonical_key"] = all_rows["row_key"]
+    if "year" in all_rows.columns:
+        year_strs = all_rows["year"].apply(
+            lambda y: str(int(y)) if pd.notna(y) else ""
+        )
+        all_rows["row_id"] = (
+            year_strs + f"-{STATEWIDE_AGENCY_SLUG}-" + all_rows["row_key"].astype(str)
+        )
+
+    for col in canonical.columns:
+        if col not in all_rows.columns:
+            all_rows[col] = pd.NA
+
+    return all_rows[canonical.columns]
+
+
 def _build_percentage_frame(
     base: pd.DataFrame,
     value_cols: List[str],
@@ -427,6 +503,7 @@ def add_rank_percentile_rows(context, combined: pd.DataFrame) -> pd.DataFrame:
 
     tmp_dir = Path(tempfile.mkdtemp(prefix="vsr_rank_"))
     try:
+        chunk_columns: list[str] | None = None
         for yr in years:
             base = combined[combined["year"] == yr].copy()
             if base.empty:
@@ -454,11 +531,34 @@ def add_rank_percentile_rows(context, combined: pd.DataFrame) -> pd.DataFrame:
             _add_ingroup_pcts_and_ratios(base, value_cols)
 
             chunk = _rebuild_row_ids(pd.concat([base, *derived], ignore_index=True))
+            if chunk_columns is None:
+                chunk_columns = list(chunk.columns)
             chunk_path = tmp_dir / f"chunk_{yr}.parquet"
             chunk.to_parquet(chunk_path, index=False, engine="pyarrow")
             total_base += len(base)
             total_out += len(chunk)
             context.log.debug("Wrote year %d chunk: %d rows", yr, len(chunk))
+
+        # Inject statewide base rows (no rank/percentile/percentage variants).
+        # Built from the canonical-collapsed real-agency frame so the rollup is
+        # consistent with canonical_combined.parquet.
+        if chunk_columns is not None:
+            template = pd.DataFrame(columns=chunk_columns)
+            statewide_source_cols = [c for c in template.columns if c in combined.columns]
+            statewide_source = combined[statewide_source_cols].copy()
+            for col in chunk_columns:
+                if col not in statewide_source.columns:
+                    statewide_source[col] = pd.NA
+            statewide_source = statewide_source[chunk_columns]
+            statewide_rows = _build_statewide_canonical_rows(statewide_source)
+            if not statewide_rows.empty:
+                statewide_path = tmp_dir / "chunk_statewide.parquet"
+                statewide_rows.to_parquet(statewide_path, index=False, engine="pyarrow")
+                total_out += len(statewide_rows)
+                context.log.info(
+                    "Appended %d statewide base rows to reports_with_rank_percentile",
+                    len(statewide_rows),
+                )
 
         out_dir = Path(context.resources.data_dir_processed.get_path())
         out_path = out_dir / "reports_with_rank_percentile.parquet"
@@ -2331,11 +2431,17 @@ def canonical_combined_parquet(context) -> str:
     con.execute(f"COPY (SELECT * FROM canonical_combined WHERE year >= {DIST_MIN_YEAR}) TO '{out_path}' (FORMAT PARQUET)")
     con.close()
 
+    df = pd.read_parquet(out_path)
+
+    statewide_rows = _build_statewide_canonical_rows(df)
+    if not statewide_rows.empty:
+        df = pd.concat([df, statewide_rows], ignore_index=True)
+        context.log.info("Appended %d statewide rows to canonical combined", len(statewide_rows))
+
     # Clip rate values to 100% for dist outputs (bad source data can produce >100% rates).
     # Downloads keep the raw computed values.
     race_cols = [c for c in PIVOT_VALUE_COLUMNS if c != "Total"]
     all_val_cols = ["Total"] + race_cols
-    df = pd.read_parquet(out_path)
     rate_mask = df["canonical_key"].str.endswith("-rate", na=False)
     for col in all_val_cols:
         if col in df.columns:
