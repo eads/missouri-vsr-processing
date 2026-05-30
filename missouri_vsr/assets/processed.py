@@ -925,6 +925,34 @@ def _extract_jurisdiction_geoid(row: pd.Series) -> str | None:
     return None
 
 
+def pq_column_names(parquet_path: Path) -> list[str]:
+    """Return a parquet file's column names without reading any row data."""
+    import pyarrow.parquet as pq
+
+    return list(pq.ParquetFile(str(parquet_path)).schema.names)
+
+
+def _canonical_name_lookup(agency_reference_geocoded: pd.DataFrame) -> dict[str, str]:
+    """{normalized_agency_name: canonical_name} from the agency reference."""
+    lookup: dict[str, str] = {}
+    if agency_reference_geocoded is None or agency_reference_geocoded.empty:
+        return lookup
+    for _, row in agency_reference_geocoded.iterrows():
+        normalized = _first_non_empty(row, ["Normalized"]) or ""
+        canonical = _first_non_empty(row, ["Department", "Canonical"]) or ""
+        if normalized and canonical:
+            lookup[normalized] = canonical
+    return lookup
+
+
+def _apply_canonical_names(reports: pd.DataFrame, lookup: dict[str, str]) -> pd.DataFrame:
+    """Add a canonical_name column to reports using a prebuilt normalized->canonical lookup."""
+    reports["canonical_name"] = reports["agency"].apply(
+        lambda a: lookup.get(_normalize_name(str(a))) if pd.notna(a) else None
+    )
+    return reports
+
+
 def _add_canonical_names(
     reports: pd.DataFrame,
     agency_reference_geocoded: pd.DataFrame,
@@ -932,19 +960,10 @@ def _add_canonical_names(
     """Add a canonical_name column to reports by joining against the agency reference."""
     if reports.empty or agency_reference_geocoded.empty:
         return reports
-    lookup: dict[str, str] = {}
-    for _, row in agency_reference_geocoded.iterrows():
-        normalized = _first_non_empty(row, ["Normalized"]) or ""
-        canonical = _first_non_empty(row, ["Department", "Canonical"]) or ""
-        if normalized and canonical:
-            lookup[normalized] = canonical
+    lookup = _canonical_name_lookup(agency_reference_geocoded)
     if not lookup:
         return reports
-    result = reports.copy()
-    result["canonical_name"] = result["agency"].apply(
-        lambda a: lookup.get(_normalize_name(str(a))) if pd.notna(a) else None
-    )
-    return result
+    return _apply_canonical_names(reports.copy(), lookup)
 
 
 def _load_program_287g_by_canonical(processed_dir: Path) -> dict[str, dict]:
@@ -2737,12 +2756,23 @@ def write_download_agency_comments(context, agency_comments: pd.DataFrame) -> di
 
 def write_downloads_combined(
     context,
-    vsr_statistics: pd.DataFrame,
+    vsr_statistics_path: Path,
     pivoted: pd.DataFrame,
     agency_reference_geocoded: pd.DataFrame,
     combined: pd.DataFrame,
     agency_comments: pd.DataFrame,
+    *,
+    batch_size: int = 100_000,
 ) -> dict:
+    """Write the combined downloads bundle, streaming the large vsr_statistics dataset.
+
+    vsr_statistics is read from its parquet in row batches and serialized record-by-record
+    so the full reports table never lives in memory at once — this keeps peak RSS low
+    enough to run on small (4GB) cloud workers. The small agency_index / agency_comments
+    datasets are still built in memory.
+    """
+    import pyarrow.parquet as pq
+
     out_dir = Path(context.resources.data_dir_out.get_path()) / "downloads"
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2755,21 +2785,44 @@ def write_downloads_combined(
         program_287g_by_canonical=program_287g,
     )
     agency_index_df = pd.DataFrame(agency_index_records)
+    agency_index_payload = (
+        agency_index_df.to_dict(orient="records") if not agency_index_df.empty else []
+    )
+    agency_comments_payload = (
+        agency_comments.to_dict(orient="records") if not agency_comments.empty else []
+    )
 
-    datasets = {
-        "vsr_statistics": _add_canonical_names(vsr_statistics, agency_reference_geocoded),
-        "agency_index": agency_index_df,
-        "agency_comments": agency_comments,
-    }
-
+    canonical_lookup = _canonical_name_lookup(agency_reference_geocoded)
+    sep = (",", ":")
     combined_json = out_dir / f"{DOWNLOAD_PREFIX}downloads.json"
-    combined_parquet = out_dir / f"{DOWNLOAD_PREFIX}downloads.parquet"
 
-    json_payload = {
-        key: df.to_dict(orient="records") if not df.empty else []
-        for key, df in datasets.items()
-    }
-    combined_json.write_text(json.dumps(json_payload, separators=(",", ":")))
+    vsr_rows = 0
+    with combined_json.open("w") as f:
+        f.write('{"vsr_statistics":[')
+        first = True
+        vsr_statistics_path = Path(vsr_statistics_path)
+        if vsr_statistics_path.exists():
+            parquet_file = pq.ParquetFile(str(vsr_statistics_path))
+            for batch in parquet_file.iter_batches(batch_size=batch_size):
+                chunk = batch.to_pandas()
+                if canonical_lookup:
+                    _apply_canonical_names(chunk, canonical_lookup)
+                for record in chunk.to_dict(orient="records"):
+                    f.write("," if not first else "")
+                    first = False
+                    f.write(json.dumps(record, separators=sep))
+                vsr_rows += len(chunk)
+                del chunk
+        f.write('],"agency_index":')
+        f.write(json.dumps(agency_index_payload, separators=sep))
+        f.write(',"agency_comments":')
+        f.write(json.dumps(agency_comments_payload, separators=sep))
+        f.write("}")
+
+    context.log.info(
+        "Wrote %s (vsr_statistics=%d rows, agency_index=%d, agency_comments=%d)",
+        combined_json, vsr_rows, len(agency_index_payload), len(agency_comments_payload),
+    )
 
     uploaded = upload_paths(
         context,
@@ -2845,13 +2898,29 @@ def downloads_agency_comments(context) -> dict:
 )
 def downloads_combined(context) -> dict:
     processed_dir = Path(context.resources.data_dir_processed.get_path())
-    # Load one large parquet; derive stops_rows and agency filter from it directly.
-    reports = pd.read_parquet(processed_dir / "reports_with_rank_percentile.parquet")
-    stops_rows = reports[reports["row_key"] == "stops"][["agency", "year", "Total"]].copy()
-    stops_rows = stops_rows.rename(columns={"Total": "stops__Total"})
+    reports_path = processed_dir / "reports_with_rank_percentile.parquet"
+    # Derive the small frames via DuckDB so the full reports table is never loaded into
+    # memory — write_downloads_combined streams vsr_statistics straight from the parquet.
+    value_cols = [c for c in PIVOT_VALUE_COLUMNS if c in pq_column_names(reports_path)]
+    any_value = " OR ".join(f'"{c}" IS NOT NULL' for c in value_cols) or "TRUE"
+    con = duckdb.connect()
+    stops_rows = con.execute(
+        f"SELECT agency, year, \"Total\" AS stops__Total "
+        f"FROM read_parquet('{reports_path}') WHERE row_key = 'stops'"
+    ).df()
+    # `combined` only drives the statewide entry + the allowed-keys filter in
+    # build_agency_index_records: any agency with a non-null value column. Mirror that
+    # exactly without loading the table.
+    agencies_with_data = con.execute(
+        f"SELECT DISTINCT agency, 1 AS \"Total\" FROM read_parquet('{reports_path}') "
+        f"WHERE agency IS NOT NULL AND ({any_value})"
+    ).df()
+    con.close()
     agency_ref = pd.read_parquet(processed_dir / "agency_reference_geocoded.parquet")
     agency_comments = pd.read_parquet(processed_dir / "agency_comments.parquet")
-    return write_downloads_combined(context, reports, stops_rows, agency_ref, reports, agency_comments)
+    return write_downloads_combined(
+        context, reports_path, stops_rows, agency_ref, agencies_with_data, agency_comments
+    )
 
 
 @asset(
