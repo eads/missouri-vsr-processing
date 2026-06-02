@@ -30,6 +30,7 @@ from dagster import (
 # Configure the years you want Dagster to ingest
 # ------------------------------------------------------------------------------
 YEAR_URLS: Dict[int, str] = {
+    2025: "https://ago.mo.gov/wp-content/uploads/2025-VSR-Agency-Specific-Reports.pdf",
     2024: "https://ago.mo.gov/wp-content/uploads/2024-VSR-Agency-Specific-Reports.pdf",
     2023: "https://ago.mo.gov/wp-content/uploads/VSRreport2023.pdf",
     2022: "https://ago.mo.gov/wp-content/uploads/vsrreport2022.pdf",

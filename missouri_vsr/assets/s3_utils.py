@@ -1,8 +1,25 @@
 from __future__ import annotations
 
 import mimetypes
+import os
 from pathlib import Path
 from typing import Iterable, Optional
+
+
+def inline_uploads_enabled() -> bool:
+    """Whether assets may upload to S3 as a side effect of materialization.
+
+    Default is OFF: materializing data must never push to S3 implicitly (this
+    once leaked embargoed data to a public prefix because the prefix in .env had
+    not yet been switched). The ONLY sanctioned upload path is the explicit
+    ``dist_sync`` asset. Set MISSOURI_VSR_INLINE_S3_UPLOAD=1 to opt back in.
+    """
+    return os.getenv("MISSOURI_VSR_INLINE_S3_UPLOAD", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
 
 
 def _resolve_s3_target(context, *, prefix_override: str | None = None) -> tuple[str, str, object] | None:
@@ -32,6 +49,8 @@ def upload_file_to_s3(
 ) -> dict:
     """Upload a single file to S3 (prefix aware) and return metadata (s3_uri, errors)."""
     meta: dict = {}
+    if not inline_uploads_enabled():
+        return meta
     s3_res = getattr(context.resources, "s3", None)
     if s3_res is None:
         return meta
@@ -101,6 +120,8 @@ def upload_paths(
     prefix_override: str | None = None,
 ) -> list[str]:
     """Upload paths to S3 under <prefix>/dist/<relative_path>, if S3 is configured."""
+    if not inline_uploads_enabled():
+        return []
     target = _resolve_s3_target(context, prefix_override=prefix_override)
     if not target:
         return []

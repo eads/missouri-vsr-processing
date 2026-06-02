@@ -1,83 +1,83 @@
 canonical_key,category,pre_2020_row_key,pre_2020_years,post_2020_row_key,post_2020_years,notes
-stops,core-counts,key-indicators--stops,2000-2019,rates-by-race--totals--all-stops|number-of-stops-by-race--all-stops,2020-2024,number-of-stops-by-race--all-stops is a duplicate; rates-by-race--totals--all-stops is primary
-searches,core-counts,key-indicators--searches,2000-2019,rates-by-race--totals--searches|number-of-stops-by-race--stop-outcome--searches,2020-2024,number-of-stops-by-race--stop-outcome--searches is a duplicate; rates-by-race--totals--searches is primary
-arrests,core-counts,key-indicators--arrests,2000-2019,rates-by-race--totals--arrests|number-of-stops-by-race--stop-outcome--arrests,2020-2024,number-of-stops-by-race--stop-outcome--arrests is a duplicate; rates-by-race--totals--arrests is primary
-citations,core-counts,vehicle-stop-stats--stop-outcome--citation|vehicle-stop-stats--stop-outcome--ci-tation,2004-2019,rates-by-race--totals--citations|number-of-stops-by-race--stop-outcome--citation,2020-2024,number-of-stops-by-race--stop-outcome--citation is a duplicate; rates-by-race--totals--citations is primary
-resident-stops,core-counts,,,rates-by-race--totals--resident-stops|number-of-stops-by-race--resident-stops,2020-2024,number-of-stops-by-race--resident-stops is a duplicate; rates-by-race--totals--resident-stops is primary
-non-resident-stops,core-counts,,,number-of-stops-by-race--non-resident-stops,2020-2024,
-contraband-total,core-counts,,,rates-by-race--totals--contraband,2020-2024,2020+ also has number-of-stops-by-race--stop-outcome--contraband (same value)
-search-rate,rates,key-indicators--search-rate,2000-2019,rates-by-race--rates--search-rate,2020-2024,pre-computed in PDF; will be recomputed at layer 2 from raw counts
-arrest-rate,rates,key-indicators--arrest-rate,2001-2019,rates-by-race--rates--arrest-rate,2020-2024,pre-computed in PDF; will be recomputed at layer 2 from raw counts
-contraband-hit-rate,rates,key-indicators--contraband-hit-rate,2001-2019,rates-by-race--rates--contraband-hit-rate,2020-2024,pre-computed in PDF; will be recomputed at layer 2 from raw counts
-stop-rate,rates,,,rates-by-race--rates--stop-rate,2020-2024,ACS population denominator; 2020+ only
-stop-rate-residents,rates,,,rates-by-race--rates--stop-rate-residents,2020-2024,ACS population denominator; 2020+ only
-citation-rate,rates,,,rates-by-race--rates--citation-rate,2020-2024,2020+ only
-stop-rate-residents--search-rate,rates,,,rates-by-race--stop-rate-residents--search-rate,2020-2024,resident-stop-denominator variant; 2020+ only
-stop-rate-residents--arrest-rate,rates,,,rates-by-race--stop-rate-residents--arrest-rate,2020-2024,resident-stop-denominator variant; 2020+ only
-stop-rate-residents--citation-rate,rates,,,rates-by-race--stop-rate-residents--citation-rate,2020-2024,resident-stop-denominator variant; 2020+ only
-stop-rate-residents--contraband-hit-rate,rates,,,rates-by-race--stop-rate-residents--contraband-hit-rate,2020-2024,resident-stop-denominator variant; 2020+ only
-contraband-hit-rate--arrest-rate,rates,,,rates-by-race--contraband-hit-rate--arrest-rate,2020-2024,CHR-denominator variant; 2020+ only
-contraband-hit-rate--citation-rate,rates,,,rates-by-race--contraband-hit-rate--citation-rate,2020-2024,CHR-denominator variant; 2020+ only
-reason-for-stop--equipment,reason-for-stop,vehicle-stop-stats--reason-for-stop--equipment,2004-2019,number-of-stops-by-race--reason-for-stop--equpiment,2020-2024,typo in 2020+ source (equpiment); canonical key uses correct spelling
-reason-for-stop--investigative,reason-for-stop,vehicle-stop-stats--reason-for-stop--investigative,2004-2019,number-of-stops-by-race--reason-for-stop--investigative,2020-2024,
-reason-for-stop--license,reason-for-stop,vehicle-stop-stats--reason-for-stop--license,2004-2019,number-of-stops-by-race--reason-for-stop--license,2020-2024,
-reason-for-stop--moving,reason-for-stop,vehicle-stop-stats--reason-for-stop--moving|vehicle-stop-stats--reason-for-stop--for-moving,2009-2019|2004-2008,number-of-stops-by-race--reason-for-stop--moving,2020-2024,
-reason-for-stop--called-for-service,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--called-for-service,2023-2024,2023+ only
-reason-for-stop--det-crime-bulletin,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--det-crime-bulletin,2023-2024,2023+ only
-reason-for-stop--officer-initiative,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--officer-initiative,2023-2024,2023+ only
-reason-for-stop--other,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--other,2023-2024,2023+ only
-stop-outcome--no-action,stop-outcome,vehicle-stop-stats--stop-outcome--no-action,2004-2019,number-of-stops-by-race--stop-outcome--no-action,2020-2024,
-stop-outcome--warning,stop-outcome,vehicle-stop-stats--stop-outcome--warning,2004-2019,number-of-stops-by-race--stop-outcome--warning,2020-2024,
-stop-outcome--contraband,stop-outcome,,,number-of-stops-by-race--stop-outcome--contraband,2020-2024,2020+ only
-driver-age--17-and-under,driver-age,vehicle-stop-stats--driver-age--17-and-under|vehicle-stop-stats--driver-age--age-17-and-under,2009-2019|2004-2008,number-of-stops-by-race--driver-age--17-and-under,2020-2024,
-driver-age--18-29,driver-age,vehicle-stop-stats--driver-age--18-29,2004-2019,number-of-stops-by-race--driver-age--18-29,2020-2024,
-driver-age--30-39,driver-age,vehicle-stop-stats--driver-age--30-39,2004-2019,number-of-stops-by-race--driver-age--30-39,2020-2024,
+stops,core-counts,key-indicators--stops,2000-2019,rates-by-race--totals--all-stops|number-of-stops-by-race--all-stops,2020-2025,number-of-stops-by-race--all-stops is a duplicate; rates-by-race--totals--all-stops is primary
+searches,core-counts,key-indicators--searches,2000-2019,rates-by-race--totals--searches|number-of-stops-by-race--stop-outcome--searches,2020-2025,number-of-stops-by-race--stop-outcome--searches is a duplicate; rates-by-race--totals--searches is primary
+arrests,core-counts,key-indicators--arrests,2000-2019,rates-by-race--totals--arrests|number-of-stops-by-race--stop-outcome--arrests,2020-2025,number-of-stops-by-race--stop-outcome--arrests is a duplicate; rates-by-race--totals--arrests is primary
+citations,core-counts,vehicle-stop-stats--stop-outcome--citation|vehicle-stop-stats--stop-outcome--ci-tation,2004-2019,rates-by-race--totals--citations|number-of-stops-by-race--stop-outcome--citation,2020-2025,number-of-stops-by-race--stop-outcome--citation is a duplicate; rates-by-race--totals--citations is primary
+resident-stops,core-counts,,,rates-by-race--totals--resident-stops|number-of-stops-by-race--resident-stops,2020-2025,number-of-stops-by-race--resident-stops is a duplicate; rates-by-race--totals--resident-stops is primary
+non-resident-stops,core-counts,,,number-of-stops-by-race--non-resident-stops,2020-2025,
+contraband-total,core-counts,,,rates-by-race--totals--contraband,2020-2025,2020+ also has number-of-stops-by-race--stop-outcome--contraband (same value)
+search-rate,rates,key-indicators--search-rate,2000-2019,rates-by-race--rates--search-rate,2020-2025,pre-computed in PDF; will be recomputed at layer 2 from raw counts
+arrest-rate,rates,key-indicators--arrest-rate,2001-2019,rates-by-race--rates--arrest-rate,2020-2025,pre-computed in PDF; will be recomputed at layer 2 from raw counts
+contraband-hit-rate,rates,key-indicators--contraband-hit-rate,2001-2019,rates-by-race--rates--contraband-hit-rate,2020-2025,pre-computed in PDF; will be recomputed at layer 2 from raw counts
+stop-rate,rates,,,rates-by-race--rates--stop-rate,2020-2025,ACS population denominator; 2020+ only
+stop-rate-residents,rates,,,rates-by-race--rates--stop-rate-residents,2020-2025,ACS population denominator; 2020+ only
+citation-rate,rates,,,rates-by-race--rates--citation-rate,2020-2025,2020+ only
+stop-rate-residents--search-rate,rates,,,rates-by-race--stop-rate-residents--search-rate,2020-2025,resident-stop-denominator variant; 2020+ only
+stop-rate-residents--arrest-rate,rates,,,rates-by-race--stop-rate-residents--arrest-rate,2020-2025,resident-stop-denominator variant; 2020+ only
+stop-rate-residents--citation-rate,rates,,,rates-by-race--stop-rate-residents--citation-rate,2020-2025,resident-stop-denominator variant; 2020+ only
+stop-rate-residents--contraband-hit-rate,rates,,,rates-by-race--stop-rate-residents--contraband-hit-rate,2020-2025,resident-stop-denominator variant; 2020+ only
+contraband-hit-rate--arrest-rate,rates,,,rates-by-race--contraband-hit-rate--arrest-rate,2020-2025,CHR-denominator variant; 2020+ only
+contraband-hit-rate--citation-rate,rates,,,rates-by-race--contraband-hit-rate--citation-rate,2020-2025,CHR-denominator variant; 2020+ only
+reason-for-stop--equipment,reason-for-stop,vehicle-stop-stats--reason-for-stop--equipment,2004-2019,number-of-stops-by-race--reason-for-stop--equpiment,2020-2025,typo in 2020+ source (equpiment); canonical key uses correct spelling
+reason-for-stop--investigative,reason-for-stop,vehicle-stop-stats--reason-for-stop--investigative,2004-2019,number-of-stops-by-race--reason-for-stop--investigative,2020-2025,
+reason-for-stop--license,reason-for-stop,vehicle-stop-stats--reason-for-stop--license,2004-2019,number-of-stops-by-race--reason-for-stop--license,2020-2025,
+reason-for-stop--moving,reason-for-stop,vehicle-stop-stats--reason-for-stop--moving|vehicle-stop-stats--reason-for-stop--for-moving,2009-2019|2004-2008,number-of-stops-by-race--reason-for-stop--moving,2020-2025,
+reason-for-stop--called-for-service,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--called-for-service,2023-2025,2023+ only
+reason-for-stop--det-crime-bulletin,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--det-crime-bulletin,2023-2025,2023+ only
+reason-for-stop--officer-initiative,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--officer-initiative,2023-2025,2023+ only
+reason-for-stop--other,reason-for-stop,,,number-of-stops-by-race--reason-for-stop--other,2023-2025,2023+ only
+stop-outcome--no-action,stop-outcome,vehicle-stop-stats--stop-outcome--no-action,2004-2019,number-of-stops-by-race--stop-outcome--no-action,2020-2025,
+stop-outcome--warning,stop-outcome,vehicle-stop-stats--stop-outcome--warning,2004-2019,number-of-stops-by-race--stop-outcome--warning,2020-2025,
+stop-outcome--contraband,stop-outcome,,,number-of-stops-by-race--stop-outcome--contraband,2020-2025,2020+ only
+driver-age--17-and-under,driver-age,vehicle-stop-stats--driver-age--17-and-under|vehicle-stop-stats--driver-age--age-17-and-under,2009-2019|2004-2008,number-of-stops-by-race--driver-age--17-and-under,2020-2025,
+driver-age--18-29,driver-age,vehicle-stop-stats--driver-age--18-29,2004-2019,number-of-stops-by-race--driver-age--18-29,2020-2025,
+driver-age--30-39,driver-age,vehicle-stop-stats--driver-age--30-39,2004-2019,number-of-stops-by-race--driver-age--30-39,2020-2025,
 driver-age--40-and-over,driver-age,vehicle-stop-stats--driver-age--40-and-over,2004-2019,number-of-stops-by-race--driver-age--40-and-over,2020-2021,2022+ splits this bucket into 40-64 and 65-and-over
-driver-age--40-64,driver-age,,,number-of-stops-by-race--driver-age--40-64,2022-2024,2022+ only; prior years used 40-and-over bucket
-driver-age--65-and-over,driver-age,,,number-of-stops-by-race--driver-age--65-and-over,2022-2024,2022+ only; prior years used 40-and-over bucket
-driver-gender--female,driver-gender,vehicle-stop-stats--driver-gender--female,2004-2019,number-of-stops-by-race--driver-gender--female,2020-2024,
-driver-gender--male,driver-gender,vehicle-stop-stats--driver-gender--male,2004-2019,number-of-stops-by-race--driver-gender--male,2020-2024,
-location-of-stop--city-street,location-of-stop,vehicle-stop-stats--location-of-stop--city-street,2004-2019,number-of-stops-by-race--location-of-stop--city-street,2020-2024,
-location-of-stop--county-road,location-of-stop,vehicle-stop-stats--location-of-stop--county-road,2004-2019,number-of-stops-by-race--location-of-stop--county-road,2020-2024,
-location-of-stop--interstate-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--interstate-hwy,2004-2019,number-of-stops-by-race--location-of-stop--interstate-hwy,2020-2024,
-location-of-stop--other,location-of-stop,vehicle-stop-stats--location-of-stop--other,2004-2019,number-of-stops-by-race--location-of-stop--other,2020-2024,
-location-of-stop--state-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--state-hwy,2004-2019,number-of-stops-by-race--location-of-stop--state-hwy,2020-2024,
-location-of-stop--us-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--us-hwy,2004-2019,number-of-stops-by-race--location-of-stop--us-hwy,2020-2024,
-officer-assignment--dedicated-traffic,officer-assignment,,,number-of-stops-by-race--officer-assignment--dedicated-traffic,2023-2024,2023+ only
-officer-assignment--general-patrol,officer-assignment,,,number-of-stops-by-race--officer-assignment--general-parol,2023-2024,typo in source (general-parol); canonical key uses correct spelling
-officer-assignment--special-assignment,officer-assignment,,,number-of-stops-by-race--officer-assignment--special-assignment,2023-2024,2023+ only
-probable-cause--consent,probable-cause,search-stats--probable-cause-authority-to-search--consent,2000-2019,search-statistics--probable-cause--consent,2020-2024,
-probable-cause--drug-alcohol-odor,probable-cause,search-stats--probable-cause-authority-to-search--drug-alcohol-odor,2000-2019,search-statistics--probable-cause--drug-alcohol-odor,2020-2024,
-probable-cause--drug-dog-alert,probable-cause,search-stats--probable-cause-authority-to-search--drug-dog-alert,2000-2019,search-statistics--probable-cause--drug-dog-alert,2020-2024,
-probable-cause--incident-to-arrest,probable-cause,search-stats--probable-cause-authority-to-search--incident-to-arrest,2000-2019,search-statistics--probable-cause--incident-to-arrest,2020-2024,
-probable-cause--inventory,probable-cause,search-stats--probable-cause-authority-to-search--inventory,2000-2019,search-statistics--probable-cause--inventory,2020-2024,
-probable-cause--other,probable-cause,search-stats--probable-cause-authority-to-search--other,2000-2019,search-statistics--probable-cause--other,2020-2024,
-probable-cause--plain-view-contra,probable-cause,search-stats--probable-cause-authority-to-search--plain-view|search-stats--probable-cause-authority-to-search--contraband,2018-2019|2000-2017,search-statistics--probable-cause--plain-view-contra,2020-2024,pre-2020 label changed: contraband (2014-2017) became plain-view (2018-2019); pipe-separated multiple row_keys with matching year ranges
-probable-cause--reas-susp-weapon,probable-cause,search-stats--probable-cause-authority-to-search--reasonable|search-stats--probable-cause-authority-to-search--suspicion-weapon,2018-2019|2000-2017,search-statistics--probable-cause--reas-susp-weapon,2020-2024,pre-2020 label changed: suspicion-weapon (2014-2017) became reasonable (2018-2019); pipe-separated multiple row_keys with matching year ranges
-what-searched--car-property,what-searched,search-stats--what-searched--car-property,2000-2019,search-statistics--what-searched--car-property,2020-2024,
-what-searched--driver,what-searched,search-stats--what-searched--driver,2000-2019,search-statistics--what-searched--driver,2020-2024,
-what-searched--driver-property,what-searched,search-stats--what-searched--driver-property,2002-2019,search-statistics--what-searched--driver-property,2020-2024,
-search-duration--0-15-minutes,search-duration,search-stats--search-duration--0-15-minutes,2000-2019,search-statistics--search-duration--0-15-minutes,2020-2024,
-search-duration--16-30-minutes,search-duration,search-stats--search-duration--16-30-minutes,2000-2019,search-statistics--search-duration--16-30-minutes,2020-2024,
-search-duration--31-minutes,search-duration,search-stats--search-duration--31-minutes,2000-2019,search-statistics--search-duration--31-minutes,2020-2024,
-contraband-found--currency,contraband-found,search-stats--contraband-found--currency,2000-2019,search-statistics--contraband-found--currency,2020-2024,
+driver-age--40-64,driver-age,,,number-of-stops-by-race--driver-age--40-64,2022-2025,2022+ only; prior years used 40-and-over bucket
+driver-age--65-and-over,driver-age,,,number-of-stops-by-race--driver-age--65-and-over,2022-2025,2022+ only; prior years used 40-and-over bucket
+driver-gender--female,driver-gender,vehicle-stop-stats--driver-gender--female,2004-2019,number-of-stops-by-race--driver-gender--female,2020-2025,
+driver-gender--male,driver-gender,vehicle-stop-stats--driver-gender--male,2004-2019,number-of-stops-by-race--driver-gender--male,2020-2025,
+location-of-stop--city-street,location-of-stop,vehicle-stop-stats--location-of-stop--city-street,2004-2019,number-of-stops-by-race--location-of-stop--city-street,2020-2025,
+location-of-stop--county-road,location-of-stop,vehicle-stop-stats--location-of-stop--county-road,2004-2019,number-of-stops-by-race--location-of-stop--county-road,2020-2025,
+location-of-stop--interstate-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--interstate-hwy,2004-2019,number-of-stops-by-race--location-of-stop--interstate-hwy,2020-2025,
+location-of-stop--other,location-of-stop,vehicle-stop-stats--location-of-stop--other,2004-2019,number-of-stops-by-race--location-of-stop--other,2020-2025,
+location-of-stop--state-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--state-hwy,2004-2019,number-of-stops-by-race--location-of-stop--state-hwy,2020-2025,
+location-of-stop--us-hwy,location-of-stop,vehicle-stop-stats--location-of-stop--us-hwy,2004-2019,number-of-stops-by-race--location-of-stop--us-hwy,2020-2025,
+officer-assignment--dedicated-traffic,officer-assignment,,,number-of-stops-by-race--officer-assignment--dedicated-traffic,2023-2025,2023+ only
+officer-assignment--general-patrol,officer-assignment,,,number-of-stops-by-race--officer-assignment--general-parol,2023-2025,typo in source (general-parol); canonical key uses correct spelling
+officer-assignment--special-assignment,officer-assignment,,,number-of-stops-by-race--officer-assignment--special-assignment,2023-2025,2023+ only
+probable-cause--consent,probable-cause,search-stats--probable-cause-authority-to-search--consent,2000-2019,search-statistics--probable-cause--consent,2020-2025,
+probable-cause--drug-alcohol-odor,probable-cause,search-stats--probable-cause-authority-to-search--drug-alcohol-odor,2000-2019,search-statistics--probable-cause--drug-alcohol-odor,2020-2025,
+probable-cause--drug-dog-alert,probable-cause,search-stats--probable-cause-authority-to-search--drug-dog-alert,2000-2019,search-statistics--probable-cause--drug-dog-alert,2020-2025,
+probable-cause--incident-to-arrest,probable-cause,search-stats--probable-cause-authority-to-search--incident-to-arrest,2000-2019,search-statistics--probable-cause--incident-to-arrest,2020-2025,
+probable-cause--inventory,probable-cause,search-stats--probable-cause-authority-to-search--inventory,2000-2019,search-statistics--probable-cause--inventory,2020-2025,
+probable-cause--other,probable-cause,search-stats--probable-cause-authority-to-search--other,2000-2019,search-statistics--probable-cause--other,2020-2025,
+probable-cause--plain-view-contra,probable-cause,search-stats--probable-cause-authority-to-search--plain-view|search-stats--probable-cause-authority-to-search--contraband,2018-2019|2000-2017,search-statistics--probable-cause--plain-view-contra,2020-2025,pre-2020 label changed: contraband (2014-2017) became plain-view (2018-2019); pipe-separated multiple row_keys with matching year ranges
+probable-cause--reas-susp-weapon,probable-cause,search-stats--probable-cause-authority-to-search--reasonable|search-stats--probable-cause-authority-to-search--suspicion-weapon,2018-2019|2000-2017,search-statistics--probable-cause--reas-susp-weapon,2020-2025,pre-2020 label changed: suspicion-weapon (2014-2017) became reasonable (2018-2019); pipe-separated multiple row_keys with matching year ranges
+what-searched--car-property,what-searched,search-stats--what-searched--car-property,2000-2019,search-statistics--what-searched--car-property,2020-2025,
+what-searched--driver,what-searched,search-stats--what-searched--driver,2000-2019,search-statistics--what-searched--driver,2020-2025,
+what-searched--driver-property,what-searched,search-stats--what-searched--driver-property,2002-2019,search-statistics--what-searched--driver-property,2020-2025,
+search-duration--0-15-minutes,search-duration,search-stats--search-duration--0-15-minutes,2000-2019,search-statistics--search-duration--0-15-minutes,2020-2025,
+search-duration--16-30-minutes,search-duration,search-stats--search-duration--16-30-minutes,2000-2019,search-statistics--search-duration--16-30-minutes,2020-2025,
+search-duration--31-minutes,search-duration,search-stats--search-duration--31-minutes,2000-2019,search-statistics--search-duration--31-minutes,2020-2025,
+contraband-found--currency,contraband-found,search-stats--contraband-found--currency,2000-2019,search-statistics--contraband-found--currency,2020-2025,
 contraband-found--drugs-alcohol,contraband-found,search-stats--contraband-found--drugs-alcohol,2000-2019,search-statistics--contraband-found--drugs-alcohol,2020-2022,2023+ splits this into contraband-found--drugs and contraband-found--alcohol
-contraband-found--other,contraband-found,search-stats--contraband-found--other,2000-2019,search-statistics--contraband-found--other,2020-2024,
-contraband-found--stolen-property,contraband-found,search-stats--contraband-found--stolen-property,2000-2019,search-statistics--contraband-found--stolen-property,2020-2024,
-contraband-found--weapon,contraband-found,search-stats--contraband-found--weapon,2000-2019,search-statistics--contraband-found--weapon,2020-2024,
-contraband-found--alcohol,contraband-found,,,search-statistics--contraband-found--alcohol,2023-2024,2023+ only; split from drugs-alcohol
-contraband-found--drugs,contraband-found,,,search-statistics--contraband-found--drugs,2023-2024,2023+ only; split from drugs-alcohol
-arrest-charge--drug-violation,arrest-charge,search-stats--arrest-charge--drug-violation,2002-2019,search-statistics--arrest-charge--drug-violation|number-of-stops-by-race--arrest-violation--drug-violation,2020-2022|2023-2024,2023+ moved from search-statistics to number-of-stops table; scope may differ (search-context vs all stops); combined pending verification
-arrest-charge--dwi-bac,arrest-charge,search-stats--arrest-charge--dwi-bac,2002-2019,search-statistics--arrest-charge--dwi-bac|number-of-stops-by-race--arrest-violation--dwi-bac,2020-2022|2023-2024,same scope note as arrest-charge--drug-violation
-arrest-charge--off-against-person,arrest-charge,search-stats--arrest-charge--off-against-person|search-stats--arrest-charge--offense-against,2009-2019|2002-2008,search-statistics--arrest-charge--off-against-person|number-of-stops-by-race--arrest-violation--off-against-person,2020-2022|2023-2024,same scope note
-arrest-charge--other,arrest-charge,search-stats--arrest-charge--other,2002-2019,search-statistics--arrest-charge--other|number-of-stops-by-race--arrest-violation--other,2020-2022|2023-2024,same scope note
-arrest-charge--outstanding-warrant,arrest-charge,search-stats--arrest-charge--outstanding-warrant|search-stats--arrest-charge--outstanding,2009-2019|2002-2008,search-statistics--arrest-charge--outstanding-warrant|number-of-stops-by-race--arrest-violation--outstanding-warrent,2020-2022|2023-2024,typo in 2023+ source (outstanding-warrent); same scope note
-arrest-charge--property-offense,arrest-charge,search-stats--arrest-charge--property-offense,2002-2019,search-statistics--arrest-charge--property-offense|number-of-stops-by-race--arrest-violation--property,2020-2022|2023-2024,label shortened in 2023+ source; same scope note
-arrest-charge--resist-arrest,arrest-charge,search-stats--arrest-charge--resist-arrest,2002-2019,search-statistics--arrest-charge--resist-arrest|number-of-stops-by-race--arrest-violation--resist-arrest,2020-2022|2023-2024,same scope note
-arrest-charge--traffic-violation,arrest-charge,search-stats--arrest-charge--traffic-violation,2002-2019,search-statistics--arrest-charge--traffic-violation|number-of-stops-by-race--arrest-violation--traffic,2020-2022|2023-2024,label shortened in 2023+ source; same scope note
-citation-warning--equipment,citation-warning,,,number-of-stops-by-race--citation-warning-violation--equipment,2023-2024,2023+ only
-citation-warning--license-registration,citation-warning,,,number-of-stops-by-race--citation-warning-violation--license-registration,2023-2024,2023+ only
-citation-warning--moving,citation-warning,,,number-of-stops-by-race--citation-warning-violation--moving,2023-2024,2023+ only
+contraband-found--other,contraband-found,search-stats--contraband-found--other,2000-2019,search-statistics--contraband-found--other,2020-2025,
+contraband-found--stolen-property,contraband-found,search-stats--contraband-found--stolen-property,2000-2019,search-statistics--contraband-found--stolen-property,2020-2025,
+contraband-found--weapon,contraband-found,search-stats--contraband-found--weapon,2000-2019,search-statistics--contraband-found--weapon,2020-2025,
+contraband-found--alcohol,contraband-found,,,search-statistics--contraband-found--alcohol,2023-2025,2023+ only; split from drugs-alcohol
+contraband-found--drugs,contraband-found,,,search-statistics--contraband-found--drugs,2023-2025,2023+ only; split from drugs-alcohol
+arrest-charge--drug-violation,arrest-charge,search-stats--arrest-charge--drug-violation,2002-2019,search-statistics--arrest-charge--drug-violation|number-of-stops-by-race--arrest-violation--drug-violation,2020-2022|2023-2025,2023+ moved from search-statistics to number-of-stops table; scope may differ (search-context vs all stops); combined pending verification
+arrest-charge--dwi-bac,arrest-charge,search-stats--arrest-charge--dwi-bac,2002-2019,search-statistics--arrest-charge--dwi-bac|number-of-stops-by-race--arrest-violation--dwi-bac,2020-2022|2023-2025,same scope note as arrest-charge--drug-violation
+arrest-charge--off-against-person,arrest-charge,search-stats--arrest-charge--off-against-person|search-stats--arrest-charge--offense-against,2009-2019|2002-2008,search-statistics--arrest-charge--off-against-person|number-of-stops-by-race--arrest-violation--off-against-person,2020-2022|2023-2025,same scope note
+arrest-charge--other,arrest-charge,search-stats--arrest-charge--other,2002-2019,search-statistics--arrest-charge--other|number-of-stops-by-race--arrest-violation--other,2020-2022|2023-2025,same scope note
+arrest-charge--outstanding-warrant,arrest-charge,search-stats--arrest-charge--outstanding-warrant|search-stats--arrest-charge--outstanding,2009-2019|2002-2008,search-statistics--arrest-charge--outstanding-warrant|number-of-stops-by-race--arrest-violation--outstanding-warrent|number-of-stops-by-race--arrest-violation--outstanding-warrant,2020-2022|2023-2024|2025,typo in 2023-2024 source (outstanding-warrent); 2025 corrected spelling to outstanding-warrant; same scope note
+arrest-charge--property-offense,arrest-charge,search-stats--arrest-charge--property-offense,2002-2019,search-statistics--arrest-charge--property-offense|number-of-stops-by-race--arrest-violation--property,2020-2022|2023-2025,label shortened in 2023+ source; same scope note
+arrest-charge--resist-arrest,arrest-charge,search-stats--arrest-charge--resist-arrest,2002-2019,search-statistics--arrest-charge--resist-arrest|number-of-stops-by-race--arrest-violation--resist-arrest,2020-2022|2023-2025,same scope note
+arrest-charge--traffic-violation,arrest-charge,search-stats--arrest-charge--traffic-violation,2002-2019,search-statistics--arrest-charge--traffic-violation|number-of-stops-by-race--arrest-violation--traffic,2020-2022|2023-2025,label shortened in 2023+ source; same scope note
+citation-warning--equipment,citation-warning,,,number-of-stops-by-race--citation-warning-violation--equipment,2023-2025,2023+ only
+citation-warning--license-registration,citation-warning,,,number-of-stops-by-race--citation-warning-violation--license-registration,2023-2025,2023+ only
+citation-warning--moving,citation-warning,,,number-of-stops-by-race--citation-warning-violation--moving,2023-2025,2023+ only
 pre2020-disparity-index,disparity,key-indicators--disparity-index,2000-2018,,,era-specific; single disparity index using census population; no cross-era equivalent
 pre2020-local-population-pct,disparity,key-indicators--local-population-pct,2000-2018,,,era-specific; local census population %; no cross-era equivalent
 pre2020-disparity-index-2010,disparity,key-indicators--2010-pop-disparity-index,2019,,,era-specific; 2019 report split into 2010 census and ACS; no cross-era equivalent
@@ -86,27 +86,27 @@ pre2020-disparity-index-acs,disparity,key-indicators--2018-pop-disparity-index,2
 pre2020-local-population-pct-acs,disparity,key-indicators--2018-local-population-pct,2019,,,era-specific
 pre2020-statewide-population-pct,disparity,key-indicators--statewide-population-pct,2000-2019,,,era-specific; statewide Missouri population %; no 2020+ equivalent
 disparity-index--all-stops,disparity,,,disparity-index-by-race--disparity-index--all-stops,2020-2021,era-specific; 2020-2021 only (label changes in 2022)
-disparity-index--all-stops-acs,disparity,,,disparity-index-by-race--disparity-index--all-stops-acs,2022,era-specific
-disparity-index--all-stops-dec,disparity,,,disparity-index-by-race--disparity-index--all-stops-dec,2022,era-specific
+disparity-index--all-stops-acs,disparity,,,disparity-index-by-race--disparity-index--all-stops-acs,2022-2025,era-specific
+disparity-index--all-stops-dec,disparity,,,disparity-index-by-race--disparity-index--all-stops-dec,2022-2025,era-specific
 disparity-index--resident-stops,disparity,,,disparity-index-by-race--disparity-index--resident-stops,2020-2021,era-specific
-disparity-index--resident-stops-acs,disparity,,,disparity-index-by-race--disparity-index--resident-stops-acs,2022,era-specific
-disparity-index--resident-stops-dec,disparity,,,disparity-index-by-race--disparity-index--resident-stops-dec,2022,era-specific
-disparity-index--stops--all-stops,disparity,,,disparity-index-by-race--stops--all-stops,2020-2022,era-specific; raw stop count used for disparity calculation
-disparity-index--stops--resident-stops,disparity,,,disparity-index-by-race--stops--resident-stops,2020-2022,era-specific
-disparity-index--resident-stops-acs--all-stops-dec,disparity,,,disparity-index-by-race--resident-stops-acs--all-stops-dec,2022,era-specific
-disparity-index--resident-stops-acs--resident-stops-dec,disparity,,,disparity-index-by-race--resident-stops-acs--resident-stops-dec,2022,era-specific
+disparity-index--resident-stops-acs,disparity,,,disparity-index-by-race--disparity-index--resident-stops-acs,2022-2025,era-specific
+disparity-index--resident-stops-dec,disparity,,,disparity-index-by-race--disparity-index--resident-stops-dec,2022-2025,era-specific
+disparity-index--stops--all-stops,disparity,,,disparity-index-by-race--stops--all-stops,2020-2025,era-specific; raw stop count used for disparity calculation
+disparity-index--stops--resident-stops,disparity,,,disparity-index-by-race--stops--resident-stops,2020-2025,era-specific
+disparity-index--resident-stops-acs--all-stops-dec,disparity,,,disparity-index-by-race--resident-stops-acs--all-stops-dec,2022-2025,era-specific
+disparity-index--resident-stops-acs--resident-stops-dec,disparity,,,disparity-index-by-race--resident-stops-acs--resident-stops-dec,2022-2025,era-specific
 disparity-index--population-2019,population,,,disparity-index-by-race--population--2019-population,2020,era-specific; population used for disparity calculation
 disparity-index--population-pct-2019,population,,,disparity-index-by-race--population--2019-population-pct,2020,era-specific
-disparity-index--population-2020-decennial,population,,,disparity-index-by-race--population--2020-decennial-pop,2022,era-specific
-disparity-index--population-pct-2020-decennial,population,,,disparity-index-by-race--population--2020-decennial-pop-pct,2022,era-specific
+disparity-index--population-2020-decennial,population,,,disparity-index-by-race--population--2020-decennial-pop,2022-2025,era-specific
+disparity-index--population-pct-2020-decennial,population,,,disparity-index-by-race--population--2020-decennial-pop-pct,2022-2025,era-specific
 disparity-index--population-2020-acs,population,,,disparity-index-by-race--population--2020-population,2021,era-specific
 disparity-index--population-pct-2020-acs,population,,,disparity-index-by-race--population--2020-population-pct,2021,era-specific
 disparity-index--population-2021-acs,population,,,disparity-index-by-race--population--2021-acs-pop,2022,era-specific
 disparity-index--population-pct-2021-acs,population,,,disparity-index-by-race--population--2021-acs-pop-pct,2022,era-specific
 rates-population-2019,population,,,rates-by-race--population--2019-population,2020,era-specific; population used for rate calculation
 rates-population-pct-2019,population,,,rates-by-race--population--2019-population-pct,2020,era-specific
-rates-population-2020-decennial,population,,,rates-by-race--population--2020-decennial-pop,2022-2024,era-specific
-rates-population-pct-2020-decennial,population,,,rates-by-race--population--2020-decennial-pop-pct,2022-2024,era-specific
+rates-population-2020-decennial,population,,,rates-by-race--population--2020-decennial-pop,2022-2025,era-specific
+rates-population-pct-2020-decennial,population,,,rates-by-race--population--2020-decennial-pop-pct,2022-2025,era-specific
 rates-population-2020-acs,population,,,rates-by-race--population--2020-population,2021,era-specific
 rates-population-pct-2020-acs,population,,,rates-by-race--population--2020-population-pct,2021,era-specific
 rates-population-2021-acs,population,,,rates-by-race--population--2021-acs-pop,2022,era-specific
@@ -115,3 +115,7 @@ rates-population-2022-acs,population,,,rates-by-race--population--2022-acs-pop,2
 rates-population-pct-2022-acs,population,,,rates-by-race--population--2022-acs-pop-pct,2023,era-specific
 rates-population-2023-acs,population,,,rates-by-race--population--2023-acs-pop,2024,era-specific
 rates-population-pct-2023-acs,population,,,rates-by-race--population--2023-acs-pop-pct,2024,era-specific
+rates-population-2024-acs,population,,,rates-by-race--population--2024-acs-pop,2025,era-specific; population used for rate calculation
+rates-population-pct-2024-acs,population,,,rates-by-race--population--2024-acs-pop-pct,2025,era-specific
+disparity-index--population-2024-acs,population,,,disparity-index-by-race--population--2024-acs-pop,2025,era-specific; population used for disparity calculation
+disparity-index--population-pct-2024-acs,population,,,disparity-index-by-race--population--2024-acs-pop-pct,2025,era-specific
