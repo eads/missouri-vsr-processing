@@ -175,7 +175,9 @@ def _compute_statewide_rates(grouped: pd.DataFrame, value_cols: List[str]) -> pd
                 continue
             num = lookup.loc[(year, num_key)]
             den = lookup.loc[(year, den_key)]
-            rates = num / den
+            # Issue #36: STATEWIDE_RATE_SPECS are all count/count ratios; scale to
+            # percentage to match per-agency rate rows (which are already percentages).
+            rates = num / den * 100
             rates = rates.where(den != 0)
             record: dict = {"year": year, "row_key": spec["row_key"]}
             for col in value_cols:
@@ -1883,7 +1885,8 @@ def write_statewide_year_sums_json(context, combined: pd.DataFrame) -> str:
                     if pd.isna(num) or pd.isna(den) or den == 0:
                         record[col] = pd.NA
                     else:
-                        record[col] = num / den
+                        # Issue #36: scale ratio to percentage (see _compute_statewide_rates).
+                        record[col] = num / den * 100
                 rate_records.append(record)
             rates_df = pd.DataFrame(rate_records)
             if rates_df.empty:
