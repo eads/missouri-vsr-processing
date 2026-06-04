@@ -209,10 +209,17 @@ def _build_statewide_canonical_rows(canonical: pd.DataFrame) -> pd.DataFrame:
     base = base[~derived_mask]
 
     # Exclude rate rows and population rows from aggregation source.
-    # Rates are re-derived from totals; population aggregation is misleading.
+    # Rates are re-derived from totals (STATEWIDE_RATE_SPECS); population-normalized
+    # rows are skipped because summing per-agency residents double-counts overlapping
+    # jurisdictions. Match on substring, not suffix/exact-prefix: keys like
+    # ``stop-rate-residents`` and ``rates-population-2024-acs`` are rates / population
+    # denominators that must NOT be summed, yet don't end in ``-rate`` and don't start
+    # with ``rates-by-race--population`` (which matches nothing) — the old mask let them
+    # leak into the sum, so the aggregate showed e.g. a 3,962% stop-rate-residents row.
+    row_key_str = base["row_key"].astype(str)
     exclude_mask = (
-        base["row_key"].astype(str).str.endswith("-rate", na=False)
-        | base["row_key"].astype(str).str.startswith("rates-by-race--population", na=False)
+        row_key_str.str.contains("rate", case=False, na=False)
+        | row_key_str.str.contains("population", case=False, na=False)
     )
     count_base = base[~exclude_mask].copy()
     for col in value_cols:
