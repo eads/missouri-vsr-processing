@@ -59,7 +59,11 @@ OFFICIAL_PC_LABEL = {
     "Other": "probable-cause--other",
 }
 
-_DEPS = [AssetKey("canonical_combined_parquet"), AssetKey("state_reports_combined")]
+_DEPS = [
+    AssetKey("canonical_combined_parquet"),
+    AssetKey("state_reports_combined"),
+    AssetKey("acs_population_16plus"),
+]
 
 
 # ------------------------------------------------------------------------------
@@ -78,6 +82,22 @@ def _load_state_reports(context) -> pd.DataFrame:
     return pd.read_parquet(_processed(context, "state_reports_combined.parquet"))
 
 
+def _acs_pop_pct(context) -> Dict[int, Dict[str, float]]:
+    """stops_year -> {race: ACS 16+ population %}, self-sourced from ACS 5-year PUMS.
+
+    Replaces the state report as the disparity denominator: we tabulate ages 16+ by
+    race ourselves (acs_population_16plus), so the population line spans the full
+    chart window instead of stopping at the last parseable AG statewide report.
+    Keyed by stops_year (= acs_vintage + 1), matching the AG's vintage convention.
+    Reproduces the AG's published denominators within ~1% on the major categories.
+    """
+    acs = pd.read_parquet(_processed(context, "acs_population_16plus.parquet"))
+    out: Dict[int, Dict[str, float]] = {}
+    for _, row in acs.iterrows():
+        out[int(row["stops_year"])] = {r: _num(row.get(f"{r} pct")) for r in RACES}
+    return out
+
+
 def _num(v) -> Optional[float]:
     return None if v is None or pd.isna(v) else float(v)
 
@@ -89,30 +109,6 @@ def _race_values(df: pd.DataFrame, canonical_key: str, year: int) -> Optional[Di
         return None
     row = r.iloc[0]
     return {c: _num(row.get(c)) for c in RACE_COLS}
-
-
-def _official_acs_pop_pct(sr: pd.DataFrame) -> Dict[int, Dict[str, float]]:
-    """report_year -> {race: ACS 16+ population %}. Deduped across tables.
-
-    The denominator label drifts across report years: 2022+ reports use
-    ``<year> ACS pop. %`` (alongside a separate ``Decennial pop. %`` we must NOT
-    pick up), while the 2021 report labels the same ACS 16+ estimate plainly as
-    ``2020 population %`` (confirmed ACS 16+ five-year estimate in that report's
-    own notes). Match either form; exclude the Decennial row.
-    """
-    metric = sr["metric"].astype(str)
-    is_pct = metric.str.contains("%", na=False)
-    is_acs16 = (
-        metric.str.contains("ACS pop", case=False, na=False)
-        | metric.str.contains(r"\bpopulation\b", case=False, regex=True, na=False)
-    )
-    is_decennial = metric.str.contains("decennial", case=False, na=False)
-    pop = sr[is_pct & is_acs16 & ~is_decennial]
-    pop = pop.drop_duplicates(subset=["report_year"])
-    out: Dict[int, Dict[str, float]] = {}
-    for _, row in pop.iterrows():
-        out[int(row["report_year"])] = {c: _num(row.get(c)) for c in RACES}
-    return out
 
 
 def _official_all_stops_disparity(sr: pd.DataFrame) -> Dict[int, Dict[str, float]]:
@@ -168,16 +164,15 @@ def _write_outputs(context, name: str, payload: dict, rows: List[dict]) -> List[
 def ii2025_disparity_index(context) -> List[str]:
     sw = _load_statewide(context)
     sr = _load_state_reports(context)
-    pop_by_year = _official_acs_pop_pct(sr)          # year -> {race: pop %}
+    pop_by_year = _acs_pop_pct(context)              # stops_year -> {race: ACS 16+ pop %}
     official_disp = _official_all_stops_disparity(sr)  # series_year -> {race: disparity}
 
     metrics = {"stops": "stops", "searches": "searches", "arrests": "arrests"}
     # 10-year window ending at the primary year. Shares come from our statewide
-    # counts (available every year) and the official disparity line spans the full
-    # window from the latest report's 2000..N series; the independently-computed
-    # disparity is only populated for years where a statewide report gave us an ACS
-    # 16+ denominator (the AG's tabular statewide report format only goes back to
-    # 2021 — earlier years carry official_disparity_index but no computed value).
+    # counts (available every year); the disparity denominator is our own ACS
+    # 5-year PUMS 16+-by-race tabulation (acs_population_16plus), which spans the
+    # full window, so disparity_index is computed for every year. The AG's published
+    # disparity (2000..N series) rides alongside as official_disparity_index.
     years = list(range(PRIMARY_YEAR - 9, PRIMARY_YEAR + 1))
     denominator_years = sorted(y for y in pop_by_year if y in years)
 
@@ -186,14 +181,17 @@ def ii2025_disparity_index(context) -> List[str]:
         "metric": "disparity_index",
         "window": {"start": years[0], "end": years[-1], "n_years": len(years)},
         "definition": "(group's share of <metric>) / (group's share of 16+ ACS population)",
-        "population_basis": "ACS 5-year estimates, ages 16+, as reported in the statewide "
-                            "annual report for that year (matches the AG's disparity-index denominator)",
+        "population_basis": "ACS 5-year PUMS, ages 16+, by race, tabulated by us "
+                            "(acs_population_16plus; vintage = stops_year - 1, the AG's convention). "
+                            "Reproduces the AG's published 16+ denominators within ~1% on the major "
+                            "categories; lets the denominator span the full window where the AG's "
+                            "parseable statewide report does not.",
         "computed_disparity_years": denominator_years,
-        "computed_disparity_coverage": "disparity_index is computed only for years with an ingested "
-                                       "statewide-report ACS denominator; other years in the window carry "
-                                       "share_pct and official_disparity_index but disparity_index = null.",
-        "caveat": "ACS provides race-specific Hispanic estimates only for White, so non-White "
-                  "Hispanic residents are double-counted in the population shares (per the AG's note).",
+        "computed_disparity_coverage": "disparity_index is computed for every year with an ACS PUMS "
+                                       "denominator (the full window unless a PUMS vintage was unavailable). "
+                                       "official_disparity_index carries the AG's published series for comparison.",
+        "caveat": "Every race category except White is race-alone INCLUDING Hispanics (matching the AG), "
+                  "so non-White Hispanic residents are double-counted in the population shares.",
         "statewide_counts_source": "computed: 'Missouri (all agencies)' aggregate summed from per-agency reports",
         "official_comparison": "official_disparity_index = AG's published all-stops disparity (Table 3 time series)",
         "years": {},

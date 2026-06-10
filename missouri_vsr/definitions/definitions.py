@@ -4,7 +4,7 @@ from pathlib import Path
 from dagster import Definitions, load_assets_from_modules
 
 from missouri_vsr.asset_checks import asset_checks
-from missouri_vsr.assets import agency_reference, audit, extract, gis, processed, program_287g, reports, state_report
+from missouri_vsr.assets import acs_population, agency_reference, audit, extract, gis, processed, program_287g, reports, state_report
 from missouri_vsr.assets.analysis import initial_impressions_2025
 from missouri_vsr.resources import LocalDirectoryResource, S3Resource
 
@@ -16,7 +16,7 @@ DATA_DIR_OUT=Path("data/out")
 # Automatically load assets from the assets modules.
 assets_loaded = load_assets_from_modules(
     [extract, reports, processed, agency_reference, audit, gis, program_287g, state_report,
-     initial_impressions_2025]
+     acs_population, initial_impressions_2025]
 )
 
 defs = Definitions(
