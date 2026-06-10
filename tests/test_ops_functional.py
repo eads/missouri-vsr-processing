@@ -19,24 +19,24 @@ def _sample_combined_df() -> pd.DataFrame:
             {
                 "agency": "Agency A",
                 "year": 2023,
-                "row_key": "rates-by-race--totals--all-stops",
-                "metric": "All stops",
+                "row_key": "stops",
+                "metric": "Stops",
                 "Total": 100,
                 "White": 50,
             },
             {
                 "agency": "Agency B",
                 "year": 2023,
-                "row_key": "rates-by-race--totals--all-stops",
-                "metric": "All stops",
+                "row_key": "stops",
+                "metric": "Stops",
                 "Total": 200,
                 "White": 50,
             },
             {
                 "agency": "Missouri State Highway Patrol",
                 "year": 2023,
-                "row_key": "rates-by-race--totals--all-stops",
-                "metric": "All stops",
+                "row_key": "stops",
+                "metric": "Stops",
                 "Total": 150,
                 "White": 25,
             },
@@ -59,7 +59,7 @@ def test_add_rank_percentile_rows_op(tmp_path):
     real_agency_rows = augmented[augmented["agency"] != processed.STATEWIDE_AGENCY_NAME]
     assert len(real_agency_rows) == len(df) * 4
 
-    base_row_key = "rates-by-race--totals--all-stops"
+    base_row_key = "stops"
     slug_suffixes = {
         row_key.replace(base_row_key, "")
         for row_key in real_agency_rows["row_key"].unique()

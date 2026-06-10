@@ -26,9 +26,11 @@ APPELSON_REPO = "appelson/Tracking_287g"
 APPELSON_SHEETS_API = f"https://api.github.com/repos/{APPELSON_REPO}/contents/sheets"
 APPELSON_FOLDER_RE = re.compile(r"^sheets_\d{8}_\d{6}$")
 
-# ICE filename: participatingAgenciesMMDDYYYY{am|pm}.xlsx
+# ICE filename: participatingAgenciesMMDDYYYY[am|pm].xlsx
+# The am/pm period suffix was dropped by the source as of the 06032026 snapshot,
+# so it is optional; older files still carry it.
 _FILENAME_RE = re.compile(
-    r"participatingAgencies(?P<m>\d{2})(?P<d>\d{2})(?P<y>\d{4})(?P<period>am|pm)(?:_(?P<seq>\d+))?\.xlsx",
+    r"participatingAgencies(?P<m>\d{2})(?P<d>\d{2})(?P<y>\d{4})(?P<period>am|pm)?(?:_(?P<seq>\d+))?\.xlsx",
     re.IGNORECASE,
 )
 
@@ -39,7 +41,7 @@ def _parse_snapshot_filename(name: str) -> tuple[date, str, int] | None:
         return None
     snap = date(int(m["y"]), int(m["m"]), int(m["d"]))
     seq = int(m["seq"] or 0)
-    return snap, m["period"].lower(), seq
+    return snap, (m["period"] or "").lower(), seq
 
 
 def _latest_snapshot_path(snapshot_dir: Path) -> Path:
