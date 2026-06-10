@@ -69,8 +69,9 @@ def test_aggregates_counts_and_derives_rates():
     search_rate = statewide[(statewide["row_key"] == "search-rate") & (statewide["year"] == 2023)]
     assert len(search_rate) == 1
     rate_row = search_rate.iloc[0]
-    assert rate_row["Total"] == pytest_approx(30.0 / 300.0)
-    assert rate_row["White"] == pytest_approx(15.0 / 210.0)
+    # Rates are re-derived on the percentage scale (×100) to match per-agency rate rows.
+    assert rate_row["Total"] == pytest_approx(100 * 30.0 / 300.0)
+    assert rate_row["White"] == pytest_approx(100 * 15.0 / 210.0)
 
 
 def test_excludes_population_rows_from_aggregation():
