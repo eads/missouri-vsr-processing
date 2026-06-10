@@ -217,7 +217,8 @@ def state_reports_combined(context, download_state_reports: Dict[str, str]) -> p
     for year_str, path in sorted(download_state_reports.items()):
         df = parse_state_report(path, int(year_str))
         context.log.info("Parsed statewide %s: %d metric rows", year_str, len(df))
-        frames.append(df)
+        if not df.empty:
+            frames.append(df)
     combined = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
     out_dir = Path(context.resources.data_dir_processed.get_path())
