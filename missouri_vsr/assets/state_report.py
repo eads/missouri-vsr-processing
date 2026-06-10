@@ -42,8 +42,24 @@ from dagster import AssetIn, asset
 # ------------------------------------------------------------------------------
 STATE_REPORT_URLS: Dict[int, str] = {
     2025: "https://ago.mo.gov/wp-content/uploads/2025-VSR-Annual-State-Report.pdf",
+    2024: "https://ago.mo.gov/wp-content/uploads/VSR-Annual-State-Report-2024.pdf",
     2023: "https://ago.mo.gov/wp-content/uploads/VSRstatereport2023.pdf",
+    2022: "https://ago.mo.gov/wp-content/uploads/vsrstatereport2022.pdf",
+    2021: "https://ago.mo.gov/wp-content/uploads/2021-VSR-Statewide.pdf",
 }
+
+# Known statewide reports we do NOT yet ingest, with their published URLs, because
+# their PDF layout predates the clean "Table N: ... for Missouri" tabular format the
+# parser keys on:
+#   - 2020: https://ago.mo.gov/wp-content/uploads/2020-VSR-Statewide.pdf
+#     A typeset "annual report" (cover letters, contents page); no parseable tables.
+#   - 2016-2019: the AG published no consolidated statewide report — only an executive
+#     summary + agency reports + appendices (e.g. 2017 Appendix B carries the disparity
+#     indexes 2000-2017). Population/disparity for these years live in that appendix
+#     format, which this parser does not handle.
+# The official disparity-index *time series* (2000..N) in the latest ingested report
+# already spans the full window, so charts can show the official line back to 2000
+# even where we cannot independently recompute the denominator.
 
 RACE_COLS = ["Total", "White", "Black", "Hispanic", "Native American", "Asian", "Other"]
 # The disparity-index *time series* table omits the Total column.
