@@ -437,3 +437,185 @@ asset_checks.extend(
 from missouri_vsr.assets.program_287g import check_all_mo_agencies_resolved
 
 asset_checks.append(check_all_mo_agencies_resolved)
+
+
+# ------------------------------------------------------------------------------
+# State statewide-report (parsed PDF) checks — tolerant of years/tables that the
+# AG never published or that the parser cannot read (skip, don't fail).
+# ------------------------------------------------------------------------------
+_STATE_REPORTS_PARQUET = Path("data/processed/state_reports_combined.parquet")
+_ACS_POP_PARQUET = Path("data/processed/acs_population_16plus.parquet")
+_AG_RACES = ["White", "Black", "Hispanic", "Native American", "Asian", "Other"]
+
+# (vintage, category) pairs where the AG's PUBLISHED denominator is itself an outlier,
+# so a >tolerance gap is expected and must not fail the build. The AG's 2021 ACS White
+# figure (2022 statewide report) is 4.02M / 81.84% — anomalously high vs both 2020
+# (3.95M) and 2022 (3.93M); our PUMS 5-year tabulation (~3.93M / 79.7%) sits naturally
+# between them and is internally consistent. Almost certainly an artifact of the
+# pandemic-disrupted 2021 ACS vintage. Documented, not silently widened.
+_KNOWN_AG_DENOMINATOR_ANOMALIES = {(2021, "White")}
+
+
+@asset_check(asset=AssetKey("state_reports_combined"))
+def check_state_reports_parsed_nonempty(state_reports_combined: pd.DataFrame) -> AssetCheckResult:
+    """Each report_year that parsed should yield a substantive table, not a near-empty
+    frame (a silent parser break). Only inspects years that ARE present — a year the AG
+    never published in tabular form simply won't appear and is not failed here."""
+    if state_reports_combined.empty or "report_year" not in state_reports_combined.columns:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no state reports parsed"})
+    counts = state_reports_combined.groupby("report_year").size()
+    thin = {int(y): int(n) for y, n in counts.items() if n < 30}
+    return AssetCheckResult(
+        passed=not thin,
+        metadata={"report_years": [int(y) for y in counts.index],
+                  "rows_per_year": {int(y): int(n) for y, n in counts.items()},
+                  "suspiciously_thin": MetadataValue.json(thin)},
+    )
+
+
+@asset_check(asset=AssetKey("state_reports_combined"))
+def check_state_reports_population_shares_sane(state_reports_combined: pd.DataFrame) -> AssetCheckResult:
+    """Where a population-percentage row exists, the race shares should be valid
+    percentages that sum to ~100 plus the AG's non-White-Hispanic double-count
+    (observed ~102-104). Catches a misparsed/transposed population row. Skips if
+    no population-% rows are present."""
+    df = state_reports_combined
+    if df.empty or "metric" not in df.columns:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no rows"})
+    metric = df["metric"].astype(str)
+    is_pct = metric.str.contains("%", na=False)
+    is_pop = (metric.str.contains("ACS pop", case=False, na=False)
+              | metric.str.contains(r"\bpopulation\b", case=False, regex=True, na=False))
+    is_dec = metric.str.contains("decennial", case=False, na=False)
+    pop = df[is_pct & is_pop & ~is_dec]
+    if pop.empty:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no population-% rows"})
+    races = [c for c in _AG_RACES if c in df.columns]
+    violations = []
+    for _, row in pop.iterrows():
+        shares = [row.get(c) for c in races]
+        nums = [float(s) for s in shares if pd.notna(s)]
+        out_of_range = [c for c, s in zip(races, shares) if pd.notna(s) and not (0 <= float(s) <= 100)]
+        total = sum(nums)
+        if out_of_range or not (99 <= total <= 112):
+            violations.append({"report_year": int(row.get("report_year")), "metric": str(row.get("metric")),
+                               "share_sum": round(total, 2), "out_of_range": out_of_range})
+    return AssetCheckResult(
+        passed=not violations,
+        metadata={"population_rows_checked": len(pop),
+                  "violations": MetadataValue.json(violations[:25])},
+    )
+
+
+@asset_check(asset=AssetKey("state_reports_combined"))
+def check_state_reports_disparity_timeseries_sane(state_reports_combined: pd.DataFrame) -> AssetCheckResult:
+    """Where a disparity-index time series exists, values are plausible (0 <= d < 20)
+    and series_year falls within 2000..report_year. Skips reports without the series
+    (some years omit the disparity tables entirely)."""
+    df = state_reports_combined
+    if df.empty or "section" not in df.columns:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no rows"})
+    ts = df[df["section"] == "disparity-index-timeseries"]
+    if ts.empty:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no disparity time series present"})
+    races = [c for c in _AG_RACES if c in df.columns]
+    vals = ts[races].apply(pd.to_numeric, errors="coerce")
+    bad_value = int(((vals < 0) | (vals >= 20)).sum().sum())
+    sy = pd.to_numeric(ts.get("series_year"), errors="coerce")
+    ry = pd.to_numeric(ts.get("report_year"), errors="coerce")
+    bad_year = int(((sy < 2000) | (sy > ry)).sum())
+    return AssetCheckResult(
+        passed=bad_value == 0 and bad_year == 0,
+        metadata={"timeseries_rows": len(ts), "out_of_range_values": bad_value,
+                  "out_of_range_series_years": bad_year},
+    )
+
+
+# ------------------------------------------------------------------------------
+# ACS PUMS population checks
+# ------------------------------------------------------------------------------
+@asset_check(asset=AssetKey("acs_population_16plus"))
+def check_acs_population_sane(acs_population_16plus: pd.DataFrame) -> AssetCheckResult:
+    """Schema + range sanity: a Total 16+ in a plausible Missouri band, race shares in
+    (0, 100], and a share-sum above 100 (confirming the intended non-White-Hispanic
+    double-count is present, not silently dropped)."""
+    df = acs_population_16plus
+    if df.empty:
+        return AssetCheckResult(passed=False, metadata={"reason": "no ACS vintages materialized"})
+    pct_cols = [f"{r} pct" for r in _AG_RACES]
+    missing = [c for c in ["acs_vintage", "stops_year", "Total", *_AG_RACES, *pct_cols] if c not in df.columns]
+    if missing:
+        return AssetCheckResult(passed=False, metadata={"missing_columns": missing})
+    bad = []
+    for _, row in df.iterrows():
+        v = int(row["acs_vintage"])
+        total = row["Total"]
+        if not (4_000_000 <= total <= 6_000_000):
+            bad.append({"vintage": v, "issue": "Total out of MO band", "Total": int(total)})
+        shares = [row[c] for c in pct_cols]
+        if any(pd.isna(s) or not (0 < float(s) <= 100) for s in shares):
+            bad.append({"vintage": v, "issue": "race pct out of (0,100]"})
+        elif sum(float(s) for s in shares) <= 100:
+            bad.append({"vintage": v, "issue": "share-sum <= 100 (double-count missing?)",
+                        "sum": round(sum(float(s) for s in shares), 2)})
+    return AssetCheckResult(
+        passed=not bad,
+        metadata={"vintages": [int(v) for v in df["acs_vintage"]],
+                  "violations": MetadataValue.json(bad[:25])},
+    )
+
+
+@asset_check(asset=AssetKey("acs_population_16plus"))
+def check_acs_population_matches_ag_published(acs_population_16plus: pd.DataFrame) -> AssetCheckResult:
+    """Cross-check our PUMS tabulation against the AG's published 'NNNN ACS pop.' /
+    'NNNN population' COUNT rows in the statewide reports, for overlapping vintages.
+    Asserts White/Black/Hispanic/Total within 2% (the tiny Native American/Other buckets
+    are definitionally looser and excluded). Skips if the state reports aren't present or
+    don't overlap — this guards against a future ACS recode or vintage-mapping slip."""
+    df = acs_population_16plus
+    if df.empty or not _STATE_REPORTS_PARQUET.exists():
+        return AssetCheckResult(passed=True, metadata={"skipped": True,
+                                "reason": "acs empty or state_reports_combined.parquet absent"})
+    sr = pd.read_parquet(_STATE_REPORTS_PARQUET)
+    metric = sr["metric"].astype(str)
+    # COUNT rows only: "<year> ACS pop." or "<year> population" (no %, not Decennial).
+    is_count = (metric.str.match(r"^\d{4}\s+(ACS pop\.|population)$", case=False)
+                & ~metric.str.contains("%", na=False))
+    ag = sr[is_count].copy()
+    if ag.empty:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no AG count rows to compare"})
+    ag["vintage"] = metric[is_count].str.extract(r"^(\d{4})").astype(int).values
+    by_vintage = {int(v): row for v, row in df.set_index("acs_vintage").iterrows()}
+    checked, violations, known_anomalies = [], [], []
+    for _, agrow in ag.drop_duplicates("vintage").iterrows():
+        v = int(agrow["vintage"])
+        ours = by_vintage.get(v)
+        if ours is None:
+            continue
+        checked.append(v)
+        for cat in ["Total", "White", "Black", "Hispanic"]:
+            a, o = agrow.get(cat), ours.get(cat)
+            if pd.isna(a) or pd.isna(o) or not a:
+                continue
+            rel = abs(float(o) - float(a)) / float(a)
+            if rel > 0.02:
+                entry = {"vintage": v, "category": cat, "ours": int(o),
+                         "ag_published": int(a), "rel_diff_pct": round(100 * rel, 2)}
+                (known_anomalies if (v, cat) in _KNOWN_AG_DENOMINATOR_ANOMALIES else violations).append(entry)
+    if not checked:
+        return AssetCheckResult(passed=True, metadata={"skipped": True, "reason": "no overlapping vintages"})
+    return AssetCheckResult(
+        passed=not violations,
+        metadata={"vintages_cross_checked": checked,
+                  "violations": MetadataValue.json(violations[:25]),
+                  "known_ag_anomalies": MetadataValue.json(known_anomalies)},
+    )
+
+
+asset_checks.extend([
+    check_state_reports_parsed_nonempty,
+    check_state_reports_population_shares_sane,
+    check_state_reports_disparity_timeseries_sane,
+    check_acs_population_sane,
+    check_acs_population_matches_ag_published,
+])
