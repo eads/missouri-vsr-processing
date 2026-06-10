@@ -2645,6 +2645,28 @@ def homepage_stats_json(context, canonical_combined_parquet: str) -> str:
     return write_homepage_stats_json(context, pd.read_parquet(canonical_combined_parquet))
 
 
+# Ordered release notes; the manifest emits every entry up to the current version.
+_RELEASE_CHANGELOG = [
+    ("2.0", "v2.0: Added 2001–2019 pre-2020 format data with canonical_key normalization; "
+            "row_key in all dist outputs is now canonical_key (era-independent); agency JSON "
+            "partitioned by year (dist/agency_year/{slug}/{year}.json)."),
+    ("2.3", "v2.3: Folded in agencies that filed but reported zero stops — previously dropped "
+            "because the 2020+ reports list them in a prose 'Zero Stops' section rather than a "
+            "table. They now appear with a stops=0 row (issue #41)."),
+]
+
+
+def _version_tuple(v: str) -> tuple[int, ...]:
+    return tuple(int(p) for p in re.findall(r"\d+", v)) or (0,)
+
+
+def _release_version_from_prefix(default: str = "2.0") -> str:
+    """Parse the release version from MISSOURI_VSR_S3_PREFIX (releases/vX.Y)."""
+    prefix = os.getenv("MISSOURI_VSR_S3_PREFIX", "") or ""
+    m = re.search(r"v(\d+(?:\.\d+)?)", prefix)
+    return m.group(1) if m else default
+
+
 @asset(
     name="dist_manifest_json",
     group_name="dist",
@@ -2669,18 +2691,21 @@ def dist_manifest_json(context) -> str:
     years = [int(r[0]) for r in years_rows]
     canonical_metrics = [r[0] for r in canonical_rows if not _is_cross_rate_pairing(r[0])]
 
+    # Releases are cut by setting MISSOURI_VSR_S3_PREFIX=releases/vX.Y; derive the
+    # release version from it so the manifest self-labels instead of staying "2.0".
+    version = _release_version_from_prefix()
+    # Cumulative changelog: every note up to and including the current version.
+    changelog = " ".join(
+        note for ver, note in _RELEASE_CHANGELOG if _version_tuple(ver) <= _version_tuple(version)
+    )
+
     manifest = {
-        "version": "2.0",
+        "version": version,
         "released": date.today().isoformat(),
         "years": years,
         "schema_version": "2.0",
         "canonical_metrics": canonical_metrics,
-        "changelog": (
-            f"v2.0: Added {DIST_MIN_YEAR}–2019 pre-2020 format data with canonical_key normalization. "
-            "row_key in all dist outputs is now canonical_key (era-independent). "
-            "Agency JSON partitioned by year (dist/agency_year/{slug}/{year}.json). "
-            f"Years before {DIST_MIN_YEAR} excluded from dist outputs (sparse/unreliable coverage)."
-        ),
+        "changelog": changelog,
     }
 
     out_dir = Path(context.resources.data_dir_out.get_path())
