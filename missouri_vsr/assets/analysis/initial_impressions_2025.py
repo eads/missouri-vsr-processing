@@ -7,6 +7,8 @@ Deliverables (all statewide):
      all-other, plus a full per-reason breakdown, per year.
   3. ii2025_race_summary_2025    — total stops, search rate, contraband hit rate
      by race, statewide, 2025.
+  4. ii2025_outcome_test_by_year — the outcome test (search rate vs contraband
+     hit rate by race, each relative to white) for every year in the data.
 
 Statewide counts are *computed* by us (the "Missouri (all agencies)" aggregate in
 canonical_combined, summed from the per-agency reports). The 16+ population
@@ -398,6 +400,95 @@ def ii2025_race_summary_2025(context) -> List[str]:
         })
 
     return _write_outputs(context, "ii2025_race_summary_2025", payload, rows)
+
+
+# ------------------------------------------------------------------------------
+# 4. Outcome test, all years: search rate vs contraband hit rate by race
+# ------------------------------------------------------------------------------
+@asset(
+    name="ii2025_outcome_test_by_year",
+    group_name=GROUP,
+    deps=_DEPS,
+    required_resource_keys={"data_dir_processed", "data_dir_out"},
+    description="Outcome test (Knowles, Persico & Todd 2001) by race for every year: "
+                "search rate vs contraband hit rate, each relative to white, statewide, vs official.",
+)
+def ii2025_outcome_test_by_year(context) -> List[str]:
+    sw = _load_statewide(context)
+    sr = _load_state_reports(context)
+
+    # All years for which we have a statewide search rate (the broader metric);
+    # contraband hit rate — the crux of the outcome test — only exists 2020+, so
+    # earlier years carry a null hit rate and outcome_test_computable=False.
+    years = sorted(
+        int(y)
+        for y in sw[sw["canonical_key"] == "search-rate"]["year"].dropna().unique()
+    )
+
+    payload = {
+        "post": POST_SLUG,
+        "metric": "outcome_test_by_year",
+        "note": "The outcome test: a group searched MORE often than white drivers yet "
+                "yielding contraband LESS often is the bias signal. *_vs_white columns "
+                "are ratios to the white rate (1.00 = same as white). Contraband hit rate "
+                "is only reported statewide from 2020 on, so outcome_test_computable is "
+                "False for earlier years (search rate only).",
+        "definitions": {
+            "search_rate": "100 x searches / stops",
+            "contraband_hit_rate": "100 x searches-with-contraband / searches",
+            "search_rate_vs_white": "search_rate(race) / search_rate(white)",
+            "hit_rate_vs_white": "contraband_hit_rate(race) / contraband_hit_rate(white)",
+        },
+        "statewide_counts_source": "computed: 'Missouri (all agencies)' aggregate",
+        "by_year": {},
+    }
+    rows: List[dict] = []
+    for y in years:
+        search_rate = _race_values(sw, "search-rate", y) or {}
+        hit_rate = _race_values(sw, "contraband-hit-rate", y) or {}
+        off_search_rate = _official_metric(sr, y, "Rates", "Search rate") or {}
+        off_hit_rate = _official_metric(sr, y, "Rates", "Contraband hit rate") or {}
+
+        white_sr = search_rate.get("White")
+        white_hr = hit_rate.get("White")
+        computable = white_hr is not None
+
+        by_race: Dict[str, dict] = {}
+        for r in RACE_COLS:
+            sr_r = search_rate.get(r)
+            hr_r = hit_rate.get(r)
+            cell = {
+                "search_rate": sr_r,
+                "contraband_hit_rate": hr_r,
+                "search_rate_vs_white": round(sr_r / white_sr, 4) if (sr_r is not None and white_sr) else None,
+                "hit_rate_vs_white": round(hr_r / white_hr, 4) if (hr_r is not None and white_hr) else None,
+                "official": {
+                    "search_rate": off_search_rate.get(r),
+                    "contraband_hit_rate": off_hit_rate.get(r),
+                },
+                "delta_vs_official": {
+                    "search_rate": _delta(sr_r, off_search_rate.get(r)),
+                    "contraband_hit_rate": _delta(hr_r, off_hit_rate.get(r)),
+                },
+            }
+            by_race[r] = cell
+            rows.append({
+                "year": y, "race": r,
+                "search_rate": sr_r, "contraband_hit_rate": hr_r,
+                "search_rate_vs_white": cell["search_rate_vs_white"],
+                "hit_rate_vs_white": cell["hit_rate_vs_white"],
+                "outcome_test_computable": computable,
+                "official_search_rate": off_search_rate.get(r),
+                "official_contraband_hit_rate": off_hit_rate.get(r),
+                "delta_search_rate": cell["delta_vs_official"]["search_rate"],
+                "delta_contraband_hit_rate": cell["delta_vs_official"]["contraband_hit_rate"],
+            })
+        payload["by_year"][str(y)] = {
+            "outcome_test_computable": computable,
+            "by_race": by_race,
+        }
+
+    return _write_outputs(context, "ii2025_outcome_test_by_year", payload, rows)
 
 
 # ------------------------------------------------------------------------------
