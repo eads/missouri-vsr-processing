@@ -92,8 +92,22 @@ def _race_values(df: pd.DataFrame, canonical_key: str, year: int) -> Optional[Di
 
 
 def _official_acs_pop_pct(sr: pd.DataFrame) -> Dict[int, Dict[str, float]]:
-    """report_year -> {race: ACS 16+ population %}. Deduped across tables."""
-    pop = sr[sr["metric"].astype(str).str.contains("ACS pop. %", na=False)]
+    """report_year -> {race: ACS 16+ population %}. Deduped across tables.
+
+    The denominator label drifts across report years: 2022+ reports use
+    ``<year> ACS pop. %`` (alongside a separate ``Decennial pop. %`` we must NOT
+    pick up), while the 2021 report labels the same ACS 16+ estimate plainly as
+    ``2020 population %`` (confirmed ACS 16+ five-year estimate in that report's
+    own notes). Match either form; exclude the Decennial row.
+    """
+    metric = sr["metric"].astype(str)
+    is_pct = metric.str.contains("%", na=False)
+    is_acs16 = (
+        metric.str.contains("ACS pop", case=False, na=False)
+        | metric.str.contains(r"\bpopulation\b", case=False, regex=True, na=False)
+    )
+    is_decennial = metric.str.contains("decennial", case=False, na=False)
+    pop = sr[is_pct & is_acs16 & ~is_decennial]
     pop = pop.drop_duplicates(subset=["report_year"])
     out: Dict[int, Dict[str, float]] = {}
     for _, row in pop.iterrows():
@@ -149,7 +163,7 @@ def _write_outputs(context, name: str, payload: dict, rows: List[dict]) -> List[
     deps=_DEPS,
     required_resource_keys={"data_dir_processed", "data_dir_out"},
     description="Statewide share of stops/searches/arrests by race + disparity index "
-                "(share / 16+ ACS population share), per year, vs official.",
+                "(share / 16+ ACS population share) over a 10-year window, vs official.",
 )
 def ii2025_disparity_index(context) -> List[str]:
     sw = _load_statewide(context)
@@ -158,14 +172,26 @@ def ii2025_disparity_index(context) -> List[str]:
     official_disp = _official_all_stops_disparity(sr)  # series_year -> {race: disparity}
 
     metrics = {"stops": "stops", "searches": "searches", "arrests": "arrests"}
-    years = sorted(pop_by_year)  # disparity needs a population denominator => report years
+    # 10-year window ending at the primary year. Shares come from our statewide
+    # counts (available every year) and the official disparity line spans the full
+    # window from the latest report's 2000..N series; the independently-computed
+    # disparity is only populated for years where a statewide report gave us an ACS
+    # 16+ denominator (the AG's tabular statewide report format only goes back to
+    # 2021 — earlier years carry official_disparity_index but no computed value).
+    years = list(range(PRIMARY_YEAR - 9, PRIMARY_YEAR + 1))
+    denominator_years = sorted(y for y in pop_by_year if y in years)
 
     payload = {
         "post": POST_SLUG,
         "metric": "disparity_index",
+        "window": {"start": years[0], "end": years[-1], "n_years": len(years)},
         "definition": "(group's share of <metric>) / (group's share of 16+ ACS population)",
         "population_basis": "ACS 5-year estimates, ages 16+, as reported in the statewide "
                             "annual report for that year (matches the AG's disparity-index denominator)",
+        "computed_disparity_years": denominator_years,
+        "computed_disparity_coverage": "disparity_index is computed only for years with an ingested "
+                                       "statewide-report ACS denominator; other years in the window carry "
+                                       "share_pct and official_disparity_index but disparity_index = null.",
         "caveat": "ACS provides race-specific Hispanic estimates only for White, so non-White "
                   "Hispanic residents are double-counted in the population shares (per the AG's note).",
         "statewide_counts_source": "computed: 'Missouri (all agencies)' aggregate summed from per-agency reports",
@@ -174,7 +200,7 @@ def ii2025_disparity_index(context) -> List[str]:
     }
     rows: List[dict] = []
     for y in years:
-        popy = pop_by_year[y]
+        popy = pop_by_year.get(y, {})
         ystruct: Dict[str, dict] = {}
         for mlabel, ck in metrics.items():
             vals = _race_values(sw, ck, y)
