@@ -9,7 +9,13 @@ import requests
 
 from dagster import AssetIn, AssetKey, AssetOut, In, Out, Output, graph_asset, op, multi_asset
 
-from missouri_vsr.assets.extract import YEAR_URLS, _ensure_pdftotext, _slugify_simple
+from missouri_vsr.assets.extract import (
+    RACE_COLUMNS,
+    YEAR_URLS,
+    _ensure_pdftotext,
+    _slugify_simple,
+    zero_stop_rows,
+)
 from missouri_vsr.assets.s3_utils import upload_file_to_s3
 from missouri_vsr.cli.crosswalk import _normalize_name
 
@@ -415,6 +421,34 @@ def combine_reports(context, **extracted_reports: dict[str, pd.DataFrame]) -> pd
         combined = combined.rename(columns={"slug": "row_key"})
     if "slug" in combined.columns:
         combined = combined.drop(columns=["slug"])
+
+    # Fold in agencies that filed but reported zero stops. The 2020+ reports list
+    # these in a prose "Zero Stops" section we never parse into tables, so without
+    # this they vanish from the dataset entirely. Emit one all-stops=0 row each
+    # (raw row_key 'rates-by-race--totals--all-stops'); they then flow through name
+    # normalization and canonical_key mapping (-> 'stops') like any other row, and
+    # count as having reported. See issue #41.
+    reports_dir = Path("data/src/reports")
+    if "year" in combined.columns and "agency" in combined.columns:
+        present_by_year: dict[int, set[str]] = {
+            int(y): set(g["agency"].dropna().astype(str))
+            for y, g in combined.groupby("year")
+        }
+        zero_records: list[dict] = []
+        for y in sorted({int(v) for v in combined["year"].dropna().unique()}):
+            zero_records.extend(
+                zero_stop_rows(reports_dir, y, existing=present_by_year.get(y, set()))
+            )
+        if zero_records:
+            zdf = pd.DataFrame(zero_records).reindex(columns=combined.columns)
+            for col in RACE_COLUMNS:
+                if col in zdf.columns:
+                    zdf[col] = pd.to_numeric(zdf[col], errors="coerce")
+            combined = pd.concat([combined, zdf], ignore_index=True)
+            context.log.info(
+                "Folded in %d zero-stop filer rows across %d years (issue #41)",
+                len(zero_records), zdf["year"].nunique(),
+            )
 
     # Collapse pre-2020 'Am. Indian' race column into the 2020+ 'Native American'
     # column so downstream layers only see one. Pre-2020 reports use 'Am. Indian';

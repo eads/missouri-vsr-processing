@@ -288,6 +288,66 @@ def _clean_agency_name(name: str) -> str:
     return text
 
 
+def parse_zero_stop_agencies(report_text: str) -> list[str]:
+    """Agency names from the prose "Zero Stops" section of a 2020+ per-agency
+    report — agencies that filed but recorded zero stops, so they never get a
+    per-agency table (and would otherwise be dropped entirely). Returns raw
+    report names (not crosswalked). Returns [] when the section is absent
+    (pre-2020 combined reports, or a year whose PDF doesn't carry it). See #41.
+    """
+    for m in re.finditer(r"Zero Stops", report_text):
+        seg = report_text[m.end(): m.end() + 2500]
+        body = re.split(r"\n\s*2?\s*Agency Results", seg)[0]
+        if re.search(r"\.\s*\.\s*\.\s*\.", body):  # table-of-contents hit (dotted leaders)
+            continue
+        if not re.search(r"Dept|Division|College|Police|Department", body):
+            continue
+        flat = re.sub(r"\s+", " ", body).strip()
+        names = [n.strip().rstrip(".").strip() for n in flat.split(",")]
+        return [n for n in names if len(n) > 3 and not n.isdigit()]
+    return []
+
+
+def zero_stop_rows(reports_dir: Path, year: int, *, existing: set[str] | None = None) -> list[dict]:
+    """Synthetic all-stops=0 extract records for each agency in `year`'s "Zero
+    Stops" list, so filed-but-reported-nothing agencies become first-class rows
+    (canonical_key 'stops', Total 0) instead of vanishing. `existing` is the set
+    of already-present cleaned agency names for the year, to avoid duplicating an
+    agency that does have a table. See issue #41.
+    """
+    layout = reports_dir / f"VSRreport{year}.layout.txt"
+    if not layout.exists():
+        return []
+    names = parse_zero_stop_agencies(layout.read_text(encoding="utf-8", errors="replace"))
+    if not names:
+        return []
+    table_title = "Rates by Race"
+    table_id = _slugify_simple(table_title)
+    section = "Totals"
+    section_id = _build_section_id(section)
+    metric = "All stops"
+    metric_id = _build_metric_id(metric)
+    row_key = _build_row_key(table_id, section_id, metric_id)
+    existing = existing or set()
+    rows: list[dict] = []
+    seen: set[str] = set()
+    for raw in names:
+        agency = _clean_agency_name(raw)
+        if not agency or agency in existing or agency in seen:
+            continue
+        seen.add(agency)
+        rows.append({
+            "Total": 0, "White": 0, "Black": 0, "Hispanic": 0,
+            "Native American": 0, "Asian": 0, "Other": 0,
+            "year": year, "row_key": row_key, "agency": agency,
+            "table": table_title, "table_id": table_id,
+            "section": section, "section_id": section_id,
+            "metric": metric, "metric_id": metric_id,
+            "row_id": _build_row_id(year, agency, table_id, section_id, metric_id),
+        })
+    return rows
+
+
 def _is_page_number(line: str) -> bool:
     stripped = line.strip()
     return stripped.isdigit()
