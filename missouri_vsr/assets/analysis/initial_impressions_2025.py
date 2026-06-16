@@ -434,6 +434,8 @@ def ii2025_outcome_test_by_year(context) -> List[str]:
                 "is only reported statewide from 2020 on, so outcome_test_computable is "
                 "False for earlier years (search rate only).",
         "definitions": {
+            "searches": "count of searches (the denominator behind the hit rate / "
+                        "numerator behind the search rate; small counts => noisy rates)",
             "search_rate": "100 x searches / stops",
             "contraband_hit_rate": "100 x searches-with-contraband / searches",
             "search_rate_vs_white": "search_rate(race) / search_rate(white)",
@@ -444,6 +446,7 @@ def ii2025_outcome_test_by_year(context) -> List[str]:
     }
     rows: List[dict] = []
     for y in years:
+        searches = _race_values(sw, "searches", y) or {}
         search_rate = _race_values(sw, "search-rate", y) or {}
         hit_rate = _race_values(sw, "contraband-hit-rate", y) or {}
         off_search_rate = _official_metric(sr, y, "Rates", "Search rate") or {}
@@ -458,6 +461,7 @@ def ii2025_outcome_test_by_year(context) -> List[str]:
             sr_r = search_rate.get(r)
             hr_r = hit_rate.get(r)
             cell = {
+                "searches": searches.get(r),
                 "search_rate": sr_r,
                 "contraband_hit_rate": hr_r,
                 "search_rate_vs_white": round(sr_r / white_sr, 4) if (sr_r is not None and white_sr) else None,
@@ -474,6 +478,7 @@ def ii2025_outcome_test_by_year(context) -> List[str]:
             by_race[r] = cell
             rows.append({
                 "year": y, "race": r,
+                "searches": searches.get(r),
                 "search_rate": sr_r, "contraband_hit_rate": hr_r,
                 "search_rate_vs_white": cell["search_rate_vs_white"],
                 "hit_rate_vs_white": cell["hit_rate_vs_white"],
