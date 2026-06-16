@@ -7,6 +7,7 @@ from missouri_vsr.assets.processed import (
     STATEWIDE_AGENCY_NAME,
     STATEWIDE_AGENCY_SLUG,
     _build_statewide_canonical_rows,
+    _exclude_statewide_aggregate,
 )
 
 
@@ -134,6 +135,54 @@ def test_re_running_on_augmented_frame_is_idempotent():
         first.reset_index(drop=True).sort_values(["year", "row_key"]).reset_index(drop=True),
         second.reset_index(drop=True).sort_values(["year", "row_key"]).reset_index(drop=True),
     )
+
+
+def test_exclude_statewide_aggregate_prevents_double_count():
+    """Regression (v2.2): any cross-agency sum must first drop the synthetic
+    'Missouri (all agencies)' row, or every statewide total comes out 2×.
+    This guards statewide_year_sums*, homepage_*_stats, and the
+    missouri-all-agencies agency_year export."""
+    df = _canonical_frame()
+    real_total = df[(df["row_key"] == "stops") & (df["year"] == 2023)]["Total"].sum()
+    assert real_total == 300.0
+
+    # canonical_combined carries both the per-agency rows AND the aggregate row.
+    statewide = _build_statewide_canonical_rows(df)
+    augmented = pd.concat([df, statewide], ignore_index=True)
+
+    # The aggregate row alone already equals the statewide total...
+    agg = statewide[(statewide["row_key"] == "stops") & (statewide["year"] == 2023)].iloc[0]
+    assert agg["Total"] == real_total
+
+    # ...so a naive sum over the augmented frame double-counts (the bug).
+    naive = augmented[(augmented["row_key"] == "stops") & (augmented["year"] == 2023)]["Total"].sum()
+    assert naive == 2 * real_total
+
+    # _exclude_statewide_aggregate removes it, restoring the correct universe.
+    cleaned = _exclude_statewide_aggregate(augmented)
+    assert (cleaned["agency"] != STATEWIDE_AGENCY_NAME).all()
+    fixed = cleaned[(cleaned["row_key"] == "stops") & (cleaned["year"] == 2023)]["Total"].sum()
+    assert fixed == real_total
+
+
+def test_exclude_statewide_aggregate_matches_on_slug():
+    """The aggregate is dropped whether identified by agency name or agency_slug."""
+    df = pd.DataFrame(
+        {
+            "agency": ["Agency A", STATEWIDE_AGENCY_NAME, "Agency B"],
+            "agency_slug": ["agency-a", STATEWIDE_AGENCY_SLUG, "agency-b"],
+            "Total": [1.0, 99.0, 2.0],
+        }
+    )
+    cleaned = _exclude_statewide_aggregate(df)
+    assert list(cleaned["agency"]) == ["Agency A", "Agency B"]
+    assert cleaned["Total"].sum() == 3.0
+
+
+def test_exclude_statewide_aggregate_noop_without_aggregate():
+    """A frame with no aggregate row is returned unchanged."""
+    df = _canonical_frame()
+    assert len(_exclude_statewide_aggregate(df)) == len(df)
 
 
 # tiny helper to avoid pytest.approx import boilerplate

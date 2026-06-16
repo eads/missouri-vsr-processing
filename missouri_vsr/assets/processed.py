@@ -1786,9 +1786,28 @@ def _combine_download_parquet(named_frames: dict[str, pd.DataFrame]) -> pd.DataF
     return pd.concat(frames, ignore_index=True, sort=False)
 
 
+def _exclude_statewide_aggregate(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop the synthetic 'Missouri (all agencies)' aggregate row before any
+    cross-agency sum / mean / count.
+
+    That row (added by ``_build_statewide_canonical_rows``) already equals the
+    statewide total, so summing it alongside the per-agency rows double-counts
+    every statewide figure — the v2.2 regression where statewide_year_sums and
+    homepage_*_stats came out exactly 2× and agency_count was +1.
+    """
+    mask = pd.Series(False, index=df.index)
+    if "agency" in df.columns:
+        mask |= df["agency"].astype(str).str.strip() == STATEWIDE_AGENCY_NAME
+    if "agency_slug" in df.columns:
+        mask |= df["agency_slug"].astype(str).str.strip() == STATEWIDE_AGENCY_SLUG
+    if not mask.any():
+        return df
+    return df[~mask].copy()
+
+
 def write_statewide_year_sums_json(context, combined: pd.DataFrame) -> str:
     """Write statewide per-year sums for each row_key and race column."""
-    combined = _collapse_to_canonical(combined)
+    combined = _exclude_statewide_aggregate(_collapse_to_canonical(combined))
     if combined.empty:
         context.log.warning("Combined DataFrame empty; no statewide sums JSON created.")
         return ""
@@ -1950,7 +1969,7 @@ def write_statewide_year_sums_json(context, combined: pd.DataFrame) -> str:
 
 def write_statewide_year_sums_subset_json(context, combined: pd.DataFrame) -> str:
     """Write a slimmed-down statewide sums JSON for selected row_keys."""
-    combined = _collapse_to_canonical(combined)
+    combined = _exclude_statewide_aggregate(_collapse_to_canonical(combined))
     if combined.empty:
         context.log.warning("Combined DataFrame empty; no statewide sums subset created.")
         return ""
@@ -2013,7 +2032,7 @@ def write_statewide_year_sums_subset_json(context, combined: pd.DataFrame) -> st
 
 def write_homepage_stats_json(context, combined: pd.DataFrame) -> str:
     """Write homepage stats for the latest report year."""
-    combined = _collapse_to_canonical(combined)
+    combined = _exclude_statewide_aggregate(_collapse_to_canonical(combined))
     if combined.empty:
         context.log.warning("Combined DataFrame empty; no homepage stats created.")
         return ""
@@ -2360,7 +2379,9 @@ def agency_year_json_exports(context) -> List[str]:
 
 def write_statewide_agency_json(context, combined: pd.DataFrame) -> str:
     """Write an agency-year-format JSON for the Missouri (all agencies) aggregate."""
-    combined = _collapse_to_canonical(combined)
+    # Re-summed from the per-agency rows, so the pre-existing aggregate row must
+    # be dropped first or its raw counts (stops/searches/...) come out 2×.
+    combined = _exclude_statewide_aggregate(_collapse_to_canonical(combined))
     if combined.empty:
         context.log.warning("Combined DataFrame is empty; skipping statewide agency JSON.")
         return ""
